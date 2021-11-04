@@ -1,4 +1,10 @@
-import { Button, FormControlLabel, Grid, Snackbar, Switch } from "@material-ui/core";
+import {
+  Button,
+  FormControlLabel,
+  Grid,
+  Snackbar,
+  Switch,
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { editGlobalVariables } from "../actions/globalVariables";
@@ -16,9 +22,7 @@ import { Alert } from "./Notification/NotificationBar";
 //   }
 // }
 
-export function ImpExpData (props) {
-
-
+export function ImpExpData(props) {
   const expLocalStorage = (filename, text = locCache()) => {
     var blob = new Blob([text], { type: "text/plain" });
     var url = window.URL.createObjectURL(blob);
@@ -29,7 +33,7 @@ export function ImpExpData (props) {
     this.props.editGlobalVariables({ autoSave: 0 });
   };
 
- const impLocStora = (event) => {
+  const impLocStora = (event) => {
     var file = event.target.files[0];
     var reader = new FileReader();
     reader.onload = function (event) {
@@ -45,7 +49,7 @@ export function ImpExpData (props) {
 
   //   if (onOffSwitch != true) {
   //     this.props.editGlobalVariables({ onOffSwitch: true });
-  
+
   //   } else {
   //     this.props.editGlobalVariables({ onOffSwitch: false });
   //   }
@@ -62,21 +66,19 @@ export function ImpExpData (props) {
   //   }
   // };
 
-    return (
-      // <div className="impExpButton">
-      <div>
-        <Grid
-          container
-          spacing={10}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item>
-            <AutoSave
-            props={props}
-            />
-            {/* <FormControlLabel
+  return (
+    // <div className="impExpButton">
+    <div>
+      <Grid
+        container
+        spacing={10}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          <AutoSave props={props} />
+          {/* <FormControlLabel
               control={
                 <Switch
                   checked={
@@ -90,32 +92,30 @@ export function ImpExpData (props) {
               }
               label={this.autoSaveLabel()}
             /> */}
-          </Grid>
-
-          <Grid item>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="expButton"
-              onClick={()=>expLocalStorage()}
-            >
-              Export Local Data
-            </Button>
-          </Grid>
-
-          <Grid item>
-            <input
-              type="file"
-              id="file"
-              name="file"
-              onChange={()=> impLocStora()}
-            />
-          </Grid>
         </Grid>
-       
-      </div>
-    );
-  
+
+        <Grid item>
+          <Button
+            color="secondary"
+            variant="contained"
+            className="expButton"
+            onClick={() => expLocalStorage()}
+          >
+            Export Local Data
+          </Button>
+        </Grid>
+
+        <Grid item>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            onChange={(e) => impLocStora(e)}
+          />
+        </Grid>
+      </Grid>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {

@@ -60,6 +60,7 @@ export function AutoSave(properties) {
         <Switch
           checked={props.globalVariables.onOffSwitch != false ? false : true}
           onChange={() => autoSaveSwitch()}
+          // color="secondary"
         />
       }
       label={autoSaveLabel()}
