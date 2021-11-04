@@ -1,0 +1,27 @@
+html {
+  // font-size: 62.5%;
+  font-size: 80%;
+}
+
+body {
+  background: $dark-blue;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+
+
+p {
+  color: rgb(72, 66, 66);
+  margin: 1px;
+  margin-left: 20px;
+
+}
