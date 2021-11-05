@@ -44,27 +44,7 @@ export function ImpExpData(props) {
     window.location.reload();
   };
 
-  // autoSaveSwitch = () => {
-  //   const onOffSwitch = this.props.globalVariables.onOffSwitch;
 
-  //   if (onOffSwitch != true) {
-  //     this.props.editGlobalVariables({ onOffSwitch: true });
-
-  //   } else {
-  //     this.props.editGlobalVariables({ onOffSwitch: false });
-  //   }
-  // };
-
-  // autoSaveLabel = () => {
-  //   const onOffSwitch = this.props.globalVariables.onOffSwitch;
-  //   const autoSave = this.props.globalVariables.autoSave;
-
-  //   if (onOffSwitch != true) {
-  //     return "Auto Save OFF";
-  //   } else {
-  //     return ["Auto Save in ", 11 - autoSave, " Actions"];
-  //   }
-  // };
 
   return (
     // <div className="impExpButton">
