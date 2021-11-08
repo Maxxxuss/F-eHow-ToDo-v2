@@ -1,5 +1,4 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
 const { web } = require('webpack');
 
@@ -53,7 +52,7 @@ devServer: {
   static: {
     directory: path.join(__dirname, "public/"),
   },
-  // historyApiFallback: true,
+  historyApiFallback: true,
   // compress: true, 
   port: 3000,
   devMiddleware: {
@@ -75,11 +74,11 @@ devServer: {
 
 
 
-// plugins: [
-//   new HtmlWebPackPlugin({
-//      template: path.resolve( __dirname, 'public/index.html' ),
-//      filename: 'index.html'
-//   })
-// ]  
+plugins: [
+  new HtmlWebPackPlugin({
+     template: path.resolve( __dirname, 'public/index.html' ),
+     filename: 'index.html'
+  })
+]  
 }
 }
