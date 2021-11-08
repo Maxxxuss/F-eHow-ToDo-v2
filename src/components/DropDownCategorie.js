@@ -85,11 +85,11 @@ class DropDownCategorie extends Component {
         const {activeNote} = this.props
         return (
         <div
-        {...css({
-          display: 'flex',
-          flexDirection: 'column',
-          marginTop: 50,
-        })}
+        // {...css({
+        //   display: 'flex',
+        //   flexDirection: 'column',
+        //   marginTop: 50,
+        // })}
         >
 
         <Downshift
@@ -115,9 +115,12 @@ class DropDownCategorie extends Component {
             inputValue,
             highlightedIndex,
           }) => (
-            <div {...css({width: 250, margin: 'auto'})}>
+            // <div {...css({width: 250, margin: 'auto'})}>
+            <div>
               <Label {...getLabelProps()}>Select categorie</Label>
-              <div {...css({position: 'relative'})}>
+              {/* <div {...css({position: 'relative'})}> */}
+              <div>
+
                 <Input
                 placeholder= {this.props.acctiveNote ? this.state.categorie : "Categorie" }
                 // value ={this.state.categorie}

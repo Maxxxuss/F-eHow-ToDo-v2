@@ -5,10 +5,12 @@ import {
   Paper,
   Collapse,
   FormControlLabel,
-  makeStyles,
-} from "@material-ui/core";
+
+} from '@mui/material';
 import React from "react";
 import PDetailsAddSetRemoveButton from "./ProjDetailsButtonAddSetRemove";
+import { createTheme, makeStyles } from '@material-ui/core/styles';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
