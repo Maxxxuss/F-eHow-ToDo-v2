@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { createTheme, makeStyles } from '@material-ui/core/styles'
+// import { createTheme, makeStyles } from '@material-ui/core/styles'
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -43,16 +43,16 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//     width: '100%',
+//     backgroundColor: theme.palette.background.paper,
+//   },
+// }));
 
 export default function ProjectTabPanelDetails(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -60,7 +60,7 @@ export default function ProjectTabPanelDetails(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div >
       <AppBar position="static" color="default" >
         <Tabs
           value={value}
