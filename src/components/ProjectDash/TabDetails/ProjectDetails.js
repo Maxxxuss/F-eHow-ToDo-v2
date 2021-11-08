@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import React from "react";
 import PDetailsAddSetRemoveButton from "./ProjDetailsButtonAddSetRemove";
-// import { createTheme, makeStyles } from '@material-ui/core/styles';
+// import { createTheme, makeStyles } from '@mui/material/styles';
 
 
 // const useStyles = makeStyles((theme) => ({

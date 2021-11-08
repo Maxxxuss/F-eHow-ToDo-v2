@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-// import { createTheme, makeStyles } from '@material-ui/core/styles'
+// import { createTheme, makeStyles } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';

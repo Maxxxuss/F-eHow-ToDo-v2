@@ -1,5 +1,5 @@
 import React from 'react';
-// import { createTheme, makeStyles } from '@material-ui/core/styles'
+// import { createTheme, makeStyles } from '@mui/material/styles'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
