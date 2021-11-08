@@ -1,37 +1,37 @@
 import React from 'react';
-import { createTheme, makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { green } from '@material-ui/core/colors';
+// import { createTheme, makeStyles } from '@mui/material/styles'
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { green } from '@mui/material/colors';
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
+// const useStyles = makeStyles((theme) => ({
+//     container: {
+//         display: 'flex',
+//         flexWrap: 'wrap',
+//     },
+//     formControl: {
+//         margin: theme.spacing(1),
+//         minWidth: 120,
+//     },
 
-}));
-const theme = createTheme({
-    palette: {
-        primary: green,
-    },
-});
+// }));
+// const theme = createTheme({
+//     palette: {
+//         primary: green,
+//     },
+// });
 
 
 export default function SetRisk(props) {
-    const classes = useStyles();
+    // const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [auswirkung, setAuswirkung] = React.useState("");
     const [occurence, setOccurence] = React.useState("")
@@ -89,8 +89,8 @@ export default function SetRisk(props) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Fill the form</DialogTitle>
                 <DialogContent>
-                    <form className={classes.container}>
-                        <FormControl className={classes.formControl}>
+                    <form >
+                        <FormControl >
                             <InputLabel htmlFor="demo-dialog-native">Auswirkung</InputLabel>
                             <Select
                                 native
@@ -104,7 +104,7 @@ export default function SetRisk(props) {
                                 <option value={105}>Niedrig</option>
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl}>
+                        <FormControl >
                             <InputLabel id="demo-dialog-select-label"> Eintritts-WS </InputLabel>
                             <Select
                                 labelId="demo-dialog-select-label"

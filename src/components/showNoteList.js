@@ -15,8 +15,6 @@ import {
   InputLabel,
   Paper,
 } from "@mui/material";
-import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 
 const showHintForTimedNotes = (expense) => {

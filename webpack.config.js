@@ -1,5 +1,4 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
 const { web } = require('webpack');
 
@@ -22,15 +21,17 @@ module.exports = (env) =>{
       test: /\.js$/,
       exclude: /node_modules/
     }
-    , 
-    {
-     test: /\.s?css$/i,
-     use: [
-       'style-loader',
-       'css-loader',
-       'sass-loader'
-     ]
-   }]
+  //   , 
+  //   {
+  //    test: /\.s?css$/i,
+  //    use: [
+  //      'style-loader',
+  //      'css-loader',
+  //      'sass-loader'
+  //    ]
+  //  }
+  
+  ]
 //  },
 //   // plugins: [   ggf anschauen min~ 1:50
 //   //   CSSExtract
@@ -45,20 +46,39 @@ module.exports = (env) =>{
 }, 
 target: "web", 
 
- devServer: {
-  contentBase: path.join(__dirname, 'public'),
+
+
+devServer: {
+  static: {
+    directory: path.join(__dirname, "public/"),
+  },
   historyApiFallback: true,
-  publicPath: '/dist/', 
+  // compress: true, 
+  port: 3000,
+  devMiddleware: {
+    publicPath: "https://localhost:3000/dist/",
+  },
+  hot: "only",
 
 
 },
 
 
-// plugins: [
-//   new HtmlWebPackPlugin({
-//      template: path.resolve( __dirname, 'public/index.html' ),
-//      filename: 'index.html'
-//   })
-// ]  
+// devServer: {
+//   historyApiFallback: true,
+//   contentBase: path.resolve(__dirname, "public"),
+//   hot: true,
+//   port: 3000,
+// },
+
+
+
+
+plugins: [
+  new HtmlWebPackPlugin({
+     template: path.resolve( __dirname, 'public/index.html' ),
+     filename: 'index.html'
+  })
+]  
 }
 }

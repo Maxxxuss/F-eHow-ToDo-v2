@@ -76,7 +76,11 @@ export function ShortDescription(properties) {
     important: important,
     noteDecscription: space + timeStamp + space + noteDecscription,
     datesToFinish: datesToFinish,
-    categorie: inputCategorie,
+    categorie: inputCategorie
+      ? inputCategorie
+      : props.activeNote != ""
+      ? props.activeNote[0].categorie
+      : properties.activeCategorie.catName,
     nextStep: nextStep,
     infoNote: infoNote,
     effort: effort,
@@ -103,14 +107,10 @@ export function ShortDescription(properties) {
       >
         <Grid container item spacing={1}>
           <Grid item xs={1}>
-          <IconButton
-          onClick={() => clearInputValues(props)}
-          >
-            <ClearIcon 
-            
-            fontSize="large"/>
-          </IconButton>
-          </Grid> 
+            <IconButton onClick={() => clearInputValues(props)} size="large">
+              <ClearIcon fontSize="large" />
+            </IconButton>
+          </Grid>
 
           <Grid item xs={11}>
             <TextField

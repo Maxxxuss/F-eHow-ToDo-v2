@@ -11,7 +11,7 @@ import {
   getHistorieCategorie,
 } from "../../selectors/categories";
 import { getAllExpenses } from "../../selectors/notes";
-import { Button, ButtonGroup, List, TextField, Link } from "@material-ui/core";
+import { Button, ButtonGroup, List, TextField, Link } from '@mui/material'
 import ProjectTabPanelDetails from "./ProjectTapPanelDetails";
 import { addExpense, editExpense, removeExpense } from "../../actions/notes";
 

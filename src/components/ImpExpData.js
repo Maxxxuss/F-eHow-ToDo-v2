@@ -4,7 +4,7 @@ import {
   Grid,
   Snackbar,
   Switch,
-} from "@material-ui/core";
+} from '@mui/material';
 import React from "react";
 import { connect } from "react-redux";
 import { editGlobalVariables } from "../actions/globalVariables";
@@ -12,7 +12,6 @@ import { getGlobalVariables } from "../selectors/autoSave";
 
 import { locCache, setLocalStorageState } from "../store/configureStore";
 import { AutoSave } from "./inputs/autoSave";
-import { Alert } from "./Notification/NotificationBar";
 
 // class ImpExpData extends React.Component {
 // constructor (props) {

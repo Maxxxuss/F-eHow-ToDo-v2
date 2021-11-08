@@ -1,35 +1,42 @@
 import React from "react";
-import { createTheme, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import InputLabel from "@material-ui/core/InputLabel";
+// import Button from '@mui/material/Button"
+// import Dialog from '@mui/material/Dialog";
+// import DialogActions from '@mui/material/DialogActions";
+// import DialogContent from '@mui/material/DialogContent";
+// import DialogTitle from '@mui/material/DialogTitle";
+// import InputLabel from '@mui/material/InputLabel";
 
-import FormControl from "@material-ui/core/FormControl";
-import { green } from "@material-ui/core/colors";
-import { TextField } from "@material-ui/core";
+// import FormControl from '@mui/material/FormControl";
+// import { green } from '@mui/material/colors";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}));
-const theme = createTheme({
-  palette: {
-    primary: green,
-  },
-});
+import {Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  InputLabel,
+  FormControl,
+  TextField } from "@mui/material"
+
+// const useStyles = makeStyles((theme) => ({
+//   container: {
+//     display: "flex",
+//     flexWrap: "wrap",
+//   },
+//   formControl: {
+//     margin: theme.spacing(1),
+//     minWidth: 120,
+//   },
+// }));
+// const theme = createTheme({
+//   palette: {
+//     primary: green,
+//   },
+// });
 
 export default function AddDeleteProject(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [categorieName, setCategorieName] = React.useState("");
   const [categorieID, setCategorieID] = React.useState("");
@@ -77,8 +84,8 @@ export default function AddDeleteProject(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Start New Project</DialogTitle>
         <DialogContent>
-          <form className={classes.container}>
-            <FormControl className={classes.formControl}>
+          <form>
+            <FormControl>
               <InputLabel htmlFor="demo-dialog-native"></InputLabel>
 
               <TextField
@@ -87,7 +94,7 @@ export default function AddDeleteProject(props) {
               ></TextField>
             </FormControl>
 
-            <FormControl className={classes.formControl}>
+            <FormControl>
               <InputLabel htmlFor="demo-dialog-native"></InputLabel>
 
               <TextField

@@ -6,7 +6,6 @@ import NotesDashboardPage from './components/NotesDashboard';
 import ProjectDashboard from './components/ProjectDash/ProjectDashboard';
 import store from './store/configureStore'
 import './styles/styles.scss'
-import 'normalize.css/normalize.css'
 import { BrowserRouter as Router
     
   , Route, Switch,  } from 'react-router-dom';
