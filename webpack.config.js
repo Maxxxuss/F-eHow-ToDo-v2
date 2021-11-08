@@ -51,13 +51,13 @@ target: "web",
 
 devServer: {
   static: {
-    directory: path.join(__dirname, "/public"),
+    directory: path.join(__dirname, "public/"),
   },
   historyApiFallback: true,
   // compress: true, 
   port: 3000,
   devMiddleware: {
-    publicPath: "https://localhost:3000/dist",
+    publicPath: "https://localhost:3000/dist/",
   },
   hot: "only",
 
