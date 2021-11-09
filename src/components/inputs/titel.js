@@ -16,6 +16,7 @@ import {
   handelTakeChanges,
 } from "../Button/AddNote";
 import ClearIcon from "@mui/icons-material/Clear";
+import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 
 export function ShortDescription(properties) {
   const props = properties.NotesDashboradProps;
@@ -294,15 +295,22 @@ export function ShortDescription(properties) {
 
         <Button onClick={() => clearInputValues(props)}>Clear</Button>
 
-        <Button
+        {/* <Button
           color="secondary"
           variant="contained"
           onClick={() =>
-            handelRemoveNote(props, updates) + clearInputValues(props)
+            handelRemoveNote(props, updates)
+            
+            + clearInputValues(props)
           }
         >
           Remove
-        </Button>
+        </Button> */}
+        <DoubleCheckRemoveButton
+        activeNote={props.activeNote}
+        handelRemoveNote={props.removeExpense}
+        // onSubmit={()=>clearInputValues(props)}
+        />
       </ButtonGroup>
     </div>
   );

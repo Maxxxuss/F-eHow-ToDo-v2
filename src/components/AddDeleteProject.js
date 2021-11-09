@@ -105,7 +105,8 @@ export default function AddDeleteProject(props) {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={addCategorie} color="primary">
+          <Button onClick={addCategorie} color="primary"     variant="contained"
+>
             Add Project
           </Button>
           <Button onClick={handleClose} color="primary">

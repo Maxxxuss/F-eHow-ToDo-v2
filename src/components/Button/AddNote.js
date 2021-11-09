@@ -1,4 +1,5 @@
 import { autoSaveFunc } from "../inputs/autoSave";
+import DoubleCheckRemoveButton from "./DoubleCheckRemoveButton";
 
 export function handelAddNote(props, updates) {
   props.addExpense(updates);

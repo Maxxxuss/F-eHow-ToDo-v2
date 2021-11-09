@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function DoubleCheckRemoveButton(props) {
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -17,15 +18,16 @@ export default function DoubleCheckRemoveButton(props) {
         setOpen(false);
     };
 
-    const handelRemoveNote =() => {
-    props.handelRemoveNote()
+    const handelRemoveNote =(props) => {
+
+    props.handelRemoveNote({id:props.activeNote[0].id})
     handleClose()
 }
-    const propAcNote = props.activeNote
+    const propAcNote = props.activeNote[0] ? props.activeNote[0] : "" 
 
     return (
         <div>
-            <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+            <Button variant="contained" color="error" onClick={handleClickOpen}>
                 Remove
             </Button>
             <Dialog
@@ -43,7 +45,7 @@ export default function DoubleCheckRemoveButton(props) {
 
                     <DialogContentText id="alert-dialog-description">
 
-                            {propAcNote.description}
+                           Titel:{propAcNote.description}
 
                     </DialogContentText>
                 </DialogContent>
@@ -51,7 +53,9 @@ export default function DoubleCheckRemoveButton(props) {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handelRemoveNote} color="secondary" variant="contained" autoFocus>
+                    <Button onClick={()=>handelRemoveNote(props)} color="error" 
+                    variant="outlined"
+                     autoFocus>
                         Löschen
                     </Button>
                 </DialogActions>

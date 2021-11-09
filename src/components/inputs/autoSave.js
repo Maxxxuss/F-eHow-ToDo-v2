@@ -32,6 +32,10 @@ export function AutoSave(properties) {
   console.log("AutoSave Properties:", properties);
 
   const props = properties.props;
+  const onOffSwitch = props.globalVariables.onOffSwitch;
+  const autoSave = props.globalVariables.autoSave;
+
+
 
   const autoSaveSwitch = () => {
     const onOffSwitch = props.globalVariables.onOffSwitch;
@@ -45,12 +49,12 @@ export function AutoSave(properties) {
 
   const autoSaveLabel = () => {
     const onOffSwitch = props.globalVariables.onOffSwitch;
-    const autoSave = props.globalVariables.autoSave;
+    const autoSave = 11-props.globalVariables.autoSave ;
 
     if (onOffSwitch != true) {
       return "Auto Save OFF";
     } else {
-      return ["Auto Save in ", 11 - autoSave, " Actions"];
+      return ("Auto Save in " +  autoSave + " Actions");
     }
   };
 
@@ -60,10 +64,19 @@ export function AutoSave(properties) {
         <Switch
           checked={props.globalVariables.onOffSwitch != false ? false : true}
           onChange={() => autoSaveSwitch()}
+          color="error"
           // color="secondary"
         />
       }
       label={autoSaveLabel()}
+      // label={
+      //   onOffSwitch != true ?
+      //    "Auto Save Off" : 
+      //    ["Auto Save in ", 11 - autoSave, " Actions"]
+
+
+      // }
+      // label="AutoSave"
     />
   );
 }
