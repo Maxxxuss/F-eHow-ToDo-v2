@@ -23,8 +23,8 @@ export function ShortDescription(properties) {
   const [activeNoteID, setActiveNoteID] = useState("");
   const [description, setDescription] = useState("");
 
-  const [relevance, setrelevance] = useState("");
-  const [important, setimportant] = useState("");
+  const [relevance, setrelevance] = useState(1);
+  const [important, setimportant] = useState(1);
   const [noteDecscription, setnoteDecscription] = useState("");
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
@@ -44,8 +44,8 @@ export function ShortDescription(properties) {
     props.removeActiveNote();
     setActiveNoteID("");
     setDescription("");
-    setrelevance("");
-    setimportant("");
+    setrelevance(1);
+    setimportant(1);
     setnoteDecscription("");
     setdatesToFinish("");
     setnextStep("");
@@ -99,6 +99,60 @@ export function ShortDescription(properties) {
 
   return (
     <div>
+      <Grid mt={1} mb={1}>
+        <ButtonGroup color="primary" variant="text" fullWidth={true}>
+          {activeNoteID ? (
+            <Button
+              variant="contained"
+              onClick={() =>
+                handelTakeChanges(props, updates) + clearInputValues(props)
+              }
+            >
+              take Changes
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() =>
+                handelAddNote(props, updates) + clearInputValues(props)
+              }
+            >
+              Direkt Add
+            </Button>
+          )}
+          <Button
+            variant="outlined"
+            onClick={() =>
+              // handelTakeChanges(props, updates) + clearInputValues(props)
+              statusChange(props, updates) + clearInputValues(props)
+            }
+          >
+            Satus Changes
+          </Button>
+
+          <Button variant="outlined" onClick={() => clearInputValues(props)}>
+            Clear
+          </Button>
+
+          {/* <Button
+          color="secondary"
+          variant="contained"
+          onClick={() =>
+            handelRemoveNote(props, updates)
+            
+            + clearInputValues(props)
+          }
+        >
+          Remove
+        </Button> */}
+          <DoubleCheckRemoveButton
+            activeNote={props.activeNote}
+            handelRemoveNote={props.removeExpense}
+            // onSubmit={()=>clearInputValues(props)}
+          />
+        </ButtonGroup>
+      </Grid>
+
       <Grid
         container
         spacing={2}
@@ -244,74 +298,26 @@ export function ShortDescription(properties) {
             />
           </Grid>
         </Grid>
-
-        <Grid container item spacing={1}>
-          <TextField
-            label="Note Description"
-            variant="outlined"
-            value={noteDecscription}
-            onChange={(e) => setnoteDecscription(e.target.value)}
-            margin="normal"
-            color="secondary"
-            minRows="10"
-            multiline
-            fullWidth
-            // inputProps={{
-            //   style: {
-            //     fontSize: 16,
-            //   },
-            // }}
-          />
-        </Grid>
       </Grid>
-      <ButtonGroup color="primary" variant="text">
-        {activeNoteID ? (
-          <Button
-            variant="contained"
-            onClick={() =>
-              handelTakeChanges(props, updates) + clearInputValues(props)
-            }
-          >
-            take Changes
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            onClick={() =>
-              handelAddNote(props, updates) + clearInputValues(props)
-            }
-          >
-            Direkt Add
-          </Button>
-        )}
-        <Button
-          onClick={() =>
-            // handelTakeChanges(props, updates) + clearInputValues(props)
-            statusChange(props, updates) + clearInputValues(props)
-          }
-        >
-          Satus Changes
-        </Button>
 
-        <Button onClick={() => clearInputValues(props)}>Clear</Button>
-
-        {/* <Button
+      <Grid container item spacing={1}>
+        <TextField
+          label="Note Description"
+          variant="outlined"
+          value={noteDecscription}
+          onChange={(e) => setnoteDecscription(e.target.value)}
+          margin="normal"
           color="secondary"
-          variant="contained"
-          onClick={() =>
-            handelRemoveNote(props, updates)
-            
-            + clearInputValues(props)
-          }
-        >
-          Remove
-        </Button> */}
-        <DoubleCheckRemoveButton
-        activeNote={props.activeNote}
-        handelRemoveNote={props.removeExpense}
-        // onSubmit={()=>clearInputValues(props)}
+          minRows="10"
+          multiline
+          fullWidth
+          // inputProps={{
+          //   style: {
+          //     fontSize: 16,
+          //   },
+          // }}
         />
-      </ButtonGroup>
+      </Grid>
     </div>
   );
 }

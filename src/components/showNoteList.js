@@ -8,27 +8,65 @@ import {
   Grid,
   Typography,
   Paper,
+  IconButton,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
+import CachedIcon from "@mui/icons-material/Cached";
+import { handelTakeChanges } from "./Button/AddNote";
+import moment from "moment";
 
-const showHintForTimedNotes = (expense) => {
+const SkipButton = (properties) => {
+  const props = properties.props ? properties.props.props : ""
+
+  console.log("Skip Button Props: ", properties);
+
+  // const activeNote = props != "" & props.activeNote!= undefined ? props.activeNote[0].id :""
+
+
+  return (
+    <IconButton
+      size="small"
+      onClick={() => handelTakeChanges(props, properties.updates)}
+    >
+      <CachedIcon />
+    </IconButton>
+  );
+};
+
+const showHintForTimedNotes = (expense, props) => {
+  console.log("HOT FOR TIME NOTES: ", props);
   const days = expense.absDatesToFinish;
 
   const daySubStrin = parseInt(days);
 
+
+  // const SkipButton = () => {
+  //   return (
+  //     <IconButton
+  //       size="small"
+  //       onClick={() => handelTakeChanges(props.props, updates)}
+  //     >
+  //       <CachedIcon />
+  //     </IconButton>
+  //   );
+  // };
+
   if (days > -0.4 && days < 0.6) {
     return (
-      <Typography
-        mr={1}
-        style={{
-          // color: "Green",
-          // backgroundColor: "ghostWhite",
-          color: "Green",
-          backgroundColor: "PowderBlue",
-        }}
-      >
-        Today
-      </Typography>
+      <div>
+        <Typography
+          mr={1}
+          style={{
+            // color: "Green",
+            // backgroundColor: "ghostWhite",
+            color: "Green",
+            backgroundColor: "PowderBlue",
+          }}
+        >
+          Today
+        </Typography>
+        {/* <SkipButton /> */}
+      </div>
     );
   }
   if (days < -0.4) {
@@ -42,8 +80,9 @@ const showHintForTimedNotes = (expense) => {
             backgroundColor: "PeachPuff",
           }}
         >
-          {daySubStrin}D
+          {/* {daySubStrin}D */}
         </Typography>
+        {/* <SkipButton /> */}
       </Grid>
     );
   } else {
@@ -52,8 +91,11 @@ const showHintForTimedNotes = (expense) => {
 };
 
 export function ShowNotes(props) {
+
+  
   const expenses = props.expenses;
   const noteListStatus = props.noteListStatus;
+
 
   const [selectedIndex, setSelectedIndex] = useState("");
 
@@ -91,24 +133,55 @@ export function ShowNotes(props) {
                     handleListItemClick(expense, props, event, index)
                   }
                 >
-                  {showHintForTimedNotes(expense)}
-
-                  <ListItemText
-                    id={expense.id}
-                    primary={expense.description}
-                    secondary={expense.noteDecscription.substr(16, 100)}
-                  />
-                  <Typography
-                    align="right"
-                    // noWrap="true"
-                    variant="body2"
-                    style={{
-                      color: "SlateGray",
-                      // backgroundColor: "WhiteSmoke",
-                    }}
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    {expense.categorie.substr(0, 8)}
-                  </Typography>
+                    <Grid item xs={1}>
+                      {showHintForTimedNotes(expense, props)}
+                    </Grid>
+                    <Grid item xs={9}>
+                      <ListItemText
+                        id={expense.id}
+                        primary={expense.description}
+                        secondary={expense.noteDecscription.substr(16, 100)}
+                      />
+                    </Grid>
+
+                    <Grid item xs={2}>
+                      <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="flex-end"
+                      >
+                        <Grid item xs={1}>
+                          <Typography
+                            // align="right"
+                            // noWrap="true"
+                            variant="body2"
+                            style={{
+                              color: "SlateGray",
+                              // backgroundColor: "WhiteSmoke",
+                            }}
+                          >
+                            {expense.categorie.substr(0, 8)}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={1}>
+                          <SkipButton 
+                          props ={props}
+                          updates = {{ id: expense.id, 
+                            datesToFinish: moment().add(1, "days"),}}
+                          />
+                        </Grid>
+                        </Grid>
+
+                    </Grid>
+                  </Grid>
                 </ListItemButton>
               </ListItem>
             </Paper>
