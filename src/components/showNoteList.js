@@ -18,7 +18,6 @@ import moment from "moment";
 const SkipButton = (properties) => {
   const props = properties.props ? properties.props.props : ""
 
-  console.log("Skip Button Props: ", properties);
 
   // const activeNote = props != "" & props.activeNote!= undefined ? props.activeNote[0].id :""
 
@@ -34,7 +33,6 @@ const SkipButton = (properties) => {
 };
 
 const showHintForTimedNotes = (expense, props) => {
-  console.log("HOT FOR TIME NOTES: ", props);
   const days = expense.absDatesToFinish;
 
   const daySubStrin = parseInt(days);
@@ -80,7 +78,7 @@ const showHintForTimedNotes = (expense, props) => {
             backgroundColor: "PeachPuff",
           }}
         >
-          {/* {daySubStrin}D */}
+          {daySubStrin}D
         </Typography>
         {/* <SkipButton /> */}
       </Grid>

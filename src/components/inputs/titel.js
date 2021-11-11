@@ -7,8 +7,9 @@ import {
   Card,
   ButtonGroup,
   IconButton,
+  Typography,
 } from "@mui/material";
-import moment from "moment";
+import moment, { isMoment } from "moment";
 import React, { useEffect, useState } from "react";
 import {
   handelAddNote,
@@ -17,14 +18,18 @@ import {
 } from "../Button/AddNote";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
+import { useHotkeys } from "react-hotkeys-hook";
+import { Box } from "@mui/system";
+
+function hotKey(params) {}
 
 export function ShortDescription(properties) {
   const props = properties.NotesDashboradProps;
   const [activeNoteID, setActiveNoteID] = useState("");
   const [description, setDescription] = useState("");
 
-  const [relevance, setrelevance] = useState(1);
-  const [important, setimportant] = useState(1);
+  const [relevance, setrelevance] = useState("");
+  const [important, setimportant] = useState("");
   const [noteDecscription, setnoteDecscription] = useState("");
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
@@ -44,8 +49,8 @@ export function ShortDescription(properties) {
     props.removeActiveNote();
     setActiveNoteID("");
     setDescription("");
-    setrelevance(1);
-    setimportant(1);
+    setrelevance("");
+    setimportant("");
     setnoteDecscription("");
     setdatesToFinish("");
     setnextStep("");
@@ -70,13 +75,18 @@ export function ShortDescription(properties) {
     setnoteStatus(props.activeNote[0].noteStatus);
   }
 
+
+
+  
+  
+
   const updates = {
     id: activeNoteID,
     description: description,
-    relevance: relevance,
-    important: important,
+    relevance: relevance ? relevance : 1,
+    important: important ? important : 1,
     noteDecscription: space + timeStamp + space + noteDecscription,
-    datesToFinish: datesToFinish,
+    datesToFinish: datesToFinish ? datesToFinish : moment().add(1, "days"),
     categorie: inputCategorie
       ? inputCategorie
       : props.activeNote != ""
@@ -86,6 +96,12 @@ export function ShortDescription(properties) {
     infoNote: infoNote,
     effort: effort,
   };
+
+  // useHotkeys(
+  //   "control+a",
+  //   () => handelTakeChanges(props, updates)
+  //    + clearInputValues(props) 
+  // );
 
   function statusChange(props, updates) {
     if (noteStatus === "open") {
@@ -154,6 +170,7 @@ export function ShortDescription(properties) {
       </Grid>
 
       <Grid
+        // ml={1}
         container
         spacing={2}
         direction="column"
@@ -191,34 +208,34 @@ export function ShortDescription(properties) {
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item xs={4}>
-            <Autocomplete
-              value={activeCategorie}
-              onChange={(e, newValue) => {
-                setActiveCategorie(newValue);
-              }}
-              inputValue={
-                inputCategorie
-                  ? inputCategorie
-                  : props.activeNote != ""
-                  ? props.activeNote[0].categorie
-                  : properties.activeCategorie.catName
+          <Grid item xs={1}>
+            <TextField
+              label="Days"
+              onChange={(e) =>
+                setdatesToFinish(moment().add(e.target.value, "days"))
               }
-              onInputChange={(e, newInputValue) => {
-                setInputCategorie(newInputValue);
-              }}
-              options={props.categories}
-              getOptionLabel={(option) =>
-                option.catName ? option.catName : ""
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <TextField
+              label="Finish Till"
+              value={
+                datesToFinish
+                  ? moment(datesToFinish).format("ddd - DD.MM.YY")
+                  : ""
               }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Project"
-                  variant="filled"
-                  color="secondary"
-                />
-              )}
+              onChange={(e) =>
+                setdatesToFinish(moment().add(e.target.value, "days"))
+              }
+              variant="filled"
+              color="secondary"
+              fullWidth
+              // select={true}
+              // inputProps={{
+              //   style: {
+              //     fontSize: 18,
+              //   },
+              // }}
             />
           </Grid>
 
@@ -268,33 +285,34 @@ export function ShortDescription(properties) {
               // }}
             />
           </Grid>
-          <Grid item xs={1}>
-            <TextField
-              label="Days"
-              onChange={(e) =>
-                setdatesToFinish(moment().add(e.target.value, "days"))
+          <Grid item xs={4}>
+            <Autocomplete
+              value={activeCategorie}
+              onChange={(e, newValue) => {
+                setActiveCategorie(newValue);
+              }}
+              inputValue={
+                inputCategorie
+                  ? inputCategorie
+                  : props.activeNote != ""
+                  ? props.activeNote[0].categorie
+                  : properties.activeCategorie.catName
               }
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <TextField
-              label="Finish Till"
-              value={
-                datesToFinish
-                  ? moment(datesToFinish).format("ddd - DD.MM.YY")
-                  : ""
+              onInputChange={(e, newInputValue) => {
+                setInputCategorie(newInputValue);
+              }}
+              options={props.categories}
+              getOptionLabel={(option) =>
+                option.catName ? option.catName : ""
               }
-              onChange={(e) =>
-                setdatesToFinish(moment().add(e.target.value, "days"))
-              }
-              variant="filled"
-              color="secondary"
-              fullWidth
-              // inputProps={{
-              //   style: {
-              //     fontSize: 18,
-              //   },
-              // }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Project"
+                  variant="filled"
+                  color="secondary"
+                />
+              )}
             />
           </Grid>
         </Grid>
@@ -308,7 +326,7 @@ export function ShortDescription(properties) {
           onChange={(e) => setnoteDecscription(e.target.value)}
           margin="normal"
           color="secondary"
-          minRows="10"
+          minRows="6"
           multiline
           fullWidth
           // inputProps={{

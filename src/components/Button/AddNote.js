@@ -8,11 +8,8 @@ export function handelAddNote(props, updates) {
 
 export function handelTakeChanges(props, updates) {
 
-  console.log(
-    "Take Changes PROPS: ", props,
-     "Updates: ", updates);
   props.editExpense(updates.id, updates);
-  // autoSaveFunc(props);
+  autoSaveFunc(props);
 }
 
 export function handelRemoveNote(props, updates) {
