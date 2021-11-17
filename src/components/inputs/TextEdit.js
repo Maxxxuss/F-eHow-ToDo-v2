@@ -108,6 +108,19 @@ import  "./RichEditor.css"
           fontSize: 16,
           padding: 2,
         },
+
+        YELLOW: {
+          backgroundColor: 'gold',
+          // fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+          // fontSize: 16,
+          padding: 2,
+        }, 
+         RED: {
+          backgroundColor: 'rgba(255,0,0,0.3)',
+          // fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+          // fontSize: 16,
+          padding: 2,
+        },
       };
 
       function getBlockStyle(block) {
@@ -144,9 +157,9 @@ import  "./RichEditor.css"
         {label: 'H1', style: 'header-one'},
         {label: 'H2', style: 'header-two'},
         {label: 'H3', style: 'header-three'},
-        {label: 'H4', style: 'header-four'},
-        {label: 'H5', style: 'header-five'},
-        {label: 'H6', style: 'header-six'},
+        // {label: 'H4', style: 'header-four'},
+        // {label: 'H5', style: 'header-five'},
+        // {label: 'H6', style: 'header-six'},
         {label: 'Blockquote', style: 'blockquote'},
         {label: 'UL', style: 'unordered-list-item'},
         {label: 'OL', style: 'ordered-list-item'},
@@ -178,9 +191,12 @@ import  "./RichEditor.css"
 
       var INLINE_STYLES = [
         {label: 'Bold', style: 'BOLD'},
-        {label: 'Italic', style: 'ITALIC'},
+        {label: 'Kursiv', style: 'ITALIC'},
         {label: 'Underline', style: 'UNDERLINE'},
         {label: 'Monospace', style: 'CODE'},
+        {label: 'Higl-Yellow', style: 'YELLOW'},
+        {label: 'Higl-Red', style: 'RED'},
+
       ];
 
       const InlineStyleControls = (props) => {
