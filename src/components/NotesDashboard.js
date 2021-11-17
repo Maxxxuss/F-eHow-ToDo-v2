@@ -11,24 +11,34 @@ import {
   Paper,
   // styled,
   Link,
+  Button,
+  Collapse,
+  ListItemButton,
+
 } from "@mui/material";
+
+import { ExpandLess,
+  ExpandMore,} from "@mui/icons-material";
+
 // import { createTheme, makeStyles } from '@mui/material/styles'
 
-
 import ImpExpData from "./ImpExpData";
-import { getAllExpenses } from "../selectors/notes";
-import { ShortDescription } from "./inputs/titel";
-import { addActiveNote, removeActiveNote } from "../actions/activeNote";
-import { getAllActiveNotes } from "../selectors/activeNote";
-import { addExpense, editExpense, removeExpense } from "../actions/notes";
-import { setCategorie, removeCategorie } from "../actions/categorie";
+import { ShortDescription } from "./inputs/NoteInput";
+
+import AddDeleteProject from "./AddDeleteProject";
 
 import { SearchForNotes } from "./inputs/search";
 import { FilteredNotesList } from "./showNoteList";
 import { getAllCategories } from "../selectors/categories";
-import AddDeleteProject from "./AddDeleteProject";
+import { getAllExpenses } from "../selectors/notes";
+import { getAllActiveNotes } from "../selectors/activeNote";
 import { getGlobalVariables } from "../selectors/autoSave";
+import { addActiveNote, removeActiveNote } from "../actions/activeNote";
+import { addExpense, editExpense, removeExpense } from "../actions/notes";
+import { setCategorie, removeCategorie } from "../actions/categorie";
 import { editGlobalVariables } from "../actions/globalVariables";
+import Tweet from "./inputs/tweet";
+import { InputNewTweet } from "./inputs/AddNewTweet";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -62,6 +72,11 @@ export function setActiveNote(expense, props) {
 export function NotesDashboardPage(props) {
   const [tabCategorie, setTabCategorie] = useState(0);
   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
+  const [collapseOpener, setcollapseOpener] = useState(true);
+
+  const handelCollapsOpener = () => {
+    setcollapseOpener(!collapseOpener);
+  };
 
   if (props.categories.length < 1) {
     props.setCategorie({
@@ -87,15 +102,26 @@ export function NotesDashboardPage(props) {
         py: 8,
       }}
     >
-         <Link
-          href="/proDash"
-          style={{
-            backgroundColor: "yellow",
-            padding: "20",
-          }}
-        >
-          Project Dashboard
-        </Link>
+      <Link
+        href="/proDash"
+        style={{
+          backgroundColor: "yellow",
+          padding: "20",
+        }}
+      >
+        Project Dashboard
+      </Link>
+
+      <Link
+        href="/addNote"
+        style={{
+          backgroundColor: "yellow",
+          padding: "20",
+        }}
+      >
+        addNote
+      </Link>
+
       <Box mt={2} mb={2} mr={2} ml={2}>
         <AppBar position="static" color="default">
           <Grid container alignItems="row">
@@ -122,24 +148,35 @@ export function NotesDashboardPage(props) {
       {/* BODY  */}
       <Box mt={2} mb={2} mr={2} ml={2}>
         <Grid container spacing={2} direction="row">
+          <Grid item xs={3}>
+            <p>My Profil</p>
+          </Grid>
           <Grid item xs>
+
+
+            <ListItemButton onClick={handelCollapsOpener}>Add</ListItemButton>
+            {collapseOpener ? <ExpandLess /> : <ExpandMore />}
+
+            <Collapse in={collapseOpener} timeout="auto" unmountOnExit>
+              <InputNewTweet props={props} />
+            </Collapse>
+
+            <p> Startseite </p>
             {/* Left Side - ShoW Notes & Filter */}
+
             <SearchForNotes props={props} activeCategorie={activeCategorie} />
+
+            <Tweet />
           </Grid>
           {/* RIGHT-SIDE - Note Details  */}
-          <Grid item xs>
-            <ShortDescription
-              NotesDashboradProps={props}
-              activeCategorie={activeCategorie}
-            />
+          <Grid item xs={3}>
+            <p>Trends</p>
           </Grid>
         </Grid>
       </Box>
 
       <Grid item xs={12}>
-        <ImpExpData 
-        props={props}
-        />
+        <ImpExpData props={props} />
       </Grid>
     </Box>
   );
@@ -158,7 +195,7 @@ const mapStateToProps = (state) => {
     ),
 
     //   historyCategorie: getHistorieCategorie(state),
-      globalVariables: getGlobalVariables(state),
+    globalVariables: getGlobalVariables(state),
   };
 };
 
@@ -172,7 +209,6 @@ const mapDispatchToProps = (dispatch) => ({
   addExpense: (expense) => dispatch(addExpense(expense)),
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

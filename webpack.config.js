@@ -21,15 +21,15 @@ module.exports = (env) =>{
       test: /\.js$/,
       exclude: /node_modules/
     }
-  //   , 
-  //   {
-  //    test: /\.s?css$/i,
-  //    use: [
-  //      'style-loader',
-  //      'css-loader',
-  //      'sass-loader'
-  //    ]
-  //  }
+    , 
+    {
+     test: /\.s?css$/i,
+     use: [
+       'style-loader',
+       'css-loader',
+      //  'sass-loader'
+     ]
+   }
   
   ]
 //  },

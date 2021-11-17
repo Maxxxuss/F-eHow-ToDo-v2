@@ -5,10 +5,11 @@ import { Provider } from 'react-redux';
 import NotesDashboardPage from './components/NotesDashboard';
 import ProjectDashboard from './components/ProjectDash/ProjectDashboard';
 import store from './store/configureStore'
-import './styles/styles.scss'
+// import './styles/styles.scss'
 import { BrowserRouter as Router
     
   , Route, Switch,  } from 'react-router-dom';
+import  ShortDescription  from './components/inputs/NoteInput';
 
 
 
@@ -21,6 +22,8 @@ ReactDOM.render(
         <Route path="/" component={NotesDashboardPage} exact={true} />
 
           <Route path="/proDash" component={ProjectDashboard} />
+          <Route path="/addNote" component={ShortDescription} />
+
         </Switch>
       </div>
     </Router>
