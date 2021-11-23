@@ -20,17 +20,20 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import { useHotkeys } from "react-hotkeys-hook";
 import { Box } from "@mui/system";
+import ReactQuill, {Quill} from "react-quill";
+import { QEditor } from "./quillEditor/qEditor";
 
 function hotKey(params) {}
+// export function ShortDescription(properties) {
 
-export function ShortDescription(properties) {
+export const ShortDescription = (properties) => {
   const props = properties.NotesDashboradProps;
   const [activeNoteID, setActiveNoteID] = useState("");
   const [description, setDescription] = useState("");
 
   const [relevance, setrelevance] = useState("");
   const [important, setimportant] = useState("");
-  const [noteDecscription, setnoteDecscription] = useState("");
+  const [noteDecscription, setnoteDecscription] = useState({ops: [] });
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
   const [infoNote, setinfoNote] = useState("");
@@ -39,6 +42,11 @@ export function ShortDescription(properties) {
 
   const [activeCategorie, setActiveCategorie] = useState("");
   const [inputCategorie, setInputCategorie] = useState("");
+
+  var EMPTY_DELTA = { ops: [] };
+
+  const [theme, setTheme] = useState("snow");
+  const [valueQuill, setValueQuill] = useState(EMPTY_DELTA);
 
   // const [] = useState("")
 
@@ -51,7 +59,7 @@ export function ShortDescription(properties) {
     setDescription("");
     setrelevance("");
     setimportant("");
-    setnoteDecscription("");
+    setnoteDecscription({ ops: [] });
     setdatesToFinish("");
     setnextStep("");
     setinfoNote("");
@@ -59,6 +67,44 @@ export function ShortDescription(properties) {
     setInputCategorie("");
     setActiveCategorie("");
   };
+
+
+
+
+
+//   var options = {
+//     debug: 'info',
+//     modules: {
+//       toolbar: '#toolbar'
+//     },
+//     placeholder: 'Compose an epic...',
+//     readOnly: true,
+//     theme: 'snow'
+//   };
+//   var editor = new Quill('#editor', options);
+
+//   var container = document.getElementById('editor');
+//   var editor = new Quill(container);  
+
+//   useEffect(()=> console.log("Input: ", 
+//   console.log("Quill Test: ",  )
+
+// // JSON.stringify(noteDecscription)
+
+// ,[noteDecscription] ))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   if (props.activeNote != "" && props.activeNote[0].id != activeNoteID) {
     setActiveNoteID(props.activeNote[0].id);
@@ -74,11 +120,6 @@ export function ShortDescription(properties) {
     seteffort(props.activeNote[0].effort);
     setnoteStatus(props.activeNote[0].noteStatus);
   }
-
-
-
-  
-  
 
   const updates = {
     id: activeNoteID,
@@ -100,7 +141,7 @@ export function ShortDescription(properties) {
   // useHotkeys(
   //   "control+a",
   //   () => handelTakeChanges(props, updates)
-  //    + clearInputValues(props) 
+  //    + clearInputValues(props)
   // );
 
   function statusChange(props, updates) {
@@ -319,7 +360,7 @@ export function ShortDescription(properties) {
       </Grid>
 
       <Grid container item spacing={1}>
-        <TextField
+        {/* <TextField
           label="Note Description"
           variant="outlined"
           value={noteDecscription}
@@ -334,8 +375,21 @@ export function ShortDescription(properties) {
           //     fontSize: 16,
           //   },
           // }}
-        />
+        /> */}
       </Grid>
+
+      {/* <QEditor/> */}
+      {/* <ReactQuill
+        theme="snow"
+        valueQuill={noteDecscription}
+        onChange={(noteDecscription, delta, source, editor) =>
+          setnoteDecscription(editor.getContents())
+        }
+      /> */}
+    <ReactQuill theme="snow" value={noteDecscription} onChange={setnoteDecscription}/>
+
+
+      {/* <ReactQuill theme="snow" value={noteDecscription}  onChange={(e) => setnoteDecscription(e.target.value)}/> */}
     </div>
   );
-}
+};

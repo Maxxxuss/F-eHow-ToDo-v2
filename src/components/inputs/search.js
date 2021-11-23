@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { setActiveNote } from "../NotesDashboard";
 import { ShowNotes } from "../showNoteList";
+import ReactQuill from "react-quill";
 
 export function SearchForNotes(properties) {
   const props = properties.props;
@@ -33,7 +34,8 @@ export function SearchForNotes(properties) {
               filteredNotes.description
                 ? filteredNotes.description +
                   "  -  " +
-                  filteredNotes.noteDecscription.substr(17, 235)
+               
+                  filteredNotes.noteDecscription.substr(17, 235).substr(16, 100).replace(/<[^>]+>/g, '')
                 : ""
             }
             style={{
@@ -42,7 +44,7 @@ export function SearchForNotes(properties) {
             }}
             fullWidth
             renderInput={(params) => (
-              <TextField {...params} label="Search Note" variant="outlined" />
+              <TextField {...params} label="Search Note" variant="outlined" onChange={filteredNotes.description} />
             )}
           />
         </Grid>

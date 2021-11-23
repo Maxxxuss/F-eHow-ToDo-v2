@@ -9,6 +9,8 @@ import './styles/styles.scss'
 import { BrowserRouter as Router
     
   , Route, Switch,  } from 'react-router-dom';
+import {Editor} from './components/inputs/quillEditor/quillEditorIndex';
+import { QEditor } from './components/inputs/quillEditor/qEditor';
 
 
 
@@ -21,6 +23,8 @@ ReactDOM.render(
         <Route path="/" component={NotesDashboardPage} exact={true} />
 
           <Route path="/proDash" component={ProjectDashboard} />
+          <Route path="/play" component={QEditor} />
+
         </Switch>
       </div>
     </Router>
