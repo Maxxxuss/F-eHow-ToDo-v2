@@ -20,8 +20,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import { useHotkeys } from "react-hotkeys-hook";
 import { Box } from "@mui/system";
-import ReactQuill, {Quill} from "react-quill";
-import { QEditor } from "./quillEditor/qEditor";
+import ReactQuill, { Quill } from "react-quill";
 
 function hotKey(params) {}
 // export function ShortDescription(properties) {
@@ -33,7 +32,7 @@ export const ShortDescription = (properties) => {
 
   const [relevance, setrelevance] = useState("");
   const [important, setimportant] = useState("");
-  const [noteDecscription, setnoteDecscription] = useState({ops: [] });
+  const [noteDecscription, setnoteDecscription] = useState({ ops: [] });
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
   const [infoNote, setinfoNote] = useState("");
@@ -50,7 +49,7 @@ export const ShortDescription = (properties) => {
 
   // const [] = useState("")
 
-  const space = "\n";
+  const space = "<p><br></p> "
   const timeStamp = moment().format("ddd - DD.MM.YY");
 
   const clearInputValues = (props) => {
@@ -67,44 +66,6 @@ export const ShortDescription = (properties) => {
     setInputCategorie("");
     setActiveCategorie("");
   };
-
-
-
-
-
-//   var options = {
-//     debug: 'info',
-//     modules: {
-//       toolbar: '#toolbar'
-//     },
-//     placeholder: 'Compose an epic...',
-//     readOnly: true,
-//     theme: 'snow'
-//   };
-//   var editor = new Quill('#editor', options);
-
-//   var container = document.getElementById('editor');
-//   var editor = new Quill(container);  
-
-//   useEffect(()=> console.log("Input: ", 
-//   console.log("Quill Test: ",  )
-
-// // JSON.stringify(noteDecscription)
-
-// ,[noteDecscription] ))
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   if (props.activeNote != "" && props.activeNote[0].id != activeNoteID) {
     setActiveNoteID(props.activeNote[0].id);
@@ -126,7 +87,7 @@ export const ShortDescription = (properties) => {
     description: description,
     relevance: relevance ? relevance : 1,
     important: important ? important : 1,
-    noteDecscription: space + timeStamp + space + noteDecscription,
+    noteDecscription: space + timeStamp + noteDecscription,
     datesToFinish: datesToFinish ? datesToFinish : moment().add(1, "days"),
     categorie: inputCategorie
       ? inputCategorie
@@ -153,6 +114,29 @@ export const ShortDescription = (properties) => {
       handelTakeChanges(props, noteStatus);
     }
   }
+
+  var modules={
+    toolbar: [
+      [{ 'header': 1 }, { 'header': 2 }],  
+      // [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      [{ 'color': "red" }, { 'background': [] }], 
+      ['link', 'image'],
+      ['clean']
+    ]
+  }
+
+  var formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image', 
+    'color', 'background'
+    
+  ]
+
+
 
   return (
     <div>
@@ -191,21 +175,9 @@ export const ShortDescription = (properties) => {
             Clear
           </Button>
 
-          {/* <Button
-          color="secondary"
-          variant="contained"
-          onClick={() =>
-            handelRemoveNote(props, updates)
-            
-            + clearInputValues(props)
-          }
-        >
-          Remove
-        </Button> */}
           <DoubleCheckRemoveButton
             activeNote={props.activeNote}
             handelRemoveNote={props.removeExpense}
-            // onSubmit={()=>clearInputValues(props)}
           />
         </ButtonGroup>
       </Grid>
@@ -359,7 +331,9 @@ export const ShortDescription = (properties) => {
         </Grid>
       </Grid>
 
-      <Grid container item spacing={1}>
+      {/* <Grid container item xs> */}
+    
+
         {/* <TextField
           label="Note Description"
           variant="outlined"
@@ -376,18 +350,14 @@ export const ShortDescription = (properties) => {
           //   },
           // }}
         /> */}
-      </Grid>
-
-      {/* <QEditor/> */}
-      {/* <ReactQuill
-        theme="snow"
-        valueQuill={noteDecscription}
-        onChange={(noteDecscription, delta, source, editor) =>
-          setnoteDecscription(editor.getContents())
-        }
-      /> */}
-    <ReactQuill theme="snow" value={noteDecscription} onChange={setnoteDecscription}/>
-
+      {/* </Grid> */}
+      <ReactQuill
+          theme="snow"
+          value={noteDecscription}
+          onChange={setnoteDecscription}
+          modules= {modules}
+          formats={formats}
+        />
 
       {/* <ReactQuill theme="snow" value={noteDecscription}  onChange={(e) => setnoteDecscription(e.target.value)}/> */}
     </div>

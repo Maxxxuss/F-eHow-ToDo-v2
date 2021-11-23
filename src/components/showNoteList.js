@@ -14,8 +14,6 @@ import WarningIcon from "@mui/icons-material/Warning";
 import CachedIcon from "@mui/icons-material/Cached";
 import { handelTakeChanges } from "./Button/AddNote";
 import moment from "moment";
-import ReactQuill from "react-quill";
-import { QEditor } from "./inputs/quillEditor/qEditor";
 
 const SkipButton = (properties) => {
   const props = properties.props ? properties.props.props : "";
@@ -37,16 +35,6 @@ const showHintForTimedNotes = (expense, props) => {
 
   const daySubStrin = parseInt(days);
 
-  // const SkipButton = () => {
-  //   return (
-  //     <IconButton
-  //       size="small"
-  //       onClick={() => handelTakeChanges(props.props, updates)}
-  //     >
-  //       <CachedIcon />
-  //     </IconButton>
-  //   );
-  // };
 
   if (days > -0.4 && days < 0.6) {
     return (
@@ -54,15 +42,13 @@ const showHintForTimedNotes = (expense, props) => {
         <Typography
           mr={1}
           style={{
-            // color: "Green",
-            // backgroundColor: "ghostWhite",
+
             color: "Green",
             backgroundColor: "PowderBlue",
           }}
         >
           Today
         </Typography>
-        {/* <SkipButton /> */}
       </div>
     );
   }
@@ -79,7 +65,6 @@ const showHintForTimedNotes = (expense, props) => {
         >
           {daySubStrin}D
         </Typography>
-        {/* <SkipButton /> */}
       </Grid>
     );
   } else {
@@ -116,7 +101,6 @@ export function ShowNotes(props) {
           return (
             <Paper key={expense.id} elevation={6}>
               <ListItem
-                // dense="true"
 
                 key={expense.id}
               >
@@ -139,40 +123,21 @@ export function ShowNotes(props) {
                     <Grid
                       item
                       xs={9}
-                      // sx={{
-                      //   maxHeight: 100,
-                      // }}
+    
                     >
                       <ListItemText
                         id={expense.id}
                         primary={expense.description}
                         secondary={
                           expense.noteDecscription.substr(16, 100).replace(/<[^>]+>/g, '')}
-                        //   <div>
-                        //     <QEditor
-                        //       theme={"bubble"}
-                        //       readOnly={true}
-                        //       value={expense.noteDecscription.substr(16, 100)}
-                        //     />
-                        //   </div>
-                        // }
-                        // sx={{
-                        //   maxHeight: 5,
-                        // }}
+   
                       />
                       <Typography
                         sx={{
                           maxHeight: 90,
                         }}
                       >
-                        {/* <ReactQuill
-                          theme={"bubble"}
-                          readOnly={true}
-                          value={expense.noteDecscription.substr(16, 100)}
-                          sx={{
-                            maxHeight: 5,
-                          }}
-                        /> */}
+             
                       </Typography>
                     </Grid>
 
@@ -185,12 +150,10 @@ export function ShowNotes(props) {
                       >
                         <Grid item xs={1}>
                           <Typography
-                            // align="right"
-                            // noWrap="true"
+                
                             variant="body2"
                             style={{
                               color: "SlateGray",
-                              // backgroundColor: "WhiteSmoke",
                             }}
                           >
                             {expense.categorie.substr(0, 8)}
