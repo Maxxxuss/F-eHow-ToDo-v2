@@ -35,7 +35,7 @@ export function SearchForNotes(properties) {
                 ? filteredNotes.description +
                   "  -  " +
                
-                  filteredNotes.noteDecscription.substr(17, 235).substr(16, 100).replace(/<[^>]+>/g, '')
+                  filteredNotes.noteDecscription.substr(17, 235).replace(/<[^>]+>/g, '')
                 : ""
             }
             style={{
