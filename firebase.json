@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "ehow-todo",
+    "site":"ehow-todo", 
     "public": "public",
     "ignore": [
       "firebase.json",
