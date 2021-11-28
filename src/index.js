@@ -10,6 +10,7 @@ import { BrowserRouter as Router
     
   , Route, Switch,  } from 'react-router-dom';
 import {Editor} from './components/inputs/quillEditor/quillEditorIndex';
+import KanbanIndex from './components/kanban/KanbanIndex';
 
 
 
@@ -22,6 +23,8 @@ ReactDOM.render(
         <Route path="/" component={NotesDashboardPage} exact={true} />
 
           <Route path="/proDash" component={ProjectDashboard} />
+          <Route path="/kanban" component={KanbanIndex} />
+
 
         </Switch>
       </div>

@@ -17,6 +17,8 @@
     "moment-timezone": "^0.5.33",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-components": "^0.5.1",
     "react-dom": "^17.0.2",
     "react-hotkeys-hook": "^3.4.4",
     "react-quill": "^2.0.0-beta.4",
@@ -28,6 +30,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "style-loader": "^3.3.1",
+    "styled-components": "^5.3.3",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },
