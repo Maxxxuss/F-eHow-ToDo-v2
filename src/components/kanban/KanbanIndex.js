@@ -1,10 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
+// import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 // import '@atlaskit/css-reset';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import initialData from './initial-data';
 import Column from './column';
+import { getkColumns } from '../../selectors/kColumns';
+import { connect } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -26,10 +28,28 @@ class InnerList extends React.PureComponent {
   }
 }
 
-export default class KanbanIndex extends React.Component {
-  state = initialData;
+export function KanbanIndex (props){
 
-  onDragEnd = result => {
+  const [task, setTask] = useState(props.kColumns)
+  const [order, setOrder] = useState("")
+
+
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //   task:props.kColumns,
+  //   // task: initialData
+  //   };
+  // }   
+
+  // showProps =()=>{
+  //   console.log("Kanban Index Props:", this.state.kColumns);
+  // }
+
+
+  // state = initialData;
+
+  const onDragEnd = (result) =>{
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
@@ -41,13 +61,13 @@ export default class KanbanIndex extends React.Component {
       destination.index === source.index
     ) {
       return;
-    }
+    } 
 
     if (type === 'COLUMN') {
-      this.setState({
-        ...this.state,
+      setOrder({
+        ...task,
         columnOrder: reorder(
-          this.state.columnOrder,
+          task.columnOrder,
           source.index,
           destination.index,
         ),
@@ -55,8 +75,8 @@ export default class KanbanIndex extends React.Component {
       return;
     }
 
-    const home = this.state.columns[source.droppableId];
-    const foreign = this.state.columns[destination.droppableId];
+    const home = task.columns[source.droppableId];
+    const foreign = task.columns[destination.droppableId];
 
     if (home === foreign) {
       const newColumn = {
@@ -65,14 +85,14 @@ export default class KanbanIndex extends React.Component {
       };
 
       const newState = {
-        ...this.state,
+        ...task,
         columns: {
-          ...this.state.columns,
+          ...task.columns,
           [newColumn.id]: newColumn,
         },
       };
 
-      this.setState(newState);
+      setOrder(newState);
       return;
     }
 
@@ -92,34 +112,33 @@ export default class KanbanIndex extends React.Component {
     };
 
     const newState = {
-      ...this.state,
+      ...task,
       columns: {
-        ...this.state.columns,
+        ...task.columns,
         [newHome.id]: newHome,
         [newForeign.id]: newForeign,
       },
     };
-    this.setState(newState);
+    setOrder(newState);
   };
 
-  render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
           {provided => (
             <Container
               ref ={provided.innerRef}
               {...provided.droppableProps}
             >
-              {this.state.columnOrder.map((columnId, index) => {
-                const column = this.state.columns[columnId];
+              {task.columnOrder.map((columnId, index) => {
+                const column = task.columns[columnId];
 
                 return (
                   <InnerList
                     key={column.id}
                     column={column}
                     index={index}
-                    taskMap={this.state.tasks}
+                    taskMap={task.tasks}
                   />
                 );
               })}
@@ -128,6 +147,32 @@ export default class KanbanIndex extends React.Component {
         </Droppable>
       </DragDropContext>
     );
-  }
 }
 
+
+
+const mapStateToProps = (state) => {
+  return {
+
+    kColumns: getkColumns(state)
+    // categories: getAllCategories(state).sort((a, b) =>
+    //   a.sorting > b.sorting ? 1 : -1
+    // ),
+    // journalExpenses: getAllExpenses(state)
+    //   .sort((a, b) => (a.noteUpdateDate > b.noteUpdateDate ? -1 : 1))
+    //   .filter((expense) => expense.journalNote === true),
+    // historyCategorie: getHistorieCategorie(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  // setCategorie: (categorie) => dispatch(setCategorie(categorie)),
+  // removeCategorie: (id) => dispatch(removeCategorie(id)),
+  // editCategorie: (id, updates) => dispatch(editCategorie(id, updates)),
+
+  // removeExpense: (id) => dispatch(removeExpense(id)),
+  // addExpense: (expense) => dispatch(addExpense(expense)),
+  // editExpense: (id, updates) => dispatch(editExpense(id, updates)),
+});
+
+export default connect(mapStateToProps, null )(KanbanIndex);

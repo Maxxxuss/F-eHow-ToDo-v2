@@ -6,6 +6,9 @@ import thunk from "redux-thunk";
 import { localStorageKey } from "./constants";
 import globalVariabels from "../reducers/globalVariables";
 import activeNoteReducer from "../reducers/activeNote";
+import kanbanBoardReducer from "../reducers/kanbanBoard";
+import kColumReducer from "../reducers/kColumn";
+
 
 const composerFunction = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -30,6 +33,8 @@ const store = combineReducers({
   categories: categorieReducer,
   globalVariables: globalVariabels,
   activeNote: activeNoteReducer,
+  kabanBoard: kanbanBoardReducer, 
+  kColumns: kColumReducer
 });
 
 const loggingMiddleware = (store) => (next) => (action) => {
