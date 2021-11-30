@@ -33,7 +33,7 @@ const store = combineReducers({
   categories: categorieReducer,
   globalVariables: globalVariabels,
   activeNote: activeNoteReducer,
-  kabanBoard: kanbanBoardReducer, 
+  kabanBoards: kanbanBoardReducer, 
   kColumns: kColumReducer
 });
 

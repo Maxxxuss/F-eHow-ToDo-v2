@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 // import '@atlaskit/css-reset';
@@ -7,6 +7,13 @@ import initialData from './initial-data';
 import Column from './column';
 import { getkColumns } from '../../selectors/kColumns';
 import { connect } from 'react-redux';
+import { getAllActiveNotes, getAllActiveNoteStories } from '../../selectors/activeNote';
+
+import {
+Button,
+  Grid,
+
+} from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -31,23 +38,36 @@ class InnerList extends React.PureComponent {
 export function KanbanIndex (props){
 
   const [task, setTask] = useState(props.kColumns)
-  const [order, setOrder] = useState("")
+  const [order, setOrder] = useState(['column-1', 'column-2', 'column-3', 'column-4'])
+  const [activeKanbanNote, setActiveKanbanNote ] = useState ("")
+
+  useEffect(() => setActiveKanbanNote(props.activeNote.kanbanboard), [props]);
+
+  useEffect(() => console.log("Kanban INDEX ActiveKanban Note:", activeKanbanNote), [props.activeNote]);
 
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //   task:props.kColumns,
-  //   // task: initialData
-  //   };
-  // }   
 
-  // showProps =()=>{
-  //   console.log("Kanban Index Props:", this.state.kColumns);
-  // }
+  function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item);
+        if (!map.has(key)) {
+            map.set(key, [item]);
+        } else {
+            map.get(key).push(item);
+        }
+    });
+    return map;
+}
 
 
-  // state = initialData;
+
+const grouped = groupBy(props.kStories, pet => pet.k_colID);
+
+console.log(grouped.get("column-1"));
+console.log(grouped.get("column-2"));
+console.log(grouped.get("column-3"));
+
 
   const onDragEnd = (result) =>{
     const { destination, source, draggableId, type } = result;
@@ -123,6 +143,8 @@ export function KanbanIndex (props){
   };
 
     return (
+      <Grid>
+        
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
           {provided => (
@@ -130,7 +152,7 @@ export function KanbanIndex (props){
               ref ={provided.innerRef}
               {...provided.droppableProps}
             >
-              {task.columnOrder.map((columnId, index) => {
+              {order.map((columnId, index) => {
                 const column = task.columns[columnId];
 
                 return (
@@ -146,6 +168,14 @@ export function KanbanIndex (props){
           )}
         </Droppable>
       </DragDropContext>
+      <Button
+      onClick={()=>console.log("Show Props - active Note:  ", props.kStories)}
+      >
+        Show Props
+
+      </Button>
+
+      </Grid>
     );
 }
 
@@ -154,7 +184,11 @@ export function KanbanIndex (props){
 const mapStateToProps = (state) => {
   return {
 
-    kColumns: getkColumns(state)
+    kColumns: getkColumns(state),   
+      activeNote: getAllActiveNotes(state),
+      kStories: getAllActiveNoteStories(state),
+
+
     // categories: getAllCategories(state).sort((a, b) =>
     //   a.sorting > b.sorting ? 1 : -1
     // ),

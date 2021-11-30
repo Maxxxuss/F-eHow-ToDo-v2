@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { connect } from "react-redux";
 import store from "../store/configureStore";
 import {
@@ -9,6 +9,7 @@ import {
   Container,
   Grid,
   Paper,
+  Button,
   // styled,
   Link,
 } from "@mui/material";
@@ -19,8 +20,8 @@ import ImpExpData from "./ImpExpData";
 import { getAllExpenses } from "../selectors/notes";
 import { ShortDescription } from "./inputs/titel";
 import { addActiveNote, removeActiveNote } from "../actions/activeNote";
-import { getAllActiveNotes } from "../selectors/activeNote";
-import { addExpense, editExpense, removeExpense } from "../actions/notes";
+import { getAllActiveNotes, getAllActiveNoteStories } from "../selectors/activeNote";
+import { addExpense, editExpense, removeExpense, addStory} from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { SearchForNotes } from "./inputs/search";
@@ -29,6 +30,8 @@ import { getAllCategories } from "../selectors/categories";
 import AddDeleteProject from "./AddDeleteProject";
 import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
+import { propsToClassKey } from "@mui/styles";
+import  AddUserStory  from "./kanban/AddUserStory";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -46,6 +49,14 @@ export function setActiveNote(expense, props) {
       infoNote: expense.infoNote,
       effort: expense.effort,
       noteStatus: expense.noteStatus,
+      kanbanboard:[expense.kanbanboard]
+      // kanbanboard:{x
+      //   k_id: expense.kanbanboard.k_id,
+      //   k_titel: expense.kanbanboard.k_titel,
+      //   k_description: expense.kanbanboard.k_description,
+      //   k_dastesToFinish: expense.kanbanboard.k_dastesToFinish,
+      //   k_colID: expense.kanbanboard.k_colID,
+      // }
     };
     props.addActiveNote(updates);
     console.log("Active Notee: ", updates);
@@ -132,6 +143,14 @@ export function NotesDashboardPage(props) {
               NotesDashboradProps={props}
               activeCategorie={activeCategorie}
             />
+            <AddUserStory
+            props={props}
+            />
+            <Button
+            onClick={()=>console.log("NotesDas Props NOTE-STORIES: ", props.noteStories)}
+            >
+              Show Props
+            </Button>
           </Grid>
         </Grid>
       </Box>
@@ -148,6 +167,7 @@ console.log(store.getState());
 
 const mapStateToProps = (state) => {
   return {
+    // noteStories: getAllActiveNoteStories(state),    
     activeNote: getAllActiveNotes(state),
     expenses: getAllExpenses(state).sort((a, b) => (a.prio > b.prio ? -1 : 1)),
     openExpenses: getAllExpenses(state)
@@ -165,13 +185,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   setCategorie: (categorie) => dispatch(setCategorie(categorie)),
   removeCategorie: (id) => dispatch(removeCategorie(id)),
-
   addActiveNote: (activeNote) => dispatch(addActiveNote(activeNote)),
   removeActiveNote: () => dispatch(removeActiveNote()),
   removeExpense: (id) => dispatch(removeExpense(id)),
   addExpense: (expense) => dispatch(addExpense(expense)),
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
+  addStory: (id, updates) => dispatch(addStory(id, updates)),
+
 
 });
 

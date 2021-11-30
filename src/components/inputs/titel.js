@@ -97,6 +97,33 @@ export const ShortDescription = (properties) => {
     nextStep: nextStep,
     infoNote: infoNote,
     effort: effort,
+    kanbanboard:""
+    // {
+      // columns:{
+      //   'column-1': {
+      //     id: 'column-1',
+      //     title: 'Backlog',
+      //     taskIds: [],
+      //   },
+      //   'column-2': {
+      //     id: 'column-2',
+      //     title: 'To do',
+      //     taskIds: [],
+      //   },
+      //   'column-3': {
+      //     id: 'column-3',
+      //     title: 'In progress',
+      //     taskIds: [],
+      //   },
+      //     'column-4': {
+      //       id: 'column-4',
+      //       title: 'Done',
+      //       taskIds: [],
+      //   },
+
+      // }
+
+    // }
   };
 
   // useHotkeys(

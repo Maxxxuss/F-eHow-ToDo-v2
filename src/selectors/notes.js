@@ -41,6 +41,8 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     snooze: expense.snooze ? expense.snooze : false,
     onHold: expense.onHold ? expense.onHold : false,
     effort: expense.effort ? expense.effort : "5",
+    kanbanboard:expense.kanbanboard, 
+    
   }))
 );
 

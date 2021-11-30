@@ -19,7 +19,7 @@ export function QEditor (props) {
     const [valueQuill, setValueQuill] = useState(EMPTY_DELTA)
     const [events, setEvents] = useState("")
 
-    useEffect(()=>console.log("Button Fired", valueQuill),[valueQuill])
+    // useEffect(()=>console.log("Button Fired", valueQuill),[valueQuill])
 
 
     const formatRange =(range)=> {

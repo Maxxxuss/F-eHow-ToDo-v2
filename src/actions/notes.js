@@ -19,6 +19,12 @@ export const addExpense = ({
   snooze,
   onHold,
   effort,
+  kanbanboard,
+
+  k_titel,
+  k_description,
+  k_dastesToFinish,
+  k_colID,
 } = {}) => ({
   type: "ADD_EXPENSE",
   expense: {
@@ -41,6 +47,12 @@ export const addExpense = ({
     snooze,
     onHold,
     effort,
+    kanbanboard,
+    //   k_id: uuidv4(),
+    //   k_titel,
+    //   k_description,
+    //   k_dastesToFinish,
+    //   k_colID,
   },
 });
 
@@ -63,12 +75,11 @@ export const removeExpense = ({ id } = {}) => ({
 export const editExpense = (id, updates) => ({
   type: "EDIT_EXPENSE",
   id,
-  updates,
-}
-);
+  updates
+});
 
-export const changeStatus = (id, updates) => ({
-  type: "CHANGE_STATUS",
+export const addStory = (id, updates) => ({
+  type: "ADD_KSTORY",
   id,
-  updates,
+  updates
 });
