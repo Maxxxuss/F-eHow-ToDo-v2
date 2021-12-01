@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 // import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled from "styled-components";
 // import '@atlaskit/css-reset';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import initialData from './initial-data';
-import Column from './column';
-import { getkColumns } from '../../selectors/kColumns';
-import { connect } from 'react-redux';
-import { getAllActiveNotes, getAllActiveNoteStories } from '../../selectors/activeNote';
-
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import initialData from "./initial-data";
+import Column from "./column";
+import { getkColumns } from "../../selectors/kColumns";
+import { connect } from "react-redux";
 import {
-Button,
-  Grid,
+  getAllActiveNotes,
+  getAllActiveNoteStories,
+} from "../../selectors/activeNote";
 
-} from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -30,46 +29,35 @@ const reorder = (array, startIndex, endIndex) => {
 class InnerList extends React.PureComponent {
   render() {
     const { column, taskMap, index } = this.props;
+    // const tasks = column.taskIds.map((taskId) => 
+    // taskId === taskMap.map(task => task.id)
+    // )
+    // const tasks = column.taskIds.map((taskId)=>taskMap(taskId))
     const tasks = column.taskIds.map(taskId => taskMap[taskId]);
+
     return <Column column={column} tasks={tasks} index={index} />;
   }
 }
 
-export function KanbanIndex (props){
+export function KanbanIndex(props) {
+  const [task, setTask] = useState(props.kStories);
 
-  const [task, setTask] = useState(props.kColumns)
-  const [order, setOrder] = useState(['column-1', 'column-2', 'column-3', 'column-4'])
-  const [activeKanbanNote, setActiveKanbanNote ] = useState ("")
+  // useEffect(()=>console.log("order Changed: ", order),[order])
+
+  const [activeKanbanNote, setActiveKanbanNote] = useState("");
+  
+  const userStories = props.kStories[0]
+
+  console.log("user Stories: ", userStories);
 
   useEffect(() => setActiveKanbanNote(props.activeNote.kanbanboard), [props]);
 
-  useEffect(() => console.log("Kanban INDEX ActiveKanban Note:", activeKanbanNote), [props.activeNote]);
+  useEffect(
+    () => console.log("Kanban INDEX ActiveKanban Note:", activeKanbanNote),
+    [props.activeNote]
+  );
 
-
-
-  function groupBy(list, keyGetter) {
-    const map = new Map();
-    list.forEach((item) => {
-        const key = keyGetter(item);
-        if (!map.has(key)) {
-            map.set(key, [item]);
-        } else {
-            map.get(key).push(item);
-        }
-    });
-    return map;
-}
-
-
-
-const grouped = groupBy(props.kStories, pet => pet.k_colID);
-
-console.log(grouped.get("column-1"));
-console.log(grouped.get("column-2"));
-console.log(grouped.get("column-3"));
-
-
-  const onDragEnd = (result) =>{
+  const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
@@ -81,16 +69,12 @@ console.log(grouped.get("column-3"));
       destination.index === source.index
     ) {
       return;
-    } 
+    }
 
-    if (type === 'COLUMN') {
-      setOrder({
+    if (type === "COLUMN") {
+      setTask({
         ...task,
-        columnOrder: reorder(
-          task.columnOrder,
-          source.index,
-          destination.index,
-        ),
+        columnOrder: reorder(task.columnOrder, source.index, destination.index),
       });
       return;
     }
@@ -112,7 +96,7 @@ console.log(grouped.get("column-3"));
         },
       };
 
-      setOrder(newState);
+      setTask(newState);
       return;
     }
 
@@ -139,28 +123,33 @@ console.log(grouped.get("column-3"));
         [newForeign.id]: newForeign,
       },
     };
-    setOrder(newState);
+    setTask(newState);
   };
 
-    return (
-      <Grid>
-        
-      <DragDropContext onDragEnd={onDragEnd}>
+
+  var arrResult = [];
+task.tasks.forEach(function(tasks) {
+   arrResult[tasks.id] = tasks;
+});
+
+  return (
+    <Grid>
+      <DragDropContext 
+      onDragEnd={onDragEnd}
+      >
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
-          {provided => (
-            <Container
-              ref ={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {order.map((columnId, index) => {
+          {(provided) => (
+            <Container ref={provided.innerRef} {...provided.droppableProps}>
+              {task.columnOrder.map((columnId, index) => {
                 const column = task.columns[columnId];
+
 
                 return (
                   <InnerList
                     key={column.id}
                     column={column}
                     index={index}
-                    taskMap={task.tasks}
+                    taskMap={arrResult}
                   />
                 );
               })}
@@ -169,25 +158,21 @@ console.log(grouped.get("column-3"));
         </Droppable>
       </DragDropContext>
       <Button
-      onClick={()=>console.log("Show Props - active Note:  ", props.kStories)}
+        onClick={() =>
+          console.log("Show Props - active Note:  ", props.kStories, task)
+        }
       >
         Show Props
-
       </Button>
-
-      </Grid>
-    );
+    </Grid>
+  );
 }
-
-
 
 const mapStateToProps = (state) => {
   return {
-
-    kColumns: getkColumns(state),   
-      activeNote: getAllActiveNotes(state),
-      kStories: getAllActiveNoteStories(state),
-
+    kColumns: getkColumns(state),
+    activeNote: getAllActiveNotes(state),
+    kStories: getAllActiveNoteStories(state),
 
     // categories: getAllCategories(state).sort((a, b) =>
     //   a.sorting > b.sorting ? 1 : -1
@@ -203,10 +188,9 @@ const mapDispatchToProps = (dispatch) => ({
   // setCategorie: (categorie) => dispatch(setCategorie(categorie)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
   // editCategorie: (id, updates) => dispatch(editCategorie(id, updates)),
-
   // removeExpense: (id) => dispatch(removeExpense(id)),
   // addExpense: (expense) => dispatch(addExpense(expense)),
   // editExpense: (id, updates) => dispatch(editExpense(id, updates)),
 });
 
-export default connect(mapStateToProps, null )(KanbanIndex);
+export default connect(mapStateToProps, null)(KanbanIndex);

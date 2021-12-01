@@ -28,7 +28,7 @@ export function AddUserStory(props) {
       k_titel: titel,
       k_description: "",
       k_dastesToFinish: "",
-      k_colID: "column-3",
+      k_colID: "column-2",
     //   k_column:column
 
   };

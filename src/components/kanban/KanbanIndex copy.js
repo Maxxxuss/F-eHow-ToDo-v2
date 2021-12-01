@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 // import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled from "styled-components";
 // import '@atlaskit/css-reset';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import initialData from './initial-data';
-import Column from './column';
-import { getkColumns } from '../../selectors/kColumns';
-import { connect } from 'react-redux';
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import initialData from "./initial-data";
+import Column from "./column";
+import { getkColumns } from "../../selectors/kColumns";
+import { connect } from "react-redux";
+import {
+  getAllActiveNotes,
+  getAllActiveNoteStories,
+} from "../../selectors/activeNote";
+
+import { Button, Grid } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -23,119 +29,106 @@ const reorder = (array, startIndex, endIndex) => {
 class InnerList extends React.PureComponent {
   render() {
     const { column, taskMap, index } = this.props;
+    // const tasks = column.taskIds.map((taskId) => 
+    // taskId === taskMap.map(task => task.id)
+    // )
+    // const tasks = column.taskIds.map((taskId)=>taskMap(taskId))
     const tasks = column.taskIds.map(taskId => taskMap[taskId]);
+
     return <Column column={column} tasks={tasks} index={index} />;
   }
 }
 
-export class KanbanIndex extends React.Component {
+export function KanbanIndex(props) {
+  const [task, setTask] = useState(props.kStories);
+  const [order, setOrder] = useState([
+    "column-1",
+    "column-2",
+    // "column-3",
+    // "column-4",
+  ]);
+  const [justColumns, setColumns] = useState(props.kStories.columns);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    task:props.kColumns,
-    // task: initialData
-    };
-  }   
+  const [activeKanbanNote, setActiveKanbanNote] = useState("");
+  
+  const userStories = props.kStories[0]
 
-  // showProps =()=>{
-  //   console.log("Kanban Index Props:", this.state.kColumns);
-  // }
+  console.log("user Stories: ", userStories);
 
+  useEffect(() => setActiveKanbanNote(props.activeNote.kanbanboard), [props]);
 
-  // state = initialData;
+  useEffect(
+    () => console.log("Kanban INDEX ActiveKanban Note:", activeKanbanNote),
+    [props.activeNote]
+  );
 
-  onDragEnd = result => {
-    const { destination, source, draggableId, type } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    if (type === 'COLUMN') {
-      this.setState({
-        ...this.state.task,
-        columnOrder: reorder(
-          this.state.task.columnOrder,
-          source.index,
-          destination.index,
-        ),
-      });
-      return;
-    }
-
-    const home = this.state.task.columns[source.droppableId];
-    const foreign = this.state.task.columns[destination.droppableId];
-
-    if (home === foreign) {
-      const newColumn = {
-        ...home,
-        taskIds: reorder(home.taskIds, source.index, destination.index),
-      };
-
-      const newState = {
-        ...this.state.task,
-        columns: {
-          ...this.state.task.columns,
-          [newColumn.id]: newColumn,
+  const onDragEnd = (result, columns, setColumns) => {
+    if (!result.destination) return;
+    const { source, destination } = result;
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+      destItems.splice(destination.index, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceColumn,
+          items: sourceItems,
         },
-      };
-
-      this.setState(newState);
-      return;
+        [destination.droppableId]: {
+          ...destColumn,
+          items: destItems,
+        },
+      });
+    } else {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems,
+        },
+      });
     }
-
-    // moving from one list to another
-    const homeTaskIds = Array.from(home.taskIds);
-    homeTaskIds.splice(source.index, 1);
-    const newHome = {
-      ...home,
-      taskIds: homeTaskIds,
-    };
-
-    const foreignTaskIds = Array.from(foreign.taskIds);
-    foreignTaskIds.splice(destination.index, 0, draggableId);
-    const newForeign = {
-      ...foreign,
-      taskIds: foreignTaskIds,
-    };
-
-    const newState = {
-      ...this.state.task,
-      columns: {
-        ...this.state.task.columns,
-        [newHome.id]: newHome,
-        [newForeign.id]: newForeign,
-      },
-    };
-    this.setState(newState);
   };
 
-  render() {
-    return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+
+  var arrResult = [];
+task.tasks.forEach(function(tasks) {
+   arrResult[tasks.id] = tasks;
+});
+
+  return (
+    <Grid>
+      <DragDropContext 
+      onDragEnd={(result) => onDragEnd(result, justColumns, setColumns)}
+      >
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
-          {provided => (
-            <Container
-              ref ={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {this.state.task.columnOrder.map((columnId, index) => {
-                const column = this.state.task.columns[columnId];
+          {(provided) => (
+            <Container ref={provided.innerRef} {...provided.droppableProps}>
+              {order.map((columnId, index) => {
+                const column = task.columns[columnId];
+                console.log("Column :" , column, task);
+                console.log("Adepted Index :" ,arrResult);
+
+
+                const column2 = initialData.columns[columnId]
+                console.log("Column2 :" , column2, initialData)
+
 
                 return (
                   <InnerList
                     key={column.id}
                     column={column}
                     index={index}
-                    taskMap={this.state.task.tasks}
+                    taskMap={arrResult}
+                    // taskMap={props.kStories.tasks}
                   />
                 );
               })}
@@ -143,16 +136,23 @@ export class KanbanIndex extends React.Component {
           )}
         </Droppable>
       </DragDropContext>
-    );
-  }
+      <Button
+        onClick={() =>
+          console.log("Show Props - active Note:  ", props.kStories)
+        }
+      >
+        Show Props
+      </Button>
+    </Grid>
+  );
 }
-
-
 
 const mapStateToProps = (state) => {
   return {
+    kColumns: getkColumns(state),
+    activeNote: getAllActiveNotes(state),
+    kStories: getAllActiveNoteStories(state),
 
-    kColumns: getkColumns(state)
     // categories: getAllCategories(state).sort((a, b) =>
     //   a.sorting > b.sorting ? 1 : -1
     // ),
@@ -167,10 +167,9 @@ const mapDispatchToProps = (dispatch) => ({
   // setCategorie: (categorie) => dispatch(setCategorie(categorie)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
   // editCategorie: (id, updates) => dispatch(editCategorie(id, updates)),
-
   // removeExpense: (id) => dispatch(removeExpense(id)),
   // addExpense: (expense) => dispatch(addExpense(expense)),
   // editExpense: (id, updates) => dispatch(editExpense(id, updates)),
 });
 
-export default connect(mapStateToProps, null )(KanbanIndex);
+export default connect(mapStateToProps, null)(KanbanIndex);
