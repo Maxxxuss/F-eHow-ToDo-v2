@@ -40,42 +40,76 @@ class InnerList extends React.Component {
   }
   render() {
     return this.props.tasks.map((task, index) => (
-      <Task key={task.id} task={task} index={index} />
+      <Task key={task.storieID} task={task} index={index} />
     ));
   }
 }
 
-export default class Column extends React.Component {
-  render() {
-    return (
-      <Draggable draggableId={this.props.column.id} index={this.props.index}>
-        {(provided, snapshot) => (
-          <Container
-          ref={provided.innerRef}
+export default function Column(props) {
+  return (
+    <Draggable draggableId={props.column.id} index={props.index}>
+      {(provided, snapshot) => (
+        <Container
+        ref={provided.innerRef}
+          isDragging={snapshot.isDragging}
+          {...provided.draggableProps}
+        >
+          <Title
+            {...provided.dragHandleProps}
             isDragging={snapshot.isDragging}
-            {...provided.draggableProps}
           >
-            <Title
-              {...provided.dragHandleProps}
-              isDragging={snapshot.isDragging}
-            >
-              {this.props.column.title}
-            </Title>
-            <Droppable droppableId={this.props.column.id} type="TASK">
-              {(provided, snapshot) => (
-                <TaskList
-                ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  isDraggingOver={snapshot.isDraggingOver}
-                >
-                  <InnerList tasks={this.props.tasks} />
-                  {provided.placeholder}
-                </TaskList>
-              )}
-            </Droppable>
-          </Container>
-        )}
-      </Draggable>
-    );
-  }
+            {props.column.title}
+          </Title>
+          <Droppable droppableId={props.column.id} type="TASK">
+            {(provided, snapshot) => (
+              <TaskList
+              ref={provided.innerRef}
+                {...provided.droppableProps}
+                isDraggingOver={snapshot.isDraggingOver}
+              >
+                <InnerList tasks={props.tasks} />
+                {provided.placeholder}
+              </TaskList>
+            )}
+          </Droppable>
+        </Container>
+      )}
+    </Draggable>
+  )
+  
 }
+
+// export default class Column extends React.Component {
+//   render() {
+//     return (
+//       <Draggable draggableId={this.props.column.id} index={this.props.index}>
+//         {(provided, snapshot) => (
+//           <Container
+//           ref={provided.innerRef}
+//             isDragging={snapshot.isDragging}
+//             {...provided.draggableProps}
+//           >
+//             <Title
+//               {...provided.dragHandleProps}
+//               isDragging={snapshot.isDragging}
+//             >
+//               {this.props.column.title}
+//             </Title>
+//             <Droppable droppableId={this.props.column.id} type="TASK">
+//               {(provided, snapshot) => (
+//                 <TaskList
+//                 ref={provided.innerRef}
+//                   {...provided.droppableProps}
+//                   isDraggingOver={snapshot.isDraggingOver}
+//                 >
+//                   <InnerList tasks={this.props.tasks} />
+//                   {provided.placeholder}
+//                 </TaskList>
+//               )}
+//             </Droppable>
+//           </Container>
+//         )}
+//       </Draggable>
+//     );
+//   }
+// }

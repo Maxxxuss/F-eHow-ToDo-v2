@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // import '@atlaskit/css-reset';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import initialData from "./initial-data";
 import Column from "./column";
 import { getkColumns } from "../../selectors/kColumns";
 import { connect } from "react-redux";
@@ -13,6 +12,9 @@ import {
 } from "../../selectors/activeNote";
 
 import { Button, Grid } from "@mui/material";
+import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
+import { editStory } from "../../actions/kanbanBoard";
+// import { addStory, removeStory } from "../../actions/notes";
 
 const Container = styled.div`
   display: flex;
@@ -29,33 +31,20 @@ const reorder = (array, startIndex, endIndex) => {
 class InnerList extends React.PureComponent {
   render() {
     const { column, taskMap, index } = this.props;
-    // const tasks = column.taskIds.map((taskId) => 
-    // taskId === taskMap.map(task => task.id)
-    // )
-    // const tasks = column.taskIds.map((taskId)=>taskMap(taskId))
-    const tasks = column.taskIds.map(taskId => taskMap[taskId]);
+
+    const tasks = column.taskIds.map((storieID) => taskMap[storieID]);
 
     return <Column column={column} tasks={tasks} index={index} />;
   }
 }
 
 export function KanbanIndex(props) {
-  const [task, setTask] = useState(props.kStories);
+  const [task, setTask] = useState(props.allStories[0]);
 
-  // useEffect(()=>console.log("order Changed: ", order),[order])
-
-  const [activeKanbanNote, setActiveKanbanNote] = useState("");
+  // useEffect(()=>console.log("task Changed"), 
+  // props.editStory(props.activeNote[0].id, task)
   
-  const userStories = props.kStories[0]
-
-  console.log("user Stories: ", userStories);
-
-  useEffect(() => setActiveKanbanNote(props.activeNote.kanbanboard), [props]);
-
-  useEffect(
-    () => console.log("Kanban INDEX ActiveKanban Note:", activeKanbanNote),
-    [props.activeNote]
-  );
+  // , [task])
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
@@ -76,6 +65,7 @@ export function KanbanIndex(props) {
         ...task,
         columnOrder: reorder(task.columnOrder, source.index, destination.index),
       });
+
       return;
     }
 
@@ -95,6 +85,7 @@ export function KanbanIndex(props) {
           [newColumn.id]: newColumn,
         },
       };
+
 
       setTask(newState);
       return;
@@ -126,11 +117,10 @@ export function KanbanIndex(props) {
     setTask(newState);
   };
 
-
   var arrResult = [];
-task.tasks.forEach(function(tasks) {
-   arrResult[tasks.id] = tasks;
-});
+  task.tasks.forEach(function (tasks) {
+    arrResult[tasks.storieID] = tasks;
+  });
 
   return (
     <Grid>
@@ -150,6 +140,7 @@ task.tasks.forEach(function(tasks) {
                     column={column}
                     index={index}
                     taskMap={arrResult}
+                    // taskMap={task.tasks}
                   />
                 );
               })}
@@ -157,12 +148,22 @@ task.tasks.forEach(function(tasks) {
           )}
         </Droppable>
       </DragDropContext>
+
       <Button
-        onClick={() =>
-          console.log("Show Props - active Note:  ", props.kStories, task)
-        }
+        variant="outlined"
+        onClick={()=>console.log("a Note Filter", task.columns, task)}
       >
         Show Props
+      </Button>
+      <Button
+        onClick={
+          () => console.log(()=>"All KAnbanbIndexPROPS: ", props)
+          // console.log("Show Props - active Note:  ",
+          // props.addStory(props.activeNote.id, task)
+          // )
+        }
+      >
+        Add Props
       </Button>
     </Grid>
   );
@@ -170,9 +171,13 @@ task.tasks.forEach(function(tasks) {
 
 const mapStateToProps = (state) => {
   return {
-    kColumns: getkColumns(state),
+    // kColumns: getkColumns(state),
     activeNote: getAllActiveNotes(state),
-    kStories: getAllActiveNoteStories(state),
+    // kStories: getAllActiveNoteStories(state),
+
+    allStories: getAllgetKanbanBoard(state).noteIds.filter(
+      (noteId) => noteId.noteId === getAllActiveNotes(state)[0].id
+    ),
 
     // categories: getAllCategories(state).sort((a, b) =>
     //   a.sorting > b.sorting ? 1 : -1
@@ -185,7 +190,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  // setCategorie: (categorie) => dispatch(setCategorie(categorie)),
+  editStory: (id, updates) => dispatch(editStory(id, updates)),
+
+  // addStory: (id, updates) => dispatch(addStory(id, updates)),
+  // removeStory: (id) => dispatch(removeStory(id)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
   // editCategorie: (id, updates) => dispatch(editCategorie(id, updates)),
   // removeExpense: (id) => dispatch(removeExpense(id)),
@@ -193,4 +201,4 @@ const mapDispatchToProps = (dispatch) => ({
   // editExpense: (id, updates) => dispatch(editExpense(id, updates)),
 });
 
-export default connect(mapStateToProps, null)(KanbanIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(KanbanIndex);

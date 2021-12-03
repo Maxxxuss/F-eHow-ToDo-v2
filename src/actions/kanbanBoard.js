@@ -1,49 +1,53 @@
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
-// export const addStory = ({
-//   notesID,
-//   titel,
-//   description,
-//   dastesToFinish,
-//   colID,
-// } = {}) => ({
-//   type: "ADD_KANBANSTORY",
-//   notesID: {
-//     id: uuidv4(),
-//     notesID,
-//     titel,
-//     description,
-//     dastesToFinish,
-//     colID,  
+export const addStory = ({
+  // export const addStory = ({noteId}) => ({
+  id,
+  aNoteId,
+  titel,
+  description,
+  dastesToFinish,
+  colID,
+  stories,
+  column,
+} = {}) => ({
+  type: "ADD_KSTORY",
+  storie: {
+    aNoteId, 
+    sID: uuidv4(),
+    titel,
+    description,
+    dastesToFinish,
+    colID,
+    stories,
+    column,
+  },
+});
+
+// REMOVE_KSTORY
+export const removeStory = ({ id } = {}) => ({
+  type: "REMOVE_KSTORY",
+  id,
+});
+// export const removeStory = ({ id } = {}) => {
+//   return (dispatch) => {
+//     dispatch(({
+//       type: 'REMOVE_KSTORY',
+//       id
+
+//     }));
 //   }
-// });
+// }
 
-// // REMOVE_KANBANSTORY
-// export const removeKanbanStory = ({ id } = {}) => ({
-//     type: "REMOVE_KANBANSTORY",
-//     id,
-//   });
-//   // export const removeKanbanStory = ({ id } = {}) => {
-//   //   return (dispatch) => {
-//   //     dispatch(({
-//   //       type: 'REMOVE_KANBANSTORY',
-//   //       id
-  
-//   //     }));
-//   //   }
-//   // }
-  
-//   // EDIT_KANBANSTORY
-//   export const editKanbanStory = (id, updates) => ({
-//     type: "EDIT_KANBANSTORY",
+// EDIT_KSTORY
+export const editStory = (id, updates) => ({
+  type: "EDIT_KSTORY",
+  id,
+  updates,
+});
+
+//   export const changeStatus = (id, updates) => ({
+//     type: "CHANGE_STATUS",
 //     id,
 //     updates,
-//   }
-//   );
-  
-// //   export const changeStatus = (id, updates) => ({
-// //     type: "CHANGE_STATUS",
-// //     id,
-// //     updates,
-// //   });
-  
+//   });

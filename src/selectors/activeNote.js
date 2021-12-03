@@ -70,63 +70,45 @@ export const getAllActiveNoteStories = createSelector(
   (activeNotes) => ({
     tasks: activeNotes.map((activeColumn) => (
       {
-        id: activeColumn.k_id,
-        titel: activeColumn.k_titel,
-        description: activeColumn.k_description,
-    
+      id: activeColumn.k_id ? activeColumn.k_id : "",
+      titel: activeColumn.k_titel ? activeColumn.k_titel : "",
+      description: activeColumn.k_description ? activeColumn.k_description : "",
     })),
 
-    columns: {
-      "column-1": {
-        id: "column-1",
-        title: "Backlog",
-        taskIds: group(activeNotes, "column-1"),
-      },
-      "column-2": {
-        id: "column-2",
-        title: "Backlog",
-        taskIds: group(activeNotes, "column-2"),
-      },
-      // "column-3": {
-      //   id: "column-3",
-      //   title: "Backlog",
-      //   taskIds: group(activeNotes, "column-3"),
-      // },
-      // "column-4": {
-      //   id: "column-4",
-      //   title: "Backlog",
-      //   taskIds: group(activeNotes, "column-4"),
-      // },
-
-    }, 
-    columnOrder: ['column-1', 'column-2'
-    // 'column-3', 'column-4'
-  ],
+    // columns: {
+    //   "column-1": {
+    //     id: "column-1",
+    //     title: "Backlog",
+    //       taskIds: group(activeNotes, "column-1")
+    //       ? group(activeNotes, "column-1")
+    //       : [],
+    //   },
+    //   "column-2": {
+    //     id: "column-2",
+    //     title: "To Do",
+    //       taskIds: group(activeNotes, "column-2")
+    //       ? group(activeNotes, "column-2")
+    //       : [],
+    //   },
+    //   "column-3": {
+    //     id: "column-3",
+    //     title: "In Progress",
+    //     taskIds: group(activeNotes, "column-3")
+    //       ? group(activeNotes, "column-3")
+    //       : [],
+    //   },
+    //   "column-4": {
+    //     id: "column-4",
+    //     title: "Done",
+    //     taskIds: group(activeNotes, "column-4")
+    //       ? group(activeNotes, "column-4")
+    //       : [],
+    //   },
+    // },
+    columnOrder: ["column-1", "column-2", "column-3", "column-4"],
   })
 );
 
-// activeColumn: activeColumn,
-// activeNotes: activeNotes
-//     }))
-// );
-
-// export const getAllActiveNoteStories = createSelector(
-//   getActiveK,
-//   (activeNotes) =>
-//     activeNotes.map((activeColumn) => ({
-
-//       columns: {
-//         // "column-1":grouped.get("column-1"),
-//         // "column-1": group(activeNotes, "column-1"),
-//         "column-1": group(activeNotes, "column-1"),
-//         "column-2": group(activeNotes, "column-2"),
-//         "column-3": group(activeNotes, "column-3"),
-//         "column-4": group(activeNotes, "column-4"),
-//       },
-//       // activeColumn: activeColumn,
-//       // activeNotes: activeNotes
-//     }))
-// );
 function group(list, varCol) {
   const grouped = groupBy(list, (pet) => pet.k_colID);
 
@@ -145,21 +127,3 @@ function group(list, varCol) {
 
   return grouped.get(varCol);
 }
-
-// export const getAllActiveNoteStories = createSelector(
-//   getActiveK,
-//   (activeNotes) =>
-//     activeNotes.map((activeColumn) => ({
-//       k_id: activeColumn.k_id ? activeColumn.k_id : "",
-//       k_titel: activeColumn.k_titel ? activeColumn.k_titel : "",
-//       k_description: activeColumn.k_description
-//         ? activeColumn.k_description
-//         : "",
-//       k_dastesToFinish: activeColumn.k_dastesToFinish
-//         ? activeColumn.k_dastesToFinish
-//         : "",
-//       k_colID: activeColumn.k_colID ? activeColumn.k_colID : "",
-//       // activeColumn: activeColumn,
-//       // activeNotes: activeNotes
-//     }))
-// );

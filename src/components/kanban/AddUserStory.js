@@ -1,16 +1,16 @@
 import { Button, TextField, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { addStory } from "../../actions/notes";
+import { addStory, editStory, removeStory } from "../../actions/kanbanBoard";
 import { v4 as uuidv4 } from "uuid";
+import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
 
 export function AddUserStory(props) {
   const ndsProps = props.props;
 
   const [activeNote, setActiveNote] = useState(""); //activeNote[0]
   const [titel, setTitel] = useState("");
-  const [column, cetColumn] = useState("column-1");
-
+  const [column, cetColumn] = useState("column-3");
 
   //   useEffect(
   //     () =>
@@ -23,15 +23,31 @@ export function AddUserStory(props) {
   const activeNoteID =
     ndsProps.activeNote.length > 0 ? ndsProps.activeNote[0].id : "";
 
-  const updates = {
-      k_id: uuidv4(),
-      k_titel: titel,
-      k_description: "",
-      k_dastesToFinish: "",
-      k_colID: "column-2",
-    //   k_column:column
+  const aActiveNote = ndsProps.activeNote.id ? ndsProps.activeNote.id : "";
 
+  const str = JSON.stringify(activeNoteID);
+
+  const updates = {
+    aNoteId: activeNoteID,
+    stories: [],
+    // k_description: "",
+    // k_dastesToFinish: "",
+    // k_colID: "column-2",
   };
+
+  const updates2 = {
+    storieID: uuidv4(),
+    noteId: activeNoteID,
+    titel: titel,
+    column: "column-2"
+    // k_description: "",
+    // k_dastesToFinish: "",
+    // k_colID: "column-2",
+  };
+
+  // const updates = (aN) => {
+  //   return aN
+  // }
 
   return (
     <Grid>
@@ -44,36 +60,58 @@ export function AddUserStory(props) {
 
       <Button
         onClick={() => {
-          ndsProps.addStory(activeNoteID, updates);
-          console.log("button Fired, Proops: ", activeNoteID);
+          props.addStory(updates);
+          // console.log("button Fired, Proops: ", [ JSON.stringify(activeNoteID), updates(activeNoteID)]);
+          // console.log("Show Props: ", props, "Note ID: ", activeNoteID);
         }}
       >
         Add User Story
+      </Button>
+
+      <Button
+        onClick={() => {
+          props.editStory(activeNoteID, updates2);
+        }}
+      >
+        EDIT STORY
+      </Button>
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={() => {
+          console.log("Props ADD USER SOTRY: ", props);
+        }}
+      >
+        SHWo Props
       </Button>
     </Grid>
   );
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//       activeNote: getAllActiveNotes(state),
-//       expenses: getAllExpenses(state).sort((a, b) => (a.prio > b.prio ? -1 : 1)),
-//       openExpenses: getAllExpenses(state)
-//         .sort((a, b) => (a.prio > b.prio ? -1 : 1))
-//         .filter((expense) => expense.noteStatus === "open"),
-//       categories: getAllCategories(state).sort((a, b) =>
-//         a.sorting > b.sorting ? 1 : -1
-//       ),
+const mapStateToProps = (state) => {
+  return {
+    allStories: getAllgetKanbanBoard(state),
+    // activeNote: getAllActiveNotes(state),
+    // expenses: getAllExpenses(state).sort((a, b) => (a.prio > b.prio ? -1 : 1)),
+    // openExpenses: getAllExpenses(state)
+    //   .sort((a, b) => (a.prio > b.prio ? -1 : 1))
+    //   .filter((expense) => expense.noteStatus === "open"),
+    // categories: getAllCategories(state).sort((a, b) =>
+    //   a.sorting > b.sorting ? 1 : -1
+    // ),
 
-//       //   historyCategorie: getHistorieCategorie(state),
-//         globalVariables: getGlobalVariables(state),
-//     };
-//   };
+    // //   historyCategorie: getHistorieCategorie(state),
+    //   globalVariables: getGlobalVariables(state),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  addStory: (id, updates) => dispatch(addStory(id, updates)),
+  addStory: (updates) => dispatch(addStory(updates)),
   // setCategorie: (categorie) => dispatch(setCategorie(categorie)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
+  editStory: (id, updates) => dispatch(editStory(id, updates)),
+
+  removeStory: (id) => dispatch(removeStory(id)),
 
   // addActiveNote: (activeNote) => dispatch(addActiveNote(activeNote)),
   // removeActiveNote: () => dispatch(removeActiveNote()),
@@ -83,4 +121,4 @@ const mapDispatchToProps = (dispatch) => ({
   // editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
 });
 
-export default connect(null, mapDispatchToProps)(AddUserStory);
+export default connect(mapStateToProps, mapDispatchToProps)(AddUserStory);

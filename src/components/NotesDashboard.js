@@ -21,7 +21,7 @@ import { getAllExpenses } from "../selectors/notes";
 import { ShortDescription } from "./inputs/titel";
 import { addActiveNote, removeActiveNote } from "../actions/activeNote";
 import { getAllActiveNotes, getAllActiveNoteStories } from "../selectors/activeNote";
-import { addExpense, editExpense, removeExpense, addStory} from "../actions/notes";
+import { addExpense, editExpense, removeExpense } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { SearchForNotes } from "./inputs/search";
@@ -32,6 +32,7 @@ import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 import { propsToClassKey } from "@mui/styles";
 import  AddUserStory  from "./kanban/AddUserStory";
+import { addStory } from "../actions/kanbanBoard";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -70,6 +71,8 @@ export function setActiveNote(expense, props) {
 //   color: theme.palette.text.secondary,
 // }));
 
+
+
 export function NotesDashboardPage(props) {
   const [tabCategorie, setTabCategorie] = useState(0);
   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
@@ -80,6 +83,15 @@ export function NotesDashboardPage(props) {
       sorting: 1,
     });
   }
+
+  // const nestedArry =()=>{
+
+  //   props.expense.map(kanbanboard)
+
+
+
+
+  // }
 
   const ProjectTab = (categories) =>
     categories.map((categorie, index) => (
@@ -191,7 +203,7 @@ const mapDispatchToProps = (dispatch) => ({
   addExpense: (expense) => dispatch(addExpense(expense)),
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
-  addStory: (id, updates) => dispatch(addStory(id, updates)),
+  addStory: (id) => dispatch(addStory(id)),
 
 
 });
