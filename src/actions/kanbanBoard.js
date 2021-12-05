@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
-export const addStory = ({
-  // export const addStory = ({noteId}) => ({
+export const startStory = ({
+  // export const startStory = ({noteId}) => ({
   id,
   aNoteId,
   titel,
@@ -11,7 +11,7 @@ export const addStory = ({
   stories,
   column,
 } = {}) => ({
-  type: "ADD_KSTORY",
+  type: "START_KSTORY",
   storie: {
     aNoteId, 
     sID: uuidv4(),
@@ -39,9 +39,9 @@ export const removeStory = ({ id } = {}) => ({
 //   }
 // }
 
-// EDIT_KSTORY
-export const editStory = (id, updates) => ({
-  type: "EDIT_KSTORY",
+// ADD_KSTORY
+export const addStory = (id, updates) => ({
+  type: "ADD_KSTORY",
   id,
   updates,
 });

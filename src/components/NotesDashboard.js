@@ -32,7 +32,7 @@ import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 import { propsToClassKey } from "@mui/styles";
 import  AddUserStory  from "./kanban/AddUserStory";
-import { addStory } from "../actions/kanbanBoard";
+import { startStory } from "../actions/kanbanBoard";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -203,7 +203,7 @@ const mapDispatchToProps = (dispatch) => ({
   addExpense: (expense) => dispatch(addExpense(expense)),
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
-  addStory: (id) => dispatch(addStory(id)),
+  startStory: (id) => dispatch(startStory(id)),
 
 
 });

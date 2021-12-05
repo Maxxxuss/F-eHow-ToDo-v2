@@ -8,6 +8,7 @@ import globalVariabels from "../reducers/globalVariables";
 import activeNoteReducer from "../reducers/activeNote";
 import kanbanBoardReducer from "../reducers/kanbanBoard";
 import kColumReducer from "../reducers/kColumn";
+import activeUserStorieReducer from "../reducers/activeStorie";
 
 
 const composerFunction = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -34,7 +35,8 @@ const store = combineReducers({
   globalVariables: globalVariabels,
   activeNote: activeNoteReducer,
   kabanBoards: kanbanBoardReducer, 
-  kColumns: kColumReducer
+  kColumns: kColumReducer,
+  activeUserStorie: activeUserStorieReducer, 
 });
 
 const loggingMiddleware = (store) => (next) => (action) => {

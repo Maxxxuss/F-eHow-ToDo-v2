@@ -11,10 +11,13 @@ import {
   getAllActiveNoteStories,
 } from "../../selectors/activeNote";
 
-import { Button, Grid } from "@mui/material";
+import { Alert, Button, Grid, TextField } from "@mui/material";
 import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
-import { editStory } from "../../actions/kanbanBoard";
-// import { addStory, removeStory } from "../../actions/notes";
+import { addStory } from "../../actions/kanbanBoard";
+// import { startStory, removeStory } from "../../actions/notes";
+import { v4 as uuidv4 } from "uuid";
+import { setActiveStory, removeActiveStory } from "../../actions/activeStorie";
+
 
 const Container = styled.div`
   display: flex;
@@ -34,17 +37,22 @@ class InnerList extends React.PureComponent {
 
     const tasks = column.taskIds.map((storieID) => taskMap[storieID]);
 
-    return <Column column={column} tasks={tasks} index={index} />;
+    return <Column column={column} tasks={tasks} index={index} props={this.props} />;
   }
 }
 
 export function KanbanIndex(props) {
   const [task, setTask] = useState(props.allStories[0]);
+  const [titel, setTitel] = useState("");
+  const [description, setDescription] = useState("");
 
-  // useEffect(()=>console.log("task Changed"), 
-  // props.editStory(props.activeNote[0].id, task)
-  
-  // , [task])
+  const updates = {
+    storieID: uuidv4(),
+    noteId: props.activeNote[0].id,
+    titel: titel,
+    description: description,
+    column: "column-2",
+  };
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
@@ -86,7 +94,6 @@ export function KanbanIndex(props) {
         },
       };
 
-
       setTask(newState);
       return;
     }
@@ -124,15 +131,12 @@ export function KanbanIndex(props) {
 
   return (
     <Grid>
-      <DragDropContext 
-      onDragEnd={onDragEnd}
-      >
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
           {(provided) => (
             <Container ref={provided.innerRef} {...provided.droppableProps}>
               {task.columnOrder.map((columnId, index) => {
                 const column = task.columns[columnId];
-
 
                 return (
                   <InnerList
@@ -140,6 +144,7 @@ export function KanbanIndex(props) {
                     column={column}
                     index={index}
                     taskMap={arrResult}
+                    props={props}
                     // taskMap={task.tasks}
                   />
                 );
@@ -151,20 +156,36 @@ export function KanbanIndex(props) {
 
       <Button
         variant="outlined"
-        onClick={()=>console.log("a Note Filter", task.columns, task)}
+        onClick={() => console.log("a Note Filter", task.columns, task)}
       >
         Show Props
       </Button>
+
+      <TextField
+        label="Story Titel"
+        variant="filled"
+        value={titel}
+        onChange={(e) => setTitel(e.target.value)}
+      ></TextField>
+
+      <TextField
+        label=" Description"
+        variant="filled"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      ></TextField>
+
       <Button
-        onClick={
-          () => console.log(()=>"All KAnbanbIndexPROPS: ", props)
-          // console.log("Show Props - active Note:  ",
-          // props.addStory(props.activeNote.id, task)
-          // )
+        onClick={()=>
+          props.addStory(props.activeNote[0].id, updates)
         }
       >
-        Add Props
+        Add Story
       </Button>
+
+
+
+
     </Grid>
   );
 }
@@ -179,6 +200,9 @@ const mapStateToProps = (state) => {
       (noteId) => noteId.noteId === getAllActiveNotes(state)[0].id
     ),
 
+    activeUserStorie: getAllgetKanbanBoard(state)
+
+
     // categories: getAllCategories(state).sort((a, b) =>
     //   a.sorting > b.sorting ? 1 : -1
     // ),
@@ -190,9 +214,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  editStory: (id, updates) => dispatch(editStory(id, updates)),
+  addStory: (id, updates) => dispatch(addStory(id, updates)),
+  setActiveStory: ( updates) => dispatch(setActiveStory(updates)),
+  removeActiveStory:()=> dispatch(removeActiveStory())
 
-  // addStory: (id, updates) => dispatch(addStory(id, updates)),
+
+  // startStory: (id, updates) => dispatch(startStory(id, updates)),
   // removeStory: (id) => dispatch(removeStory(id)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
   // editCategorie: (id, updates) => dispatch(editCategorie(id, updates)),

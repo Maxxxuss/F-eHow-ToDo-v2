@@ -40,7 +40,7 @@ class InnerList extends React.Component {
   }
   render() {
     return this.props.tasks.map((task, index) => (
-      <Task key={task.storieID} task={task} index={index} />
+      <Task key={task.storieID} task={task} index={index} props={this.props}/>
     ));
   }
 }
@@ -67,7 +67,7 @@ export default function Column(props) {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                <InnerList tasks={props.tasks} />
+                <InnerList tasks={props.tasks} props={props}/>
                 {provided.placeholder}
               </TaskList>
             )}

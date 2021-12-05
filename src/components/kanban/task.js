@@ -1,39 +1,52 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Draggable } from 'react-beautiful-dnd';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Draggable } from "react-beautiful-dnd";
 
 const Container = styled.div`
   border: 1px solid lightgrey;
   border-radius: 2px;
   padding: 8px;
   margin-bottom: 8px;
-  background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
+  background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
 `;
 
-export default class Task extends React.Component {
-  render() {
-    return (
-      <Draggable draggableId={this.props.task.storieID} index={this.props.index}>
-        {(provided, snapshot) => (
-          <div
+export default function Task(props) {
+  const [activeStorie, setActiveStory] = useState("");
 
-          >
+  useEffect(
+    () => console.log("Active story setted: ", activeStorie),
+    [activeStorie]
+  );
+
+  const cprops = props.props.props.props.props;
+
+  return (
+    <Draggable draggableId={props.task.storieID} index={props.index}>
+      {(provided, snapshot) => (
+        <div>
           <Container
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            ref ={provided.innerRef}
+            ref={provided.innerRef}
             isDragging={snapshot.isDragging}
-            onClick={()=>console.log("Buttone Presssed: ", this.props.task) }
+            onClick={
+              () =>
+                // console.log("PROPS TASK: ", cprops)
+                // &&
+                cprops.removeActiveStory()&&
+               cprops.setActiveStory({
+                 titel: props.task.titel,
+                 description:props.task.description
 
-         
+               } )
+            }
           >
-            {this.props.task.titel}
-
-          
+            <p>{props.task.titel}</p>
+            <p>{props.task.description}</p>
           </Container>
-          </div>
-        )}
-      </Draggable>
-    );
-  }
+        </div>
+      )}
+    </Draggable>
+  );
+  // }
 }

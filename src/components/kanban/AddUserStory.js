@@ -1,7 +1,7 @@
 import { Button, TextField, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { addStory, editStory, removeStory } from "../../actions/kanbanBoard";
+import { startStory, addStory, removeStory } from "../../actions/kanbanBoard";
 import { v4 as uuidv4 } from "uuid";
 import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
 
@@ -60,20 +60,20 @@ export function AddUserStory(props) {
 
       <Button
         onClick={() => {
-          props.addStory(updates);
+          props.startStory(updates);
           // console.log("button Fired, Proops: ", [ JSON.stringify(activeNoteID), updates(activeNoteID)]);
           // console.log("Show Props: ", props, "Note ID: ", activeNoteID);
         }}
       >
-        Add User Story
+        Start User Story
       </Button>
 
       <Button
         onClick={() => {
-          props.editStory(activeNoteID, updates2);
+          props.addStory(activeNoteID, updates2);
         }}
       >
-        EDIT STORY
+        ADD STORY
       </Button>
       <Button
         variant="outlined"
@@ -106,10 +106,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addStory: (updates) => dispatch(addStory(updates)),
+  startStory: (updates) => dispatch(startStory(updates)),
   // setCategorie: (categorie) => dispatch(setCategorie(categorie)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
-  editStory: (id, updates) => dispatch(editStory(id, updates)),
+  addStory: (id, updates) => dispatch(addStory(id, updates)),
 
   removeStory: (id) => dispatch(removeStory(id)),
 

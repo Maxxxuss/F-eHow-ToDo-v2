@@ -78,15 +78,15 @@ export const editExpense = (id, updates) => ({
   updates
 });
 
-// export const addStory = (id, updates) => ({
-//   type: "ADD_KSTORY",
+// export const startStory = (id, updates) => ({
+//   type: "START_KSTORY",
 //   id,
 //   updates
 // });
 
-export const removeStory  = ({ id } ) => ({
-  type: "REMOVE_KSTROY",
-  id,
-});
+// export const removeStory  = ({ id } ) => ({
+//   type: "REMOVE_KSTROY",
+//   id,
+// });
 
 
