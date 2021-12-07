@@ -29,8 +29,10 @@ export function AddUserStory(props) {
 
   const updates = {
     aNoteId: activeNoteID,
-    stories: [],
-    // k_description: "",
+    storieID: uuidv4(),
+    noteId: activeNoteID,
+    titel: titel,
+    column: "column-4"    // k_description: "",
     // k_dastesToFinish: "",
     // k_colID: "column-2",
   };
@@ -58,7 +60,7 @@ export function AddUserStory(props) {
         onChange={(e) => setTitel(e.target.value)}
       />
 
-      <Button
+      {/* <Button
         onClick={() => {
           props.startStory(updates);
           // console.log("button Fired, Proops: ", [ JSON.stringify(activeNoteID), updates(activeNoteID)]);
@@ -66,11 +68,11 @@ export function AddUserStory(props) {
         }}
       >
         Start User Story
-      </Button>
+      </Button> */}
 
       <Button
         onClick={() => {
-          props.addStory(activeNoteID, updates2);
+          props.addStory(updates);
         }}
       >
         ADD STORY

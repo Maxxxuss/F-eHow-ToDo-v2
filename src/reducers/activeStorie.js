@@ -15,17 +15,17 @@ const activeUserStorieReducer = (state = activeUserStorieReducerDefaultState, ac
         //   ...state,
         //   action.activeNote
       // ];
-    // case 'EDIT_USTORY':
-    //   return state.map((activeNote) => {
-    //     if (activeNote.id === action.id) {
-    //       return {
-    //         ...activeNote,
-    //         ...action.updates
-    //       };
-    //     } else {
-    //       return activeNote;
-    //     };
-    //   });
+  //   case 'EDIT_USTORY':
+  //     return state.map((activeNote) => {
+  //       if (activeNote.id === action.id) {
+  //         return {
+  //           ...activeNote,
+  //           ...action.updates
+  //         };
+  //       } else {
+  //         return activeNote;
+  //       };
+  //     });
     default:
       return state;
   }

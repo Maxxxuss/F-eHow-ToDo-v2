@@ -31,12 +31,15 @@ export default function Task(props) {
             isDragging={snapshot.isDragging}
             onClick={
               () =>
-                // console.log("PROPS TASK: ", cprops)
-                // &&
+                // console.log("PROPS TASK: ", props.task)
+                // // &&
                 cprops.removeActiveStory()&&
                cprops.setActiveStory({
                  titel: props.task.titel,
-                 description:props.task.description
+                 description:props.task.description,
+                 storieID:props.task.storieID, 
+
+
 
                } )
             }

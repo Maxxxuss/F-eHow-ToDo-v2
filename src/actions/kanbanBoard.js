@@ -13,7 +13,7 @@ export const startStory = ({
 } = {}) => ({
   type: "START_KSTORY",
   storie: {
-    aNoteId, 
+    aNoteId,
     sID: uuidv4(),
     titel,
     description,
@@ -25,9 +25,10 @@ export const startStory = ({
 });
 
 // REMOVE_KSTORY
-export const removeStory = ({ id } = {}) => ({
+export const removeStory = (aNid,sId) => ({
   type: "REMOVE_KSTORY",
-  id,
+  aNid, 
+  sId,
 });
 // export const removeStory = ({ id } = {}) => {
 //   return (dispatch) => {
@@ -40,9 +41,15 @@ export const removeStory = ({ id } = {}) => ({
 // }
 
 // ADD_KSTORY
-export const addStory = (id, updates) => ({
+export const addStory = (updates) => ({
   type: "ADD_KSTORY",
-  id,
+  updates,
+});
+
+export const editUserStorie = (aNid, sId, updates) => ({
+  type: "EDIT_KSTORY",
+  aNid,
+  sId,
   updates,
 });
 
