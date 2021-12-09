@@ -7,7 +7,7 @@ import Column from "./column";
 import { connect } from "react-redux";
 import { getAllActiveNotes } from "../../selectors/activeNote";
 
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, Paper, TextField } from "@mui/material";
 import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
 import {
   addStory,
@@ -18,6 +18,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { setActiveStory, removeActiveStory } from "../../actions/activeStorie";
 import { getAllActiveUserStories } from "../../selectors/activeStorie";
+import KanbanEditor from "./kanbanEditor";
 
 const Container = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ export function KanbanIndex(props) {
   const [description, setDescription] = useState("");
   const [activeUserStorieID, setActiveUserStorieID] = useState("");
 
-  useEffect(()=> setTask(props.kanbanBoard), [props.kanbanBoard])
+  useEffect(() => setTask(props.kanbanBoard), [props.kanbanBoard]);
 
   if (
     props.activeUserStorie != "" &&
@@ -100,7 +101,6 @@ export function KanbanIndex(props) {
     }
 
     if (type === "COLUMN") {
-
       console.log("OMN Drag End- Task", task);
       setTask({
         ...task,
@@ -123,7 +123,6 @@ export function KanbanIndex(props) {
         taskIds: reorder(home.taskIds, source.index, destination.index),
       };
       console.log("OMN Drag End- Task", task);
-
 
       const newState = {
         ...task,
@@ -163,7 +162,9 @@ export function KanbanIndex(props) {
       },
     };
     // console.log("NWE State: ", {column: newForeign.id});
-    props.editUserStorie(props.activeUserStorie[0].storieID,  {column: newForeign.id});
+    props.editUserStorie(props.activeUserStorie[0].storieID, {
+      column: newForeign.id,
+    });
   };
 
   var arrResult = [];
@@ -172,7 +173,7 @@ export function KanbanIndex(props) {
   });
 
   return (
-    <Grid>
+    <div>
       <DragDropContext onDragEnd={onDragEnd} props={props}>
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
           {(provided) => (
@@ -206,43 +207,8 @@ export function KanbanIndex(props) {
         Show Pro
       </Button>
 
-      <TextField
-        label="Story Titel"
-        variant="filled"
-        value={titel}
-        onChange={(e) => setTitel(e.target.value)}
-      ></TextField>
-
-      <TextField
-        label=" Description"
-        variant="filled"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      ></TextField>
-
-      <Button onClick={() => props.addStory(updates)}>Add Story</Button>
-      <Button
-        variant="outlined"
-        color="error"
-        onClick={() =>
-          // console.log("edit Props: ", props.activeNote[0].id, activeUserStorieID, updates)
-          props.editUserStorie(activeUserStorieID, updates)
-        }
-      >
-        EDit Story
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="error"
-        onClick={() =>
-          // console.log("edit Props: ", activeUserStorieID)
-          props.removeStory(props.activeUserStorie[0].storieID)
-        }
-      >
-        Remove Story
-      </Button>
-    </Grid>
+        <KanbanEditor props={props} />
+    </div>
   );
 }
 
