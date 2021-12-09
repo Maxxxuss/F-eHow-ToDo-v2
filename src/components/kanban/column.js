@@ -7,7 +7,7 @@ const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
-  width: 220px;
+  width: 500px;
   transition: background-color 0.2s ease;
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 
@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 const Title = styled.h3`
-  padding: 8px;
+  padding: 2px;
   transition: background-color 0.2s ease;
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 

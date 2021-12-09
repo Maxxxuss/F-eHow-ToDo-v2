@@ -7,7 +7,6 @@ export const getAllActiveUserStories = createSelector(getActiveUserStorie, (acti
 activeUserStorie.map((aUserStorie)=>({
     id: aUserStorie.id ? aUserStorie.id: "",
     aNoteId: aUserStorie.aNoteId ? aUserStorie.aNoteId: "", 
-    sID: aUserStorie.sID ? aUserStorie.sID: "", 
     titel: aUserStorie.titel ? aUserStorie.titel: "",
     description: aUserStorie.description ? aUserStorie.description: "",
     dastesToFinish: aUserStorie.dastesToFinish ? aUserStorie.dastesToFinish: "",

@@ -2,7 +2,7 @@
 export const setActiveStory = ({
     // export const setActiveStory = ({noteId}) => ({
     id,
-    sID,
+    
     aNoteId,
     titel,
     description,
@@ -17,7 +17,7 @@ export const setActiveStory = ({
     activeUserStorie: {
         id,
       aNoteId, 
-      sID, 
+       
       titel,
       description,
       dastesToFinish,

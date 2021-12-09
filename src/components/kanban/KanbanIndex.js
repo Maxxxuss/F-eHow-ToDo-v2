@@ -4,11 +4,10 @@ import styled from "styled-components";
 // import '@atlaskit/css-reset';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./column";
-import { getkColumns } from "../../selectors/kColumns";
 import { connect } from "react-redux";
 import { getAllActiveNotes } from "../../selectors/activeNote";
 
-import { Alert, Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
 import {
   addStory,
@@ -18,7 +17,6 @@ import {
 // import { startStory, removeStory } from "../../actions/notes";
 import { v4 as uuidv4 } from "uuid";
 import { setActiveStory, removeActiveStory } from "../../actions/activeStorie";
-import activeUserStorieReducer from "../../reducers/activeStorie";
 import { getAllActiveUserStories } from "../../selectors/activeStorie";
 
 const Container = styled.div`
@@ -47,91 +45,45 @@ class InnerList extends React.PureComponent {
     );
   }
 }
-export function group(list, varCol) {
-  const grouped = groupBy(list, (pet) => pet.column);
 
-  function groupBy(list, keyGetter) {
-    const map = new Map();
-    list.forEach((item) => {
-      const key = keyGetter(item);
-      if (!map.has(key)) {
-        map.set(key, [item.storieID]);
-      } else {
-        map.get(key).push(item.storieID);
-      }
-    });
-    return map;
-  }
+export function KanbanIndex(props) {
+  // const props = properties.props;
 
-  return grouped.get(varCol);
-}
-
-export function loader(props) {
-  const kb = props.kanbanBoard;
-
-  const sorted = {
-    tasks: kb.map((storie) => ({
-      storieID: storie.storieID ? storie.storieID : "",
-      titel: storie.titel ? storie.titel : "",
-      description: storie.description ? storie.description : "",
-    })),
-    columns: {
-      "column-1": {
-        id: "column-1",
-        title: "Backlot",
-        taskIds: group(kb, "column-1"),
-      },
-      "column-2": {
-        id: "column-2",
-        title: "To Do",
-        taskIds: group(kb, "column-2"),
-      },
-      "column-3": {
-        id: "column-3",
-        title: "In Progress",
-        taskIds: group(kb, "column-3"),
-      },
-      "column-4": {
-        id: "column-4",
-        title: "Done",
-        taskIds: group(kb, "column-4"),
-      },
-    },
-    columnOrder: ["column-1", "column-2", "column-3", "column-4"],
-  };
-
-  console.log("Props: ", props);
-
-  return <KanbanIndex props={props} sorted={sorted} />;
-}
-
-export function KanbanIndex(properties) {
-  const props = properties.props;
-
-  const [task, setTask] = useState(properties.sorted);
+  const [task, setTask] = useState(props.kanbanBoard);
   const [titel, setTitel] = useState("");
   const [description, setDescription] = useState("");
   const [activeUserStorieID, setActiveUserStorieID] = useState("");
 
-  // if (props.activeUserStorie !="" && props.activeUserStorie[0].storieID != activeUserStorieID ) {
-  //   setTitel(props.activeUserStorie[0].titel)
-  //   setDescription(props.activeUserStorie[0].description)
-  //   setActiveUserStorieID(props.activeUserStorie[0].storieID)
-  // }
+  useEffect(()=> setTask(props.kanbanBoard), [props.kanbanBoard])
 
-  // const updates = {
-  //   storieID: uuidv4(),
-  //   noteId: props.activeNote[0].id,
-  //   titel: titel,
-  //   description: description,
-  //   column: "column-2",
-  // };
+  if (
+    props.activeUserStorie != "" &&
+    props.activeUserStorie[0].storieID != activeUserStorieID
+  ) {
+    setTitel(props.activeUserStorie[0].titel);
+    setDescription(props.activeUserStorie[0].description);
+    setActiveUserStorieID(props.activeUserStorie[0].storieID);
+  }
 
-  // const updatesEdit = {
-  //   titel: titel,
-  //   description: description,
-  //   column: "column-2",
-  // };
+  // useEffect(()=> task.map((column)=>
+  //   { if (props.activeUserStorie[0].storieID === column.taskIds ) {
+  //     console.log("Gefundene Column", column.id)
+
+  //   }
+  // })
+
+  // ,[task])
+
+  // useEffect(() => console.log("Taks Chend: ", task), [task]);
+
+  const updates = {
+    aNoteId: props.activeNote[0].id,
+    storieID: uuidv4(),
+    noteId: props.activeNote[0].id,
+    titel: titel,
+    description: description,
+    column: "column-2",
+  };
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
@@ -148,12 +100,18 @@ export function KanbanIndex(properties) {
     }
 
     if (type === "COLUMN") {
+
+      console.log("OMN Drag End- Task", task);
       setTask({
         ...task,
         columnOrder: reorder(task.columnOrder, source.index, destination.index),
       });
 
       return;
+      // (props.editUserStorie(activeUserStorieID, {
+      //   ...task,
+      //   columnOrder: reorder(task.columnOrder, source.index, destination.index),
+      // }))
     }
 
     const home = task.columns[source.droppableId];
@@ -164,6 +122,8 @@ export function KanbanIndex(properties) {
         ...home,
         taskIds: reorder(home.taskIds, source.index, destination.index),
       };
+      console.log("OMN Drag End- Task", task);
+
 
       const newState = {
         ...task,
@@ -175,6 +135,8 @@ export function KanbanIndex(properties) {
 
       setTask(newState);
       return;
+      // ( props.editUserStorie(props.activeUserStorie[0].storieID, newState)
+      // )
     }
 
     // moving from one list to another
@@ -200,7 +162,8 @@ export function KanbanIndex(properties) {
         [newForeign.id]: newForeign,
       },
     };
-    setTask(newState);
+    // console.log("NWE State: ", {column: newForeign.id});
+    props.editUserStorie(props.activeUserStorie[0].storieID,  {column: newForeign.id});
   };
 
   var arrResult = [];
@@ -210,7 +173,7 @@ export function KanbanIndex(properties) {
 
   return (
     <Grid>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} props={props}>
         <Droppable droppableId="board" direction="horizontal" type="COLUMN">
           {(provided) => (
             <Container ref={provided.innerRef} {...provided.droppableProps}>
@@ -237,7 +200,7 @@ export function KanbanIndex(properties) {
 
       <Button
         variant="outlined"
-        onClick={() => console.log("props - Task: ", properties)}
+        onClick={() => console.log("props - Task: ", props)}
         // onClick={() => console.log("a Note Filter", props.activeUserStorie[0])}
       >
         Show Pro
@@ -263,11 +226,7 @@ export function KanbanIndex(properties) {
         color="error"
         onClick={() =>
           // console.log("edit Props: ", props.activeNote[0].id, activeUserStorieID, updates)
-          props.editUserStorie(
-            props.activeNote[0].id,
-            activeUserStorieID,
-            updates
-          )
+          props.editUserStorie(activeUserStorieID, updates)
         }
       >
         EDit Story
@@ -278,10 +237,7 @@ export function KanbanIndex(properties) {
         color="error"
         onClick={() =>
           // console.log("edit Props: ", activeUserStorieID)
-          props.removeStory(
-            props.activeNote[0].id,
-            props.activeUserStorie[0].storieID
-          )
+          props.removeStory(props.activeUserStorie[0].storieID)
         }
       >
         Remove Story
@@ -292,15 +248,15 @@ export function KanbanIndex(properties) {
 
 const mapStateToProps = (state) => {
   return {
-    // kanbanBoard: getAllgetKanbanBoard(state),
+    kanbanBoard: getAllgetKanbanBoard(state),
 
     // kColumns: getkColumns(state),
     activeNote: getAllActiveNotes(state),
     // kStories: getAllActiveNoteStories(state),
 
-    kanbanBoard: getAllgetKanbanBoard(state).noteIds.filter(
-      (noteId) => noteId.aNoteId === getAllActiveNotes(state)[0].id
-    ),
+    // kanbanBoard: getAllgetKanbanBoard(state).filter(
+    //   (noteId) => noteId.aNoteId === getAllActiveNotes(state)[0].id
+    // ),
 
     activeUserStorie: getAllActiveUserStories(state),
 
@@ -318,8 +274,7 @@ const mapDispatchToProps = (dispatch) => ({
   addStory: (id, updates) => dispatch(addStory(id, updates)),
   setActiveStory: (updates) => dispatch(setActiveStory(updates)),
   removeActiveStory: () => dispatch(removeActiveStory()),
-  editUserStorie: (activeNoteId, sId, updates) =>
-    dispatch(editUserStorie(activeNoteId, sId, updates)),
+  editUserStorie: (sId, updates) => dispatch(editUserStorie(sId, updates)),
   removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),
   // editCategorie: (id, updates) => dispatch(editCategorie(id, updates)),
@@ -328,4 +283,4 @@ const mapDispatchToProps = (dispatch) => ({
   // editExpense: (id, updates) => dispatch(editExpense(id, updates)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(loader);
+export default connect(mapStateToProps, mapDispatchToProps)(KanbanIndex);

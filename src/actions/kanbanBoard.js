@@ -14,7 +14,7 @@ export const startStory = ({
   type: "START_KSTORY",
   storie: {
     aNoteId,
-    sID: uuidv4(),
+    storieID: uuidv4(),
     titel,
     description,
     dastesToFinish,
@@ -25,9 +25,8 @@ export const startStory = ({
 });
 
 // REMOVE_KSTORY
-export const removeStory = (aNid,sId) => ({
+export const removeStory = (sId ) => ({
   type: "REMOVE_KSTORY",
-  aNid, 
   sId,
 });
 // export const removeStory = ({ id } = {}) => {
@@ -46,9 +45,8 @@ export const addStory = (updates) => ({
   updates,
 });
 
-export const editUserStorie = (aNid, sId, updates) => ({
+export const editUserStorie = (sId, updates) => ({
   type: "EDIT_KSTORY",
-  aNid,
   sId,
   updates,
 });

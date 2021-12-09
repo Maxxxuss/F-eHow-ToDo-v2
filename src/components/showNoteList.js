@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { setActiveNote } from "./NotesDashboard";
 import {
   List,
@@ -35,14 +35,12 @@ const showHintForTimedNotes = (expense, props) => {
 
   const daySubStrin = parseInt(days);
 
-
   if (days > -0.4 && days < 0.6) {
     return (
       <div>
         <Typography
           mr={1}
           style={{
-
             color: "Green",
             backgroundColor: "PowderBlue",
           }}
@@ -100,10 +98,7 @@ export function ShowNotes(props) {
           const labelId = expense.id;
           return (
             <Paper key={expense.id} elevation={6}>
-              <ListItem
-
-                key={expense.id}
-              >
+              <ListItem key={expense.id}>
                 <ListItemButton
                   dense={true}
                   selected={selectedIndex === index}
@@ -120,25 +115,19 @@ export function ShowNotes(props) {
                     <Grid item xs={1}>
                       {showHintForTimedNotes(expense, props)}
                     </Grid>
-                    <Grid
-                      item
-                      xs={9}
-    
-                    >
+                    <Grid item xs={9}>
                       <ListItemText
                         id={expense.id}
                         primary={expense.description}
-                        secondary={
-                          expense.noteDecscription.substr(33, 250).replace(/<[^>]+>/g, '')}
-   
+                        secondary={expense.noteDecscription
+                          .substr(33, 250)
+                          .replace(/<[^>]+>/g, "")}
                       />
                       <Typography
                         sx={{
                           maxHeight: 90,
                         }}
-                      >
-             
-                      </Typography>
+                      ></Typography>
                     </Grid>
 
                     <Grid item xs={2}>
@@ -150,7 +139,6 @@ export function ShowNotes(props) {
                       >
                         <Grid item xs={1}>
                           <Typography
-                
                             variant="body2"
                             style={{
                               color: "SlateGray",
