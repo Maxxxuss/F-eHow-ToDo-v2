@@ -9,11 +9,15 @@ import {
   Typography,
   Paper,
   IconButton,
+  FormControlLabel,
+  Switch,
+  Collapse,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
 import CachedIcon from "@mui/icons-material/Cached";
 import { handelTakeChanges } from "./Button/AddNote";
 import moment from "moment";
+import { ColKanban, KanbanIndex } from "./kanban/KanbanIndex";
 
 const SkipButton = (properties) => {
   const props = properties.props ? properties.props.props : "";
@@ -75,6 +79,7 @@ export function ShowNotes(props) {
   const noteListStatus = props.noteListStatus;
 
   const [selectedIndex, setSelectedIndex] = useState("");
+  const [collapseCheck, setCollapseCheck] = useState("");
 
   const handleListItemClick = (expense, props, event, index) => {
     setSelectedIndex(index);
@@ -108,60 +113,93 @@ export function ShowNotes(props) {
                 >
                   <Grid
                     container
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
                   >
-                    <Grid item xs={1}>
-                      {showHintForTimedNotes(expense, props)}
-                    </Grid>
-                    <Grid item xs={9}>
-                      <ListItemText
-                        id={expense.id}
-                        primary={expense.description}
-                        secondary={expense.noteDecscription
-                          .substr(33, 250)
-                          .replace(/<[^>]+>/g, "")}
-                      />
-                      <Typography
-                        sx={{
-                          maxHeight: 90,
-                        }}
-                      ></Typography>
-                    </Grid>
+                  <Grid item xs>
+                    <Grid
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Grid item xs={1}>
+                        {showHintForTimedNotes(expense, props)}
+                      </Grid>
+                      <Grid item xs={9}>
+                        <ListItemText
+                          id={expense.id}
+                          primary={expense.description}
+                          secondary={expense.noteDecscription
+                            .substr(33, 250)
+                            .replace(/<[^>]+>/g, "")}
+                        />
+                        <Typography
+                          sx={{
+                            maxHeight: 90,
+                          }}
+                        ></Typography>
+                      </Grid>
 
-                    <Grid item xs={2}>
-                      <Grid
-                        container
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="flex-end"
-                      >
-                        <Grid item xs={1}>
-                          <Typography
-                            variant="body2"
-                            style={{
-                              color: "SlateGray",
-                            }}
-                          >
-                            {expense.categorie.substr(0, 8)}
-                          </Typography>
-                        </Grid>
+                      <Grid item xs={2}>
+                        <Grid
+                          container
+                          direction="column"
+                          justifyContent="center"
+                          alignItems="flex-end"
+                        >
+                          <Grid item xs={1}>
+                            <Typography
+                              variant="body2"
+                              style={{
+                                color: "SlateGray",
+                              }}
+                            >
+                              {expense.categorie.substr(0, 8)}
+                            </Typography>
+                          </Grid>
 
-                        <Grid item xs={1}>
-                          <SkipButton
-                            props={props}
-                            updates={{
-                              id: expense.id,
-                              datesToFinish: moment().add(1, "days"),
-                            }}
-                          />
+                          <Grid item xs={1}>
+                            <SkipButton
+                              props={props}
+                              updates={{
+                                id: expense.id,
+                                datesToFinish: moment().add(1, "days"),
+                              }}
+                            />
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
+                  <Grid item xs>
+                    <Grid item xs={12}>
+                      <ColKanban
+                      props={props}
+                      />
+          
+                    </Grid>
+                  </Grid>
+                  </Grid>
                 </ListItemButton>
               </ListItem>
+              {/* <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={collapseCheck}
+                      onChange={() => setCollapseCheck(!collapseCheck)}
+                    />
+                  }
+                  label="Show"
+                />
+                <div>
+                  <Collapse in={collapseCheck}>
+                    <KanbanIndex props={props.props} />
+                  </Collapse>
+                </div>
+              </Grid> */}
             </Paper>
           );
         })}

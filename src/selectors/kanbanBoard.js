@@ -6,7 +6,7 @@ import { getActiveK, getActiveNotes, getAllActiveNotes } from "./activeNote";
 // const getactiveNotes = (state) = getActiveNotes(state.activeNote)
 
 export const getactiveNotes = (state) =>
-  state.activeNote[0] != undefined ? state.activeNote[0].id : "";
+  state.activeNote[0] != undefined ? state.activeNote[0].id : "7054f393-9cc1-460f-b8e7-eec9c007492a";
 
 export const getKanbanBoard = (state) => state.kabanBoards;
 

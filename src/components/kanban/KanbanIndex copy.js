@@ -7,16 +7,7 @@ import Column from "./column";
 import { connect } from "react-redux";
 import { getAllActiveNotes } from "../../selectors/activeNote";
 
-import {
-  Box,
-  Button,
-  Collapse,
-  FormControlLabel,
-  Grid,
-  Paper,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Button, Grid, Paper, TextField } from "@mui/material";
 import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
 import {
   addStory,
@@ -55,59 +46,49 @@ class InnerList extends React.PureComponent {
     );
   }
 }
-export function s(properties) {
-  const props = properties.props;
 
-
-  return (
-    <Button onClick={() => console.log("Props TEST-PROPS: ", props)}>
-      Show Propos
-    </Button>
-  );
-}
 export function KanbanIndex(properties) {
-  const props = properties.props;
-
+  const props = properties
 
   const [task, setTask] = useState(props.kanbanBoard);
   const [titel, setTitel] = useState("");
   const [description, setDescription] = useState("");
   const [activeUserStorieID, setActiveUserStorieID] = useState("");
-  const [aNoteId, setaNoteId] = useState("");
-
-
-  const [noteId, setNoteId] = useState("");
 
 
   useEffect(() => setTask(props.kanbanBoard), [props.kanbanBoard]);
 
-
   if (
     props.activeUserStorie != "" &&
-    props.activeUserStorie.length > 0 &&
-    props.activeUserStorie[0].storieID != undefined &&
+
+    props.activeUserStorie[0] != undefined &&
+    props.activeUserStorie[0].storieID != undefined
+
+
+    
+    &&
     props.activeUserStorie[0].storieID != activeUserStorieID
   ) {
     setTitel(props.activeUserStorie[0].titel);
     setDescription(props.activeUserStorie[0].description);
     setActiveUserStorieID(props.activeUserStorie[0].storieID);
-
-    
   }
 
-  if (
-    
-    props.activeNote.length > 0 &&
-    props.activeNote[0].id != aNoteId
-  ) {
-        setaNoteId( props.activeNote[0].id)
-    setNoteId( props.activeNote[0].id)
-  }
+  // useEffect(()=> task.map((column)=>
+  //   { if (props.activeUserStorie[0].storieID === column.taskIds ) {
+  //     console.log("Gefundene Column", column.id)
+
+  //   }
+  // })
+
+  // ,[task])
+
+  // useEffect(() => console.log("Taks Chend: ", task), [task]);
 
   const updates = {
-    aNoteId: aNoteId,
+    aNoteId: props.activeNote[0].id,
     storieID: uuidv4(),
-    noteId: noteId,
+    noteId: props.activeNote[0].id,
     titel: titel,
     description: description,
     column: "column-2",
@@ -135,7 +116,10 @@ export function KanbanIndex(properties) {
       });
 
       return;
-
+      // (props.editUserStorie(activeUserStorieID, {
+      //   ...task,
+      //   columnOrder: reorder(task.columnOrder, source.index, destination.index),
+      // }))
     }
 
     const home = task.columns[source.droppableId];
@@ -205,6 +189,8 @@ export function KanbanIndex(properties) {
               {task.columnOrder.map((columnId, index) => {
                 const column = task.columns[columnId];
 
+                console.log("Column ", column);
+
                 return (
                   <InnerList
                     key={column.id}
@@ -229,53 +215,8 @@ export function KanbanIndex(properties) {
         Show Pro
       </Button>
 
-      {/* <KanbanEditor props={props} /> */}
+        <KanbanEditor props={props} />
     </div>
-  );
-}
-
-export function ColKanban(properties) {
-  const [collapseCheck, setCollapseCheck] = useState(false);
-  const [aNote , setaNote] =useState("")
-
-  const props = properties.props.props
-
-  if (
-    
-    props.activeNote.length > 0 &&
-    props.activeNote[0].id != aNote
-  ) {
-    setaNote( props.activeNote[0].id)
-    setCollapseCheck(false)
-
-  }
-
-  // useEffect(()=> {if (props.activeNote.length > 0
-  // && props.activeNote[0].id != aNote) {
-  //   setCollapseCheck(false)
-    
-  // }} ,[props.activeNote])
-
-
-
-
-  return (
-    <Box>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={collapseCheck}
-            onChange={() => setCollapseCheck(!collapseCheck)}
-          />
-        }
-        label="Show"
-      />
-      <div>
-        <Collapse in={collapseCheck}>
-          <KanbanIndex props={props} />
-        </Collapse>
-      </div>
-    </Box>
   );
 }
 
@@ -316,4 +257,4 @@ const mapDispatchToProps = (dispatch) => ({
   // editExpense: (id, updates) => dispatch(editExpense(id, updates)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ColKanban);
+export default connect(mapStateToProps, mapDispatchToProps)(KanbanIndex);

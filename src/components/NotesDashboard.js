@@ -30,7 +30,15 @@ import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 import { propsToClassKey } from "@mui/styles";
 import  AddUserStory  from "./kanban/AddUserStory";
-import { startStory } from "../actions/kanbanBoard";
+
+import { addStory,
+  editUserStorie,
+  removeStory,} from "../actions/kanbanBoard";
+  import { setActiveStory, removeActiveStory } from "../actions/activeStorie";
+  import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
+  import { getAllActiveUserStories } from "../selectors/activeStorie";
+
+
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -143,7 +151,7 @@ export function NotesDashboardPage(props) {
       {/* BODY  */}
       <Box mt={2} mb={2} mr={2} ml={2}>
         <Grid container spacing={2} direction="row">
-          <Grid item xs>
+          <Grid item xs={7}>
             {/* Left Side - ShoW Notes & Filter */}
             <SearchForNotes props={props} activeCategorie={activeCategorie} />
           </Grid>
@@ -189,6 +197,12 @@ const mapStateToProps = (state) => {
 
     //   historyCategorie: getHistorieCategorie(state),
       globalVariables: getGlobalVariables(state),
+
+      //KanbanIndex
+      activeUserStorie: getAllActiveUserStories(state),
+      kanbanBoard: getAllgetKanbanBoard(state),
+
+
   };
 };
 
@@ -202,6 +216,13 @@ const mapDispatchToProps = (dispatch) => ({
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
   startStory: (id) => dispatch(startStory(id)),
+
+  //KanbanIndex
+  addStory: (id, updates) => dispatch(addStory(id, updates)),
+  setActiveStory: (updates) => dispatch(setActiveStory(updates)),
+  removeActiveStory: () => dispatch(removeActiveStory()),
+  editUserStorie: (sId, updates) => dispatch(editUserStorie(sId, updates)),
+  removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
 
 
 });

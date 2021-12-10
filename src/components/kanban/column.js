@@ -54,7 +54,7 @@ export default function Column(props) {
     <Draggable draggableId={props.column.id} index={props.index}>
       {(provided, snapshot) => (
         <Box
-          sx={{ width: "100%" }}
+          sx={{ width: "220px" }}
 
           // itemSize={46}
           // itemCount={200}
@@ -92,8 +92,8 @@ export default function Column(props) {
                 //   '&:hover': {
                 //     backgroundColor: 'primary.main',
                 //     opacity: [0.9, 0.8, 0.7]},
-                width: "100%",
-                height: "600px",
+                // width: "100%",
+                height: "250px",
               }}
             >
               <Droppable droppableId={props.column.id} type="TASK">

@@ -7,7 +7,7 @@ export const getActiveK = (state) => state.activeNote[0].kanbanboard[0];
 
 export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
   activeNotes.map((activeNote) => ({
-    id: activeNote.id ? activeNote.id : "",
+    id: activeNote.id ? activeNote.id : "7054f393-9cc1-460f-b8e7-eec9c007492a",
     categorie: activeNote.categorie ? activeNote.categorie : "",
     noteUpdateDate: activeNote.noteUpdateDate ? activeNote.noteUpdateDate : "",
     noteStatus: activeNote.noteStatus ? activeNote.noteStatus : "",

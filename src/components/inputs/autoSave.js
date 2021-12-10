@@ -29,7 +29,6 @@ export function autoSaveFunc(props) {
 }
 
 export function AutoSave(properties) {
-  console.log("AutoSave Properties:", properties);
 
   const props = properties.props;
   const onOffSwitch = props.globalVariables.onOffSwitch;

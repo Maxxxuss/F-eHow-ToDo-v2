@@ -21,6 +21,7 @@ import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import { useHotkeys } from "react-hotkeys-hook";
 import { Box } from "@mui/system";
 import ReactQuill, { Quill } from "react-quill";
+import { v4 as uuidv4 } from "uuid";
 
 function hotKey(params) {}
 // export function ShortDescription(properties) {
@@ -47,9 +48,11 @@ export const ShortDescription = (properties) => {
   const [theme, setTheme] = useState("snow");
   const [valueQuill, setValueQuill] = useState(EMPTY_DELTA);
 
-  // const [] = useState("")
+  //KanbanIndex
+  const [aNoteId, setaNoteId] = useState("");
+  const [noteId, setNoteId] = useState("");
 
-  const space = "<p><br></p> "
+  const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
 
   const clearInputValues = (props) => {
@@ -97,31 +100,31 @@ export const ShortDescription = (properties) => {
     nextStep: nextStep,
     infoNote: infoNote,
     effort: effort,
-    kanbanboard:""
+    kanbanboard: "",
     // {
-      // columns:{
-      //   'column-1': {
-      //     id: 'column-1',
-      //     title: 'Backlog',
-      //     taskIds: [],
-      //   },
-      //   'column-2': {
-      //     id: 'column-2',
-      //     title: 'To do',
-      //     taskIds: [],
-      //   },
-      //   'column-3': {
-      //     id: 'column-3',
-      //     title: 'In progress',
-      //     taskIds: [],
-      //   },
-      //     'column-4': {
-      //       id: 'column-4',
-      //       title: 'Done',
-      //       taskIds: [],
-      //   },
+    // columns:{
+    //   'column-1': {
+    //     id: 'column-1',
+    //     title: 'Backlog',
+    //     taskIds: [],
+    //   },
+    //   'column-2': {
+    //     id: 'column-2',
+    //     title: 'To do',
+    //     taskIds: [],
+    //   },
+    //   'column-3': {
+    //     id: 'column-3',
+    //     title: 'In progress',
+    //     taskIds: [],
+    //   },
+    //     'column-4': {
+    //       id: 'column-4',
+    //       title: 'Done',
+    //       taskIds: [],
+    //   },
 
-      // }
+    // }
 
     // }
   };
@@ -131,6 +134,20 @@ export const ShortDescription = (properties) => {
   //   () => handelTakeChanges(props, updates)
   //    + clearInputValues(props)
   // );
+
+  if (props.activeNote.length > 0 && props.activeNote[0].id != aNoteId) {
+    setaNoteId(props.activeNote[0].id);
+    setNoteId(props.activeNote[0].id);
+  }
+
+  const storieUpdates = {
+    aNoteId: aNoteId,
+    storieID: uuidv4(),
+    noteId: noteId,
+    titel: description,
+    description: noteDecscription,
+    column: "column-2",
+  };
 
   function statusChange(props, updates) {
     if (noteStatus === "open") {
@@ -142,33 +159,69 @@ export const ShortDescription = (properties) => {
     }
   }
 
-  var modules={
+  var modules = {
     toolbar: [
-      [{ 'header': 1 }, { 'header': 2 }],  
+      [{ header: 1 }, { header: 2 }],
       // [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      [{ 'color': "red" }, { 'background': [] }], 
-      ['link', 'image'],
-      ['clean']
-    ]
-  }
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      [{ color: "red" }, { background: [] }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
 
   var formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image', 
-    'color', 'background'
-    
-  ]
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "color",
+    "background",
+  ];
+
+
+  const decider= ()=> {
+    if (props.activeNote.length > 0 && props.activeUserStorie.length > 0) {
+      // UserStorie;
+      // <ButtonSwitch
+        // const  add_edit={props.addExpense}
+        const  add_edit=props.editExpense
+        const remove=props.removeExpense
+        const updates=updates
+        const bTitel= "Edit User Storie"
+      //   />
+        // {ButtonSwitch( add_edit, remove, updates , bTitel)}
+
+        return <Button>Jeölls</Button>
+      
+    }
+  } 
+
 
 
 
   return (
     <div>
       <Grid mt={1} mb={1}>
-        <ButtonGroup color="primary" variant="text" fullWidth={true}>
+        {decider}
+
+        
+
+
+        {/* <ButtonGroup color="primary" variant="text" fullWidth={true}>
           {activeNoteID ? (
             <Button
               variant="contained"
@@ -198,7 +251,11 @@ export const ShortDescription = (properties) => {
             Satus Changes
           </Button>
 
-          <Button variant="outlined" onClick={() => clearInputValues(props)}>
+          <Button
+            variant="outlined"
+            // onClick={() => clearInputValues(props)}
+            onClick={() => console.log("Button Props: ", props)}
+          >
             Clear
           </Button>
 
@@ -206,7 +263,13 @@ export const ShortDescription = (properties) => {
             activeNote={props.activeNote}
             handelRemoveNote={props.removeExpense}
           />
-        </ButtonGroup>
+        </ButtonGroup> */}
+
+        <Button
+        onClick={()=>console.log("Show props: ", props)}
+        >
+          SHow Props
+        </Button>
       </Grid>
 
       <Grid
@@ -359,9 +422,8 @@ export const ShortDescription = (properties) => {
       </Grid>
 
       {/* <Grid container item xs> */}
-    
 
-        {/* <TextField
+      {/* <TextField
           label="Note Description"
           variant="outlined"
           value={noteDecscription}
@@ -379,14 +441,78 @@ export const ShortDescription = (properties) => {
         /> */}
       {/* </Grid> */}
       <ReactQuill
-          theme="snow"
-          value={noteDecscription}
-          onChange={setnoteDecscription}
-          modules= {modules}
-          formats={formats}
-        />
+        theme="snow"
+        value={noteDecscription}
+        onChange={setnoteDecscription}
+        modules={modules}
+        formats={formats}
+      />
 
       {/* <ReactQuill theme="snow" value={noteDecscription}  onChange={(e) => setnoteDecscription(e.target.value)}/> */}
     </div>
   );
 };
+
+
+export function ButtonSwitch (add_edit, remove,updates , bTitel) {
+  return(
+    <div>
+
+  <ButtonGroup color="primary" variant="text" fullWidth={true}>
+    <Button 
+    variant ="contained"
+    onClick={()=> add_edit(updates)
+    
+    }>
+      {bTitel}
+    </Button>
+    </ButtonGroup>
+    </div>
+  )
+
+
+
+        /* {activeNoteID ? (
+          <Button
+            variant="contained"
+            onClick={() =>
+              handelTakeChanges(props, updates) + clearInputValues(props)
+            }
+          >
+            take Changes
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={() =>
+              handelAddNote(props, updates) + clearInputValues(props)
+            }
+          >
+            Direkt Add
+          </Button>
+        )}
+        <Button
+          variant="outlined"
+          onClick={() =>
+            // handelTakeChanges(props, updates) + clearInputValues(props)
+            statusChange(props, updates) + clearInputValues(props)
+          }
+        >
+          Satus Changes
+        </Button>
+
+        <Button
+          variant="outlined"
+          // onClick={() => clearInputValues(props)}
+          onClick={() => console.log("Button Props: ", props)}
+        >
+          Clear
+        </Button>
+
+        <DoubleCheckRemoveButton
+          activeNote={props.activeNote}
+          handelRemoveNote={props.removeExpense}
+        />
+      </ButtonGroup> */
+  
+}
