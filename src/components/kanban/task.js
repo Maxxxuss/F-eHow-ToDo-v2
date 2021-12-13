@@ -40,7 +40,10 @@ export default function Task(props) {
             onClick={() =>
               // console.log("PROPS TASK: ", props.task)
               // // &&
-              cprops.removeActiveStory() &&
+              cprops.removeActiveUserStory() &&
+
+
+
               cprops.setActiveStory({
                 titel: props.task.titel,
                 description: props.task.description,

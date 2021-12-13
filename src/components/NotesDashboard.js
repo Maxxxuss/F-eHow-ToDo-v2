@@ -34,7 +34,7 @@ import  AddUserStory  from "./kanban/AddUserStory";
 import { addStory,
   editUserStorie,
   removeStory,} from "../actions/kanbanBoard";
-  import { setActiveStory, removeActiveStory } from "../actions/activeStorie";
+  import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
   import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
   import { getAllActiveUserStories } from "../selectors/activeStorie";
 
@@ -220,7 +220,7 @@ const mapDispatchToProps = (dispatch) => ({
   //KanbanIndex
   addStory: (id, updates) => dispatch(addStory(id, updates)),
   setActiveStory: (updates) => dispatch(setActiveStory(updates)),
-  removeActiveStory: () => dispatch(removeActiveStory()),
+  removeActiveUserStory: () => dispatch(removeActiveUserStory()),
   editUserStorie: (sId, updates) => dispatch(editUserStorie(sId, updates)),
   removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
 

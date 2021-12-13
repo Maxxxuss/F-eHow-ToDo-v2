@@ -51,6 +51,7 @@ export const ShortDescription = (properties) => {
   //KanbanIndex
   const [aNoteId, setaNoteId] = useState("");
   const [noteId, setNoteId] = useState("");
+  const [aUserStorieID, setAUserStorieID] = useState("");
 
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
@@ -70,7 +71,25 @@ export const ShortDescription = (properties) => {
     setActiveCategorie("");
   };
 
-  if (props.activeNote != "" && props.activeNote[0].id != activeNoteID) {
+  //SET FOR ACTIVE USER STORIE
+  if (
+    props.activeNote != "" &&
+    props.activeNote[0].id === activeNoteID &&
+    props.activeUserStorie[0].storieID != "" &&
+    props.activeUserStorie[0].storieID != aUserStorieID
+  ) {
+    setDescription(props.activeUserStorie[0].titel);
+    setnoteDecscription(props.activeUserStorie[0].description);
+    setAUserStorieID(props.activeUserStorie[0].storieID);
+  }
+
+  // SET - Active Note
+
+  if (
+    props.activeNote != "" &&
+    props.activeNote[0].id != activeNoteID &&
+    props.activeUserStorie[0].storieID === ""
+  ) {
     setActiveNoteID(props.activeNote[0].id);
     setDescription(props.activeNote[0].description);
     setrelevance(props.activeNote[0].relevance);
@@ -129,6 +148,13 @@ export const ShortDescription = (properties) => {
     // }
   };
 
+  const updatesUserStorie = {
+    storieID: uuidv4(),
+    noteId: activeNoteID,
+    titel: description,
+    column: "column-1",
+  };
+
   // useHotkeys(
   //   "control+a",
   //   () => handelTakeChanges(props, updates)
@@ -140,13 +166,18 @@ export const ShortDescription = (properties) => {
     setNoteId(props.activeNote[0].id);
   }
 
-  const storieUpdates = {
+  const addStorie = {
     aNoteId: aNoteId,
     storieID: uuidv4(),
     noteId: noteId,
     titel: description,
     description: noteDecscription,
     column: "column-2",
+  };
+
+  const updateStorie = {
+    titel: description,
+    description: noteDecscription,
   };
 
   function statusChange(props, updates) {
@@ -192,34 +223,77 @@ export const ShortDescription = (properties) => {
     "background",
   ];
 
-
-  const decider= ()=> {
-    if (props.activeNote.length > 0 && props.activeUserStorie.length > 0) {
-      // UserStorie;
-      // <ButtonSwitch
-        // const  add_edit={props.addExpense}
-        const  add_edit=props.editExpense
-        const remove=props.removeExpense
-        const updates=updates
-        const bTitel= "Edit User Storie"
-      //   />
-        // {ButtonSwitch( add_edit, remove, updates , bTitel)}
-
-        return <Button>Jeölls</Button>
-      
+  function decider(props) {
+    if (
+      props.activeNote.length === 0 &&
+      props.activeUserStorie[0].collapse === false
+    ) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.addExpense(updates)}
+        >
+          Add NOte
+        </Button>
+      );
     }
-  } 
+    if (
+      props.activeNote.length > 0 &&
+      props.activeUserStorie[0].collapse === false &&
+      props.activeUserStorie[0].storieID === ""
+    ) {
+      return (
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => props.editExpense(props.activeNote[0].id, updates)}
+        >
+          Edit Note
+        </Button>
+      );
+    }
 
+    if (
+      props.activeNote.length > 0 &&
+      props.activeUserStorie.length > 0 &&
+      props.activeUserStorie[0].storieID === ""
+    )
+      return (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => props.addStory((props.activeNote[0].id, addStorie))}
+        >
+          Add Story
+        </Button>
+      );
 
-
+    if (
+      props.activeNote.length > 0 &&
+      props.activeUserStorie.length > 0 &&
+      props.activeUserStorie[0].storieID != ""
+    )
+      return (
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() =>
+            props.editUserStorie(
+              props.activeUserStorie[0].storieID,
+              updateStorie
+            )
+          }
+        >
+          Edit Story
+        </Button>
+      );
+  }
 
   return (
     <div>
       <Grid mt={1} mb={1}>
-        {decider}
-
-        
-
+        <ButtonGroup>{decider(props)}</ButtonGroup>
 
         {/* <ButtonGroup color="primary" variant="text" fullWidth={true}>
           {activeNoteID ? (
@@ -265,10 +339,13 @@ export const ShortDescription = (properties) => {
           />
         </ButtonGroup> */}
 
-        <Button
-        onClick={()=>console.log("Show props: ", props)}
-        >
+        <Button onClick={() => console.log("Show props: ", props)}>
           SHow Props
+        </Button>
+        <Button
+          onClick={() => props.removeExpense({ id: props.activeNote[0].id })}
+        >
+          Remove
         </Button>
       </Grid>
 
@@ -422,7 +499,6 @@ export const ShortDescription = (properties) => {
       </Grid>
 
       {/* <Grid container item xs> */}
-
       {/* <TextField
           label="Note Description"
           variant="outlined"
@@ -453,26 +529,18 @@ export const ShortDescription = (properties) => {
   );
 };
 
-
-export function ButtonSwitch (add_edit, remove,updates , bTitel) {
-  return(
+export function ButtonSwitch(add_edit, remove, updates, bTitel) {
+  return (
     <div>
-
-  <ButtonGroup color="primary" variant="text" fullWidth={true}>
-    <Button 
-    variant ="contained"
-    onClick={()=> add_edit(updates)
-    
-    }>
-      {bTitel}
-    </Button>
-    </ButtonGroup>
+      <ButtonGroup color="primary" variant="text" fullWidth={true}>
+        <Button variant="contained" onClick={() => add_edit(updates)}>
+          {bTitel}
+        </Button>
+      </ButtonGroup>
     </div>
-  )
+  );
 
-
-
-        /* {activeNoteID ? (
+  /* {activeNoteID ? (
           <Button
             variant="contained"
             onClick={() =>
@@ -514,5 +582,4 @@ export function ButtonSwitch (add_edit, remove,updates , bTitel) {
           handelRemoveNote={props.removeExpense}
         />
       </ButtonGroup> */
-  
 }

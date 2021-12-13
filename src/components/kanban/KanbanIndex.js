@@ -25,7 +25,10 @@ import {
 } from "../../actions/kanbanBoard";
 // import { startStory, removeStory } from "../../actions/notes";
 import { v4 as uuidv4 } from "uuid";
-import { setActiveStory, removeActiveStory } from "../../actions/activeStorie";
+import {
+  setActiveStory,
+  removeActiveUserStory,
+} from "../../actions/activeStorie";
 import { getAllActiveUserStories } from "../../selectors/activeStorie";
 import KanbanEditor from "./kanbanEditor";
 
@@ -58,7 +61,6 @@ class InnerList extends React.PureComponent {
 export function s(properties) {
   const props = properties.props;
 
-
   return (
     <Button onClick={() => console.log("Props TEST-PROPS: ", props)}>
       Show Propos
@@ -68,19 +70,15 @@ export function s(properties) {
 export function KanbanIndex(properties) {
   const props = properties.props;
 
-
   const [task, setTask] = useState(props.kanbanBoard);
   const [titel, setTitel] = useState("");
   const [description, setDescription] = useState("");
   const [activeUserStorieID, setActiveUserStorieID] = useState("");
   const [aNoteId, setaNoteId] = useState("");
 
-
   const [noteId, setNoteId] = useState("");
 
-
   useEffect(() => setTask(props.kanbanBoard), [props.kanbanBoard]);
-
 
   if (
     props.activeUserStorie != "" &&
@@ -91,17 +89,11 @@ export function KanbanIndex(properties) {
     setTitel(props.activeUserStorie[0].titel);
     setDescription(props.activeUserStorie[0].description);
     setActiveUserStorieID(props.activeUserStorie[0].storieID);
-
-    
   }
 
-  if (
-    
-    props.activeNote.length > 0 &&
-    props.activeNote[0].id != aNoteId
-  ) {
-        setaNoteId( props.activeNote[0].id)
-    setNoteId( props.activeNote[0].id)
+  if (props.activeNote.length > 0 && props.activeNote[0].id != aNoteId) {
+    setaNoteId(props.activeNote[0].id);
+    setNoteId(props.activeNote[0].id);
   }
 
   const updates = {
@@ -135,7 +127,6 @@ export function KanbanIndex(properties) {
       });
 
       return;
-
     }
 
     const home = task.columns[source.droppableId];
@@ -236,28 +227,22 @@ export function KanbanIndex(properties) {
 
 export function ColKanban(properties) {
   const [collapseCheck, setCollapseCheck] = useState(false);
-  const [aNote , setaNote] =useState("")
+  const [aNote, setaNote] = useState("");
 
-  const props = properties.props.props
+  const props = properties.props.props;
 
-  if (
-    
-    props.activeNote.length > 0 &&
-    props.activeNote[0].id != aNote
-  ) {
-    setaNote( props.activeNote[0].id)
-    setCollapseCheck(false)
-
+  if (props.activeNote.length > 0 && props.activeNote[0].id != aNote) {
+    setaNote(props.activeNote[0].id);
+    setCollapseCheck(false);
   }
 
-  // useEffect(()=> {if (props.activeNote.length > 0
-  // && props.activeNote[0].id != aNote) {
-  //   setCollapseCheck(false)
-    
-  // }} ,[props.activeNote])
 
-
-
+  useEffect(() => {
+    props.removeActiveUserStory(),
+      props.setActiveStory({
+        collapse: collapseCheck,
+      })
+  }, [collapseCheck]);
 
   return (
     <Box>
@@ -306,7 +291,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   addStory: (id, updates) => dispatch(addStory(id, updates)),
   setActiveStory: (updates) => dispatch(setActiveStory(updates)),
-  removeActiveStory: () => dispatch(removeActiveStory()),
+  removeActiveUserStory: () => dispatch(removeActiveUserStory()),
   editUserStorie: (sId, updates) => dispatch(editUserStorie(sId, updates)),
   removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
   // removeCategorie: (id) => dispatch(removeCategorie(id)),

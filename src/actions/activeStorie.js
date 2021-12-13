@@ -2,6 +2,7 @@
 export const setActiveStory = ({
     // export const setActiveStory = ({noteId}) => ({
     id,
+    collapse,
     
     aNoteId,
     titel,
@@ -16,6 +17,7 @@ export const setActiveStory = ({
     type: "SET_USTORY",
     activeUserStorie: {
         id,
+        collapse,
       aNoteId, 
        
       titel,
@@ -33,6 +35,7 @@ export const setActiveStory = ({
 
   
   // REMOVE_USTORY
-  export const removeActiveStory= () => ({
+  export const removeActiveUserStory= () => ({
     type: "REMOVE_USTORY",
+    activeUserStorie:""
   });
