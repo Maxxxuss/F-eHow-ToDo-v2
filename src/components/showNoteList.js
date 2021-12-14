@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Switch,
   Collapse,
+  Button,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
 import CachedIcon from "@mui/icons-material/Cached";
@@ -27,6 +28,7 @@ const SkipButton = (properties) => {
   return (
     <IconButton
       size="small"
+      color="primary"
       onClick={() => handelTakeChanges(props, properties.updates)}
     >
       <CachedIcon />
@@ -74,6 +76,24 @@ const showHintForTimedNotes = (expense, props) => {
   }
 };
 
+const ShowColKanban = (props, labelId) => {
+  // return (
+  //   <Button
+  //   onClick={()=>console.log("Props: ", props , "label ID", labelId)}
+  //   >
+  //     Show Props
+  //   </Button>
+
+  // )
+
+  if (
+    props.props.activeNote.length > 0 &&
+    props.props.activeNote[0].id === labelId
+  )
+    return <ColKanban props={props} />;
+  else return;
+};
+
 export function ShowNotes(props) {
   const expenses = props.expenses;
   const noteListStatus = props.noteListStatus;
@@ -103,103 +123,83 @@ export function ShowNotes(props) {
           const labelId = expense.id;
           return (
             <Paper key={expense.id} elevation={6}>
-              <ListItem key={expense.id}>
-                <ListItemButton
-                  dense={true}
-                  selected={selectedIndex === index}
-                  onClick={(event) =>
-                    handleListItemClick(expense, props, event, index)
-                  }
-                >
-                  <Grid
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="flex-start"
-                  >
-                  <Grid item xs>
-                    <Grid
-                      container
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
+              <Grid
+                container
+                direction="column"
+                // justifyContent="flex-end"
+              >
+                <Grid item>
+                  <ListItem key={expense.id}>
+                    <ListItemButton
+                      dense={true}
+                      selected={selectedIndex === index}
+                      onClick={(event) =>
+                        handleListItemClick(expense, props, event, index)
+                      }
                     >
-                      <Grid item xs={1}>
-                        {showHintForTimedNotes(expense, props)}
-                      </Grid>
-                      <Grid item xs={9}>
-                        <ListItemText
-                          id={expense.id}
-                          primary={expense.description}
-                          secondary={expense.noteDecscription
-                            .substr(33, 250)
-                            .replace(/<[^>]+>/g, "")}
-                        />
-                        <Typography
-                          sx={{
-                            maxHeight: 90,
-                          }}
-                        ></Typography>
-                      </Grid>
+                      <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item xs={1}>
+                          {showHintForTimedNotes(expense, props)}
+                        </Grid>
+                        <Grid item xs={10}>
+                          <ListItemText
+                            id={expense.id}
+                            primary={expense.description}
+                            secondary={expense.noteDecscription
+                              .substr(33, 250)
+                              .replace(/<[^>]+>/g, "")}
+                          />
+                          <Typography
+                            sx={{
+                              maxHeight: 90,
+                            }}
+                          ></Typography>
+                        </Grid>
 
-                      <Grid item xs={2}>
-                        <Grid
-                          container
-                          direction="column"
-                          justifyContent="center"
-                          alignItems="flex-end"
-                        >
-                          <Grid item xs={1}>
-                            <Typography
-                              variant="body2"
-                              style={{
-                                color: "SlateGray",
-                              }}
-                            >
-                              {expense.categorie.substr(0, 8)}
-                            </Typography>
-                          </Grid>
-
-                          <Grid item xs={1}>
-                            <SkipButton
-                              props={props}
-                              updates={{
-                                id: expense.id,
-                                datesToFinish: moment().add(1, "days"),
-                              }}
-                            />
+                        <Grid item xs={1}>
+                          <Grid
+                            container
+                            direction="column"
+                            justifyContent="flex-end"
+                            alignItems="flex-end"
+                          >
+                            <Grid item xs={1}>
+                              <Typography
+                                variant="body2"
+                                style={{
+                                  color: "SlateGray",
+                                }}
+                              >
+                                {expense.categorie.substr(0, 8)}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                              <SkipButton
+                                props={props}
+                                
+                                updates={{
+                                  id: expense.id,
+                                  datesToFinish: moment().add(1, "days"),
+                                }}
+                              />
+                            </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </ListItemButton>
+                  </ListItem>
+                </Grid>
+
+                <Grid item>
+    
+                    {ShowColKanban(props, labelId)}
                   </Grid>
-                  <Grid item xs>
-                    <Grid item xs={12}>
-                      <ColKanban
-                      props={props}
-                      />
-          
-                    </Grid>
-                  </Grid>
-                  </Grid>
-                </ListItemButton>
-              </ListItem>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={collapseCheck}
-                      onChange={() => setCollapseCheck(!collapseCheck)}
-                    />
-                  }
-                  label="Show"
-                />
-                <div>
-                  <Collapse in={collapseCheck}>
-                    <KanbanIndex props={props.props} />
-                  </Collapse>
-                </div>
-              </Grid> */}
+              </Grid>
             </Paper>
           );
         })}

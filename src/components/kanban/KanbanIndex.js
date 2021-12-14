@@ -58,15 +58,7 @@ class InnerList extends React.PureComponent {
     );
   }
 }
-export function s(properties) {
-  const props = properties.props;
 
-  return (
-    <Button onClick={() => console.log("Props TEST-PROPS: ", props)}>
-      Show Propos
-    </Button>
-  );
-}
 export function KanbanIndex(properties) {
   const props = properties.props;
 
@@ -96,14 +88,14 @@ export function KanbanIndex(properties) {
     setNoteId(props.activeNote[0].id);
   }
 
-  const updates = {
-    aNoteId: aNoteId,
-    storieID: uuidv4(),
-    noteId: noteId,
-    titel: titel,
-    description: description,
-    column: "column-2",
-  };
+  // const updates = {
+  //   aNoteId: aNoteId,
+  //   storieID: uuidv4(),
+  //   noteId: noteId,
+  //   titel: titel,
+  //   description: description,
+  //   column: "column-1",
+  // };
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
@@ -211,16 +203,6 @@ export function KanbanIndex(properties) {
           )}
         </Droppable>
       </DragDropContext>
-
-      <Button
-        variant="outlined"
-        onClick={() => console.log("props - Task: ", props)}
-        // onClick={() => console.log("a Note Filter", props.activeUserStorie[0])}
-      >
-        Show Pro
-      </Button>
-
-      {/* <KanbanEditor props={props} /> */}
     </div>
   );
 }
@@ -235,6 +217,11 @@ export function ColKanban(properties) {
     setaNote(props.activeNote[0].id);
     setCollapseCheck(false);
   }
+  if (props.activeNote.length === 0 && props.activeUserStorie[0].collapse === true && aNote != "") {
+    setCollapseCheck(false);
+    setaNote("");
+
+  }
 
 
   useEffect(() => {
@@ -245,7 +232,17 @@ export function ColKanban(properties) {
   }, [collapseCheck]);
 
   return (
-    <Box>
+    <Box
+    mr={3}
+    mb={1}
+    >
+      <Grid
+  container
+  direction="row"
+  justifyContent="flex-end"
+  alignItems="center"
+>
+
       <FormControlLabel
         control={
           <Switch
@@ -253,13 +250,15 @@ export function ColKanban(properties) {
             onChange={() => setCollapseCheck(!collapseCheck)}
           />
         }
-        label="Show"
+        label="Show - Stories"
+        labelPlacement="start"
       />
       <div>
         <Collapse in={collapseCheck}>
           <KanbanIndex props={props} />
         </Collapse>
       </div>
+      </Grid>
     </Box>
   );
 }

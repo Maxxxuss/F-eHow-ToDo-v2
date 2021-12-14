@@ -54,7 +54,7 @@ export default function Column(props) {
     <Draggable draggableId={props.column.id} index={props.index}>
       {(provided, snapshot) => (
         <Box
-          sx={{ width: "220px" }}
+          sx={{ width: "300px" }}
 
           // itemSize={46}
           // itemCount={200}

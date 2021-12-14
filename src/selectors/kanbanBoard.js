@@ -34,12 +34,12 @@ export const getAllgetKanbanBoard = createSelector(
         taskIds:
           group(kb, "column-1") === undefined ? [] : group(kb, "column-1"),
       },
-      "column-2": {
-        id: "column-2",
-        title: "To Do",
-        taskIds:
-          group(kb, "column-2") === undefined ? [] : group(kb, "column-2"),
-      },
+      // "column-2": {
+      //   id: "column-2",
+      //   title: "To Do",
+      //   taskIds:
+      //     group(kb, "column-2") === undefined ? [] : group(kb, "column-2"),
+      // },
       "column-3": {
         id: "column-3",
         title: "In Progress",
@@ -53,7 +53,9 @@ export const getAllgetKanbanBoard = createSelector(
           group(kb, "column-4") === undefined ? [] : group(kb, "column-4"),
       },
     },
-    columnOrder: ["column-1", "column-2", "column-3", "column-4"],
+    columnOrder: ["column-1",
+    //  "column-2", 
+     "column-3", "column-4"],
   })
 );
 

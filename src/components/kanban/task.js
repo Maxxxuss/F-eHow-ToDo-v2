@@ -65,7 +65,7 @@ export default function Task(props) {
                   id={props.task.storieID}
                   primary={props.task.titel}
                   secondary={props.task.description
-                    .substr(0, 250)
+                    .substr(0, 200)
                     .replace(/<[^>]+>/g, "")}
                 ></ListItemText>
               </ListItem>

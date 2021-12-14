@@ -71,6 +71,20 @@ export const ShortDescription = (properties) => {
     setActiveCategorie("");
   };
 
+  const clearStorieInput = (props) => {
+    setActiveNoteID("");
+    setDescription("");
+    setrelevance("");
+    setimportant("");
+    setnoteDecscription({ ops: [] });
+    setdatesToFinish("");
+    setnextStep("");
+    setinfoNote("");
+    seteffort("");
+    setInputCategorie("");
+    setActiveCategorie("");
+  };
+
   //SET FOR ACTIVE USER STORIE
   if (
     props.activeNote != "" &&
@@ -88,6 +102,7 @@ export const ShortDescription = (properties) => {
   if (
     props.activeNote != "" &&
     props.activeNote[0].id != activeNoteID &&
+    props.activeUserStorie.length > 0 &&
     props.activeUserStorie[0].storieID === ""
   ) {
     setActiveNoteID(props.activeNote[0].id);
@@ -120,39 +135,6 @@ export const ShortDescription = (properties) => {
     infoNote: infoNote,
     effort: effort,
     kanbanboard: "",
-    // {
-    // columns:{
-    //   'column-1': {
-    //     id: 'column-1',
-    //     title: 'Backlog',
-    //     taskIds: [],
-    //   },
-    //   'column-2': {
-    //     id: 'column-2',
-    //     title: 'To do',
-    //     taskIds: [],
-    //   },
-    //   'column-3': {
-    //     id: 'column-3',
-    //     title: 'In progress',
-    //     taskIds: [],
-    //   },
-    //     'column-4': {
-    //       id: 'column-4',
-    //       title: 'Done',
-    //       taskIds: [],
-    //   },
-
-    // }
-
-    // }
-  };
-
-  const updatesUserStorie = {
-    storieID: uuidv4(),
-    noteId: activeNoteID,
-    titel: description,
-    column: "column-1",
   };
 
   // useHotkeys(
@@ -172,7 +154,7 @@ export const ShortDescription = (properties) => {
     noteId: noteId,
     titel: description,
     description: noteDecscription,
-    column: "column-2",
+    column: "column-1",
   };
 
   const updateStorie = {
@@ -225,21 +207,9 @@ export const ShortDescription = (properties) => {
 
   function decider(props) {
     if (
-      props.activeNote.length === 0 &&
-      props.activeUserStorie[0].collapse === false
-    ) {
-      return (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.addExpense(updates)}
-        >
-          Add NOte
-        </Button>
-      );
-    }
-    if (
       props.activeNote.length > 0 &&
+      props.activeUserStorie.length > 0  &&
+
       props.activeUserStorie[0].collapse === false &&
       props.activeUserStorie[0].storieID === ""
     ) {
@@ -288,64 +258,89 @@ export const ShortDescription = (properties) => {
           Edit Story
         </Button>
       );
+    else
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.addExpense(updates)}
+        >
+          Add NOte
+        </Button>
+      );
+  }
+
+  function deciderClearInputValue(props) {
+    // IF EDIT -CLEAR TO - ADD Story
+    if (
+      props.activeNote.length > 0 &&
+      props.activeUserStorie.length > 0 &&
+      props.activeUserStorie[0].storieID != ""
+      // &&       props.activeUserStorie[0].collapse === true
+    )
+      return (
+        <div>
+          <IconButton
+            onClick={() =>
+              props.removeActiveUserStory() &&
+              props.setActiveStory({
+                collapse: true,
+              }) &&
+              clearStorieInput(props)
+            }
+            size="large"
+            color="secondary"
+          >
+            <ClearIcon fontSize="large" />
+          </IconButton>
+        </div>
+      );
+    else
+      return (
+        <div>
+          <IconButton
+            onClick={() => clearInputValues(props)}
+            size="large"
+            color="primary"
+          >
+            <ClearIcon fontSize="large" />
+          </IconButton>
+        </div>
+      );
   }
 
   return (
     <div>
       <Grid mt={1} mb={1}>
-        <ButtonGroup>{decider(props)}</ButtonGroup>
+        <ButtonGroup>
+          {decider(props)}
 
-        {/* <ButtonGroup color="primary" variant="text" fullWidth={true}>
           {activeNoteID ? (
             <Button
-              variant="contained"
+              variant="outlined"
               onClick={() =>
-                handelTakeChanges(props, updates) + clearInputValues(props)
+                // handelTakeChanges(props, updates) + clearInputValues(props)
+                statusChange(props, updates) + clearInputValues(props)
               }
             >
-              take Changes
+              Set Satus: {noteStatus === "open" ? "close" : "open"}
             </Button>
           ) : (
-            <Button
-              variant="contained"
-              onClick={() =>
-                handelAddNote(props, updates) + clearInputValues(props)
-              }
-            >
-              Direkt Add
-            </Button>
+            ""
           )}
-          <Button
-            variant="outlined"
-            onClick={() =>
-              // handelTakeChanges(props, updates) + clearInputValues(props)
-              statusChange(props, updates) + clearInputValues(props)
-            }
-          >
-            Satus Changes
-          </Button>
 
-          <Button
-            variant="outlined"
-            // onClick={() => clearInputValues(props)}
-            onClick={() => console.log("Button Props: ", props)}
-          >
-            Clear
-          </Button>
-
-          <DoubleCheckRemoveButton
-            activeNote={props.activeNote}
-            handelRemoveNote={props.removeExpense}
-          />
-        </ButtonGroup> */}
+          {activeNoteID ? (
+            <DoubleCheckRemoveButton
+              activeNote={props.activeNote}
+              handelRemoveNote={props.removeExpense}
+            />
+          ) : (
+            ""
+          )}
+        </ButtonGroup>
 
         <Button onClick={() => console.log("Show props: ", props)}>
           SHow Props
-        </Button>
-        <Button
-          onClick={() => props.removeExpense({ id: props.activeNote[0].id })}
-        >
-          Remove
         </Button>
       </Grid>
 
@@ -359,9 +354,7 @@ export const ShortDescription = (properties) => {
       >
         <Grid container item spacing={1}>
           <Grid item xs={1}>
-            <IconButton onClick={() => clearInputValues(props)} size="large">
-              <ClearIcon fontSize="large" />
-            </IconButton>
+            {deciderClearInputValue(props)}
           </Grid>
 
           <Grid item xs={11}>

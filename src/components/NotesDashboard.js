@@ -90,15 +90,6 @@ export function NotesDashboardPage(props) {
     });
   }
 
-  // const nestedArry =()=>{
-
-  //   props.expense.map(kanbanboard)
-
-
-
-
-  // }
-
   const ProjectTab = (categories) =>
     categories.map((categorie, index) => (
       <Tab
@@ -161,14 +152,6 @@ export function NotesDashboardPage(props) {
               NotesDashboradProps={props}
               activeCategorie={activeCategorie}
             />
-            <AddUserStory
-            props={props}
-            />
-            <Button
-            onClick={()=>console.log("NotesDas Props NOTE-STORIES: ", props.noteStories)}
-            >
-              Show Props
-            </Button>
           </Grid>
         </Grid>
       </Box>
@@ -194,15 +177,11 @@ const mapStateToProps = (state) => {
     categories: getAllCategories(state).sort((a, b) =>
       a.sorting > b.sorting ? 1 : -1
     ),
-
     //   historyCategorie: getHistorieCategorie(state),
       globalVariables: getGlobalVariables(state),
-
       //KanbanIndex
       activeUserStorie: getAllActiveUserStories(state),
       kanbanBoard: getAllgetKanbanBoard(state),
-
-
   };
 };
 
