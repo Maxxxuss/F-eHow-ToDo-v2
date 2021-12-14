@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import Task from "./task";
-import { Box, List, Paper } from "@mui/material";
+import { Box, List, Paper, Grid } from "@mui/material";
 import { FixedSizeList } from "react-window";
 import { minHeight } from "@mui/system";
 
@@ -51,69 +51,128 @@ class InnerList extends React.Component {
 
 export default function Column(props) {
   return (
-    <Draggable draggableId={props.column.id} index={props.index}>
-      {(provided, snapshot) => (
-        <Box
-          sx={{ width: "300px" }}
-
-          // itemSize={46}
-          // itemCount={200}
-          // overscanCount={5}
-          // scroll="paper"
-          // maxHeight={90}
-          // overflow= 'auto'
-        >
-          {/* <Box
-          // width={300}
-          // height={200}
-          // scrollbarSize	={100}
-          // autoPageSize="true"
-
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-          {...provided.draggableProps}
-          > */}
-
-          <Paper
-            ref={provided.innerRef}
-            // isDragging={snapshot.isDragging}
-            {...provided.draggableProps}
-          >
-            <Title
-              {...provided.dragHandleProps}
-              isDragging={snapshot.isDragging}
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-evenly"
+      alignItems="center"
+    >
+      <Grid item>
+        <Draggable draggableId={props.column.id} index={props.index}>
+          {(provided, snapshot) => (
+            <Paper
+              ref={provided.innerRef}
+              // isDragging={snapshot.isDragging}
+              {...provided.draggableProps}
             >
-              {props.column.title}
-            </Title>
-            <Box
-              overflow="auto"
-              sx={{
-                //   backgroundColor: 'primary.dark',
-                //   '&:hover': {
-                //     backgroundColor: 'primary.main',
-                //     opacity: [0.9, 0.8, 0.7]},
-                // width: "100%",
-                height: "250px",
-              }}
-            >
-              <Droppable droppableId={props.column.id} type="TASK">
-                {(provided, snapshot) => (
-                  <TaskList
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    isDraggingOver={snapshot.isDraggingOver}
-                  >
-                    <InnerList tasks={props.tasks} props={props} />
-                    {provided.placeholder}
-                  </TaskList>
-                )}
-              </Droppable>
-            </Box>
-          </Paper>
-          {/* </Box> */}
-        </Box>
-      )}
-    </Draggable>
+              <Box
+                sx={{
+                  //   backgroundColor: 'primary.dark',
+                  //   '&:hover': {
+                  //     backgroundColor: 'primary.main',
+                  //     opacity: [0.9, 0.8, 0.7]},
+                  minWidth:"280px",
+                  // height: "250px",
+                }}
+              >
+              <Title
+                {...provided.dragHandleProps}
+                isDragging={snapshot.isDragging}
+              >
+                {props.column.title}
+              </Title>
+              </Box>
+              <Box
+                overflow="auto"
+                sx={{
+                  //   backgroundColor: 'primary.dark',
+                  //   '&:hover': {
+                  //     backgroundColor: 'primary.main',
+                  //     opacity: [0.9, 0.8, 0.7]},
+                  width:"100%",
+                  height: "250px",
+                }}
+              >
+                <Droppable droppableId={props.column.id} type="TASK">
+                  {(provided, snapshot) => (
+                    <TaskList
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      isDraggingOver={snapshot.isDraggingOver}
+                    >
+                      <InnerList tasks={props.tasks} props={props} />
+                      {provided.placeholder}
+                    </TaskList>
+                  )}
+                </Droppable>
+              </Box>
+            </Paper>
+
+            //   <Box
+            //     sx={{
+            //       // width: "300px"
+            //       // autowith:true
+            //     }}
+
+            //     // itemSize={46}
+            //     // itemCount={200}
+            //     // overscanCount={5}
+            //     // scroll="paper"
+            //     // maxHeight={90}
+            //     // overflow= 'auto'
+            //   >
+            //     {/* <Box
+            //     // width={300}
+            //     // height={200}
+            //     // scrollbarSize	={100}
+            //     // autoPageSize="true"
+
+            //     ref={provided.innerRef}
+            //     isDragging={snapshot.isDragging}
+            //     {...provided.draggableProps}
+            //     > */}
+
+            //     <Paper
+            //       ref={provided.innerRef}
+            //       // isDragging={snapshot.isDragging}
+            //       {...provided.draggableProps}
+            //     >
+            //       <Title
+            //         {...provided.dragHandleProps}
+            //         isDragging={snapshot.isDragging}
+            //       >
+            //         {props.column.title}
+            //       </Title>
+            //       <Box
+            //         overflow="auto"
+            //         sx={{
+            //           //   backgroundColor: 'primary.dark',
+            //           //   '&:hover': {
+            //           //     backgroundColor: 'primary.main',
+            //           //     opacity: [0.9, 0.8, 0.7]},
+            //           // width: "100%",
+            //           height: "250px",
+            //         }}
+            //       >
+            //         <Droppable droppableId={props.column.id} type="TASK">
+            //           {(provided, snapshot) => (
+            //             <TaskList
+            //               ref={provided.innerRef}
+            //               {...provided.droppableProps}
+            //               isDraggingOver={snapshot.isDraggingOver}
+            //             >
+            //               <InnerList tasks={props.tasks} props={props} />
+            //               {provided.placeholder}
+            //             </TaskList>
+            //           )}
+            //         </Droppable>
+            //       </Box>
+            //     </Paper>
+            //   </Box>
+          )}
+        </Draggable>
+      </Grid>
+    </Grid>
   );
 }
 

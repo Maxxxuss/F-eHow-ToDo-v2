@@ -217,47 +217,52 @@ export function ColKanban(properties) {
     setaNote(props.activeNote[0].id);
     setCollapseCheck(false);
   }
-  if (props.activeNote.length === 0 && props.activeUserStorie[0].collapse === true && aNote != "") {
+  if (
+    props.activeNote.length === 0 &&
+    props.activeUserStorie[0].collapse === true &&
+    aNote != ""
+  ) {
     setCollapseCheck(false);
     setaNote("");
-
   }
-
 
   useEffect(() => {
     props.removeActiveUserStory(),
       props.setActiveStory({
         collapse: collapseCheck,
-      })
+      });
   }, [collapseCheck]);
 
   return (
-    <Box
-    mr={3}
-    mb={1}
-    >
+    <Box mr={3} mb={1}>
       <Grid
-  container
-  direction="row"
-  justifyContent="flex-end"
-  alignItems="center"
->
-
-      <FormControlLabel
-        control={
-          <Switch
-            checked={collapseCheck}
-            onChange={() => setCollapseCheck(!collapseCheck)}
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid
+          item xs ={12}
+          // alignItems="flex-end"
+        >
+          <FormControlLabel
+            control={
+              <Switch
+                checked={collapseCheck}
+                onChange={() => setCollapseCheck(!collapseCheck)}
+              />
+            }
+            label="Show - Stories"
+            labelPlacement="start"
           />
-        }
-        label="Show - Stories"
-        labelPlacement="start"
-      />
-      <div>
-        <Collapse in={collapseCheck}>
-          <KanbanIndex props={props} />
-        </Collapse>
-      </div>
+        </Grid>
+      </Grid>
+
+ 
+        <Grid item xs={12}>
+          <Collapse in={collapseCheck}>
+            <KanbanIndex props={props} />
+          </Collapse>
       </Grid>
     </Box>
   );

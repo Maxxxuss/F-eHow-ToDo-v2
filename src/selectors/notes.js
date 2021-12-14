@@ -42,6 +42,8 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     onHold: expense.onHold ? expense.onHold : false,
     effort: expense.effort ? expense.effort : "5",
     kanbanboard:expense.kanbanboard, 
+    countNoteStories: expense.countNoteStories ? expense.countNoteStories : "",
+
     
   }))
 );

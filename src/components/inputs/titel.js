@@ -52,6 +52,8 @@ export const ShortDescription = (properties) => {
   const [aNoteId, setaNoteId] = useState("");
   const [noteId, setNoteId] = useState("");
   const [aUserStorieID, setAUserStorieID] = useState("");
+  const [counterNoteStories, setCounterNoteStories] = useState("");
+
 
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
@@ -91,14 +93,37 @@ export const ShortDescription = (properties) => {
     props.activeNote[0].id === activeNoteID &&
     props.activeUserStorie[0].storieID != "" &&
     props.activeUserStorie[0].storieID != aUserStorieID
-  ) {
+      ) {
+    // setActiveNoteID(props.activeNote[0].id);
+
     setDescription(props.activeUserStorie[0].titel);
     setnoteDecscription(props.activeUserStorie[0].description);
     setAUserStorieID(props.activeUserStorie[0].storieID);
+    // setCounterNoteStories(props.activeNote[0].countNoteStories)
   }
 
-  // SET - Active Note
+  if (  
 
+props.activeNote != "" 
+&& props.activeNote[0].id === activeNoteID 
+&& props.activeUserStorie[0].collapse === true
+&& (description != "" || noteDecscription != "" )
+
+
+  ) {
+    // setActiveNoteID(props.activeNote[0].id);
+
+
+    setDescription("");
+    setnoteDecscription("");
+    setAUserStorieID("");
+    // setCounterNoteStories(props.activeNote[0].countNoteStories)
+
+  }
+
+ 
+
+  // SET - Active Note
   if (
     props.activeNote != "" &&
     props.activeNote[0].id != activeNoteID &&
@@ -233,7 +258,11 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => props.addStory((props.activeNote[0].id, addStorie))}
+          onClick={() => 
+            props.addStory((props.activeNote[0].id, addStorie)) &&
+            props.editExpense(props.activeNote[0].id, {countNoteStories:counterNoteStories+1})
+          
+          }
         >
           Add Story
         </Button>
