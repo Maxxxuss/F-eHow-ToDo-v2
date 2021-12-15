@@ -1,14 +1,12 @@
-import React from 'react';
-import propTypes from 'prop-types';
-// import { createTheme, makeStyles } from '@mui/material/styles'
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import TabDetailsProDetails from './TabDetails/ProjectDetails';
-import ProjectJournal from './TabDetails/ProjectJournal';
-
+import React from "react";
+import propTypes from "prop-types";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TabDetailsProDetails from "./TabDetails/ProjectDetails";
+import ProjectJournal from "./TabDetails/ProjectJournal";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -23,7 +21,9 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography component={'span'} variant={'body2'}>{children}</Typography>
+          <Typography component={"span"} variant={"body2"}>
+            {children}
+          </Typography>
         </Box>
       )}
     </div>
@@ -39,17 +39,9 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//     width: '100%',
-//     backgroundColor: theme.palette.background.paper,
-//   },
-// }));
 
 export default function ProjectTabPanelDetails(props) {
   // const classes = useStyles();
@@ -60,8 +52,8 @@ export default function ProjectTabPanelDetails(props) {
   };
 
   return (
-    <div >
-      <AppBar position="static" color="default" >
+    <div>
+      <AppBar position="static" color="default">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -78,24 +70,18 @@ export default function ProjectTabPanelDetails(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-
         <TabDetailsProDetails
           activeCategorie={props.activeCategorie}
           setCategorie={props.setCategorie}
           editCategorie={props.editCategorie}
           removeCategorie={props.removeCategorie}
           actHistroyCategorie={props.actHistroyCategorie}
-
-
         />
-
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ProjectJournal
           activeCategorie={props.activeCategorie}
           journalExpenses={props.journalExpenses}
-
-
         />
       </TabPanel>
       <TabPanel value={value} index={2}>
@@ -104,7 +90,6 @@ export default function ProjectTabPanelDetails(props) {
       <TabPanel value={value} index={3}>
         Risks
       </TabPanel>
-
     </div>
   );
 }

@@ -1,44 +1,26 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import store from "../store/configureStore";
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  Box,
-  Grid,
-  Button,
-  // styled,
-  Link,
-} from "@mui/material";
-// import { createTheme, makeStyles } from '@mui/material/styles'
-
+import { AppBar, Tabs, Tab, Box, Grid, Link } from "@mui/material";
 
 import ImpExpData from "./ImpExpData";
 import { getAllExpenses } from "../selectors/notes";
 import { ShortDescription } from "./inputs/titel";
 import { addActiveNote, removeActiveNote } from "../actions/activeNote";
-import { getAllActiveNotes, getAllActiveNoteStories } from "../selectors/activeNote";
+import { getAllActiveNotes } from "../selectors/activeNote";
 import { addExpense, editExpense, removeExpense } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { SearchForNotes } from "./inputs/search";
-import { FilteredNotesList } from "./showNoteList";
 import { getAllCategories } from "../selectors/categories";
 import AddDeleteProject from "./AddDeleteProject";
 import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
-import { propsToClassKey } from "@mui/styles";
-import  AddUserStory  from "./kanban/AddUserStory";
 
-import { addStory,
-  editUserStorie,
-  removeStory,} from "../actions/kanbanBoard";
-  import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
-  import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
-  import { getAllActiveUserStories } from "../selectors/activeStorie";
-
-
+import { addStory, editUserStorie, removeStory } from "../actions/kanbanBoard";
+import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
+import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
+import { getAllActiveUserStories } from "../selectors/activeStorie";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -56,29 +38,13 @@ export function setActiveNote(expense, props) {
       infoNote: expense.infoNote,
       effort: expense.effort,
       noteStatus: expense.noteStatus,
-      kanbanboard:[expense.kanbanboard], 
+      kanbanboard: [expense.kanbanboard],
       countNoteStories: expense.countNoteStories,
-      // kanbanboard:{x
-      //   k_id: expense.kanbanboard.k_id,
-      //   k_titel: expense.kanbanboard.k_titel,
-      //   k_description: expense.kanbanboard.k_description,
-      //   k_dastesToFinish: expense.kanbanboard.k_dastesToFinish,
-      //   k_colID: expense.kanbanboard.k_colID,
-      // }
     };
     props.addActiveNote(updates);
     console.log("Active Notee: ", updates);
   }
 }
-
-// const Item = styled(Paper)(({ theme }) => ({
-//   ...theme.typography.body2,
-//   padding: theme.spacing(2),
-//   textAlign: 'flex-start',
-//   color: theme.palette.text.secondary,
-// }));
-
-
 
 export function NotesDashboardPage(props) {
   const [tabCategorie, setTabCategorie] = useState(0);
@@ -108,15 +74,15 @@ export function NotesDashboardPage(props) {
         py: 8,
       }}
     >
-         <Link
-          href="/proDash"
-          style={{
-            backgroundColor: "yellow",
-            padding: "20",
-          }}
-        >
-          Project Dashboard
-        </Link>
+      <Link
+        href="/proDash"
+        style={{
+          backgroundColor: "yellow",
+          padding: "20",
+        }}
+      >
+        Project Dashboard
+      </Link>
       <Box mt={2} mb={2} mr={2} ml={2}>
         <AppBar position="static" color="default">
           <Grid container alignItems="row">
@@ -158,9 +124,7 @@ export function NotesDashboardPage(props) {
       </Box>
 
       <Grid item xs={12}>
-        <ImpExpData 
-        props={props}
-        />
+        <ImpExpData props={props} />
       </Grid>
     </Box>
   );
@@ -169,7 +133,7 @@ console.log(store.getState());
 
 const mapStateToProps = (state) => {
   return {
-    // noteStories: getAllActiveNoteStories(state),    
+    // noteStories: getAllActiveNoteStories(state),
     activeNote: getAllActiveNotes(state),
     expenses: getAllExpenses(state).sort((a, b) => (a.prio > b.prio ? -1 : 1)),
     openExpenses: getAllExpenses(state)
@@ -179,10 +143,10 @@ const mapStateToProps = (state) => {
       a.sorting > b.sorting ? 1 : -1
     ),
     //   historyCategorie: getHistorieCategorie(state),
-      globalVariables: getGlobalVariables(state),
-      //KanbanIndex
-      activeUserStorie: getAllActiveUserStories(state),
-      kanbanBoard: getAllgetKanbanBoard(state),
+    globalVariables: getGlobalVariables(state),
+    //KanbanIndex
+    activeUserStorie: getAllActiveUserStories(state),
+    kanbanBoard: getAllgetKanbanBoard(state),
   };
 };
 
@@ -203,8 +167,6 @@ const mapDispatchToProps = (dispatch) => ({
   removeActiveUserStory: () => dispatch(removeActiveUserStory()),
   editUserStorie: (sId, updates) => dispatch(editUserStorie(sId, updates)),
   removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
-
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

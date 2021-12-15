@@ -7,11 +7,10 @@ import {
 } from "../../actions/categorie";
 import {
   getAllCategories,
-  getCategories,
   getHistorieCategorie,
 } from "../../selectors/categories";
 import { getAllExpenses } from "../../selectors/notes";
-import { Button, ButtonGroup, List, TextField, Link } from '@mui/material'
+import { TextField, Link } from "@mui/material";
 import ProjectTabPanelDetails from "./ProjectTapPanelDetails";
 import { addExpense, editExpense, removeExpense } from "../../actions/notes";
 
@@ -122,11 +121,6 @@ class ProjectDashboard extends React.Component {
           label="Project ID"
           value={categorie.catID}
           onChange={this.onCatIDChange}
-          // inputProps={{
-          //     style: {
-          //         fontSize: 16,
-          //     }
-          // }}
         ></TextField>
 
         <TextField

@@ -2,29 +2,17 @@ import {
   TextField,
   Autocomplete,
   Button,
-  ButtonBase,
   Grid,
-  Card,
   ButtonGroup,
   IconButton,
-  Typography,
 } from "@mui/material";
-import moment, { isMoment } from "moment";
-import React, { useEffect, useState } from "react";
-import {
-  handelAddNote,
-  handelRemoveNote,
-  handelTakeChanges,
-} from "../Button/AddNote";
+import moment from "moment";
+import React, { useState } from "react";
+import { handelTakeChanges } from "../Button/AddNote";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
-import { useHotkeys } from "react-hotkeys-hook";
-import { Box } from "@mui/system";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import { v4 as uuidv4 } from "uuid";
-
-function hotKey(params) {}
-// export function ShortDescription(properties) {
 
 export const ShortDescription = (properties) => {
   const props = properties.NotesDashboradProps;
@@ -54,8 +42,6 @@ export const ShortDescription = (properties) => {
   const [aUserStorieID, setAUserStorieID] = useState("");
   const [counterNoteStories, setCounterNoteStories] = useState("");
   const [storieClearer, setStorieClearer] = useState("");
-
-
 
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
@@ -95,43 +81,29 @@ export const ShortDescription = (properties) => {
     props.activeNote[0].id === activeNoteID &&
     props.activeUserStorie[0].storieID != "" &&
     props.activeUserStorie[0].storieID != aUserStorieID
-      ) {
-    // setActiveNoteID(props.activeNote[0].id);
-
+  ) {
     setDescription(props.activeUserStorie[0].titel);
     setnoteDecscription(props.activeUserStorie[0].description);
     setAUserStorieID(props.activeUserStorie[0].storieID);
-    // setCounterNoteStories(props.activeNote[0].countNoteStories)
   }
 
-  if (  
-props.activeNote != "" 
-&& props.activeNote[0].id === activeNoteID 
-&& props.activeUserStorie[0].collapse === true
-&& storieClearer != false
-// &&     props.activeUserStorie[0].storieID === aUserStorieID
-
-
-)
-   {
+  if (
+    props.activeNote != "" &&
+    props.activeNote[0].id === activeNoteID &&
+    props.activeUserStorie[0].collapse === true &&
+    storieClearer != false
+  ) {
     setDescription("");
     setnoteDecscription("");
-    // setAUserStorieID(false);
-    setStorieClearer(false)
-    // setCounterNoteStories(props.activeNote[0].countNoteStories)
-
+    setStorieClearer(false);
   }
-
-
-
- 
 
   // SET - Active Note
   if (
     props.activeNote != "" &&
     props.activeNote[0].id != activeNoteID &&
-    props.activeUserStorie.length > 0 
-    && props.activeUserStorie[0].storieID === ""
+    props.activeUserStorie.length > 0 &&
+    props.activeUserStorie[0].storieID === ""
   ) {
     setActiveNoteID(props.activeNote[0].id);
     setDescription(props.activeNote[0].description);
@@ -145,9 +117,8 @@ props.activeNote != ""
     setinfoNote(props.activeNote[0].infoNote);
     seteffort(props.activeNote[0].effort);
     setnoteStatus(props.activeNote[0].noteStatus);
-    setStorieClearer(true)
-    setCounterNoteStories(props.activeNote[0].countNoteStories)
-
+    setStorieClearer(true);
+    setCounterNoteStories(props.activeNote[0].countNoteStories);
   }
 
   const updates = {
@@ -167,12 +138,6 @@ props.activeNote != ""
     effort: effort,
     kanbanboard: "",
   };
-
-  // useHotkeys(
-  //   "control+a",
-  //   () => handelTakeChanges(props, updates)
-  //    + clearInputValues(props)
-  // );
 
   if (props.activeNote.length > 0 && props.activeNote[0].id != aNoteId) {
     setaNoteId(props.activeNote[0].id);
@@ -206,7 +171,6 @@ props.activeNote != ""
   var modules = {
     toolbar: [
       [{ header: 1 }, { header: 2 }],
-      // [{ 'header': [1, 2, false] }],
       ["bold", "italic", "underline", "strike", "blockquote"],
       [
         { list: "ordered" },
@@ -239,8 +203,7 @@ props.activeNote != ""
   function decider(props) {
     if (
       props.activeNote.length > 0 &&
-      props.activeUserStorie.length > 0  &&
-
+      props.activeUserStorie.length > 0 &&
       props.activeUserStorie[0].collapse === false &&
       props.activeUserStorie[0].storieID === ""
     ) {
@@ -264,17 +227,17 @@ props.activeNote != ""
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => 
+          onClick={() =>
             props.addStory((props.activeNote[0].id, addStorie)) &&
-            props.editExpense(props.activeNote[0].id, {countNoteStories: true})
-          
-          
+            props.editExpense(props.activeNote[0].id, {
+              countNoteStories: true,
+            })
           }
         >
           Add Story
         </Button>
-      )
-   
+      );
+
     if (
       props.activeNote.length > 0 &&
       props.activeUserStorie.length > 0 &&
@@ -285,13 +248,10 @@ props.activeNote != ""
           variant="outlined"
           color="secondary"
           onClick={() =>
-
             props.editUserStorie(
               props.activeUserStorie[0].storieID,
               updateStorie
-            ) &&
-            setStorieClearer(false)
-
+            ) && setStorieClearer(false)
           }
         >
           Edit Story
@@ -315,7 +275,6 @@ props.activeNote != ""
       props.activeNote.length > 0 &&
       props.activeUserStorie.length > 0 &&
       props.activeUserStorie[0].storieID != ""
-      // &&       props.activeUserStorie[0].collapse === true
     )
       return (
         <div>
@@ -358,7 +317,6 @@ props.activeNote != ""
             <Button
               variant="outlined"
               onClick={() =>
-                // handelTakeChanges(props, updates) + clearInputValues(props)
                 statusChange(props, updates) + clearInputValues(props)
               }
             >
@@ -404,11 +362,7 @@ props.activeNote != ""
               onChange={(e) => setDescription(e.target.value)}
               color="secondary"
               fullWidth
-              // inputProps={{
-              //   style: {
-              //     fontSize: 18,
-              //   },
-              // }}
+              //
             />
           </Grid>
         </Grid>
@@ -442,12 +396,6 @@ props.activeNote != ""
               variant="filled"
               color="secondary"
               fullWidth
-              // select={true}
-              // inputProps={{
-              //   style: {
-              //     fontSize: 18,
-              //   },
-              // }}
             />
           </Grid>
 
@@ -459,11 +407,6 @@ props.activeNote != ""
               onChange={(e) => setrelevance(e.target.value)}
               color="secondary"
               fullWidth
-              // inputProps={{
-              //   style: {
-              //     fontSize: 18,
-              //   },
-              // }}
             />
           </Grid>
           <Grid item xs>
@@ -474,11 +417,6 @@ props.activeNote != ""
               value={important}
               onChange={(e) => setimportant(e.target.value)}
               fullWidth
-              // inputProps={{
-              //   style: {
-              //     fontSize: 18,
-              //   },
-              // }}
             />
           </Grid>
 
@@ -490,11 +428,6 @@ props.activeNote != ""
               onChange={(e) => seteffort(e.target.value)}
               color="secondary"
               fullWidth
-              // inputProps={{
-              //   style: {
-              //     fontSize: 18,
-              //   },
-              // }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -530,24 +463,6 @@ props.activeNote != ""
         </Grid>
       </Grid>
 
-      {/* <Grid container item xs> */}
-      {/* <TextField
-          label="Note Description"
-          variant="outlined"
-          value={noteDecscription}
-          onChange={(e) => setnoteDecscription(e.target.value)}
-          margin="normal"
-          color="secondary"
-          minRows="6"
-          multiline
-          fullWidth
-          // inputProps={{
-          //   style: {
-          //     fontSize: 16,
-          //   },
-          // }}
-        /> */}
-      {/* </Grid> */}
       <ReactQuill
         theme="snow"
         value={noteDecscription}
@@ -555,8 +470,6 @@ props.activeNote != ""
         modules={modules}
         formats={formats}
       />
-
-      {/* <ReactQuill theme="snow" value={noteDecscription}  onChange={(e) => setnoteDecscription(e.target.value)}/> */}
     </div>
   );
 };
@@ -571,47 +484,4 @@ export function ButtonSwitch(add_edit, remove, updates, bTitel) {
       </ButtonGroup>
     </div>
   );
-
-  /* {activeNoteID ? (
-          <Button
-            variant="contained"
-            onClick={() =>
-              handelTakeChanges(props, updates) + clearInputValues(props)
-            }
-          >
-            take Changes
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            onClick={() =>
-              handelAddNote(props, updates) + clearInputValues(props)
-            }
-          >
-            Direkt Add
-          </Button>
-        )}
-        <Button
-          variant="outlined"
-          onClick={() =>
-            // handelTakeChanges(props, updates) + clearInputValues(props)
-            statusChange(props, updates) + clearInputValues(props)
-          }
-        >
-          Satus Changes
-        </Button>
-
-        <Button
-          variant="outlined"
-          // onClick={() => clearInputValues(props)}
-          onClick={() => console.log("Button Props: ", props)}
-        >
-          Clear
-        </Button>
-
-        <DoubleCheckRemoveButton
-          activeNote={props.activeNote}
-          handelRemoveNote={props.removeExpense}
-        />
-      </ButtonGroup> */
 }

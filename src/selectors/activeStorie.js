@@ -7,7 +7,6 @@ export const getAllActiveUserStories = createSelector(
   (activeUserStorie) =>
     activeUserStorie.map((aUserStorie) => ({
       id: aUserStorie.id ? aUserStorie.id : "",
-    //   collapse: aUserStorie.storieID ? true : aUserStorie.collapse ? aUserStorie.collapse : false , 
       collapse: aUserStorie.collapse ? aUserStorie.collapse : false,
 
       aNoteId: aUserStorie.aNoteId ? aUserStorie.aNoteId : "",

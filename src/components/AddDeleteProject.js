@@ -1,42 +1,19 @@
 import React from "react";
-// import Button from '@mui/material/Button"
-// import Dialog from '@mui/material/Dialog";
-// import DialogActions from '@mui/material/DialogActions";
-// import DialogContent from '@mui/material/DialogContent";
-// import DialogTitle from '@mui/material/DialogTitle";
-// import InputLabel from '@mui/material/InputLabel";
 
-// import FormControl from '@mui/material/FormControl";
-// import { green } from '@mui/material/colors";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-import {Button,
+import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   InputLabel,
   FormControl,
-  TextField } from "@mui/material"
-
-// const useStyles = makeStyles((theme) => ({
-//   container: {
-//     display: "flex",
-//     flexWrap: "wrap",
-//   },
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 120,
-//   },
-// }));
-// const theme = createTheme({
-//   palette: {
-//     primary: green,
-//   },
-// });
+  TextField,
+} from "@mui/material";
 
 export default function AddDeleteProject(props) {
-  // const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [categorieName, setCategorieName] = React.useState("");
   const [categorieID, setCategorieID] = React.useState("");
@@ -69,7 +46,6 @@ export default function AddDeleteProject(props) {
         ),
     }),
       handleClose();
-    // props.SnackBar()
   };
 
   return (
@@ -105,8 +81,7 @@ export default function AddDeleteProject(props) {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={addCategorie} color="primary"     variant="contained"
->
+          <Button onClick={addCategorie} color="primary" variant="contained">
             Add Project
           </Button>
           <Button onClick={handleClose} color="primary">

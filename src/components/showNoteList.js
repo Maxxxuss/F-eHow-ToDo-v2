@@ -9,22 +9,16 @@ import {
   Typography,
   Paper,
   IconButton,
-  FormControlLabel,
-  Switch,
-  Collapse,
-  Button,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
 import CachedIcon from "@mui/icons-material/Cached";
 import { handelTakeChanges } from "./Button/AddNote";
 import moment from "moment";
-import { ColKanban, KanbanIndex } from "./kanban/KanbanIndex";
-import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
+import { ColKanban } from "./kanban/KanbanIndex";
+import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 
 const SkipButton = (properties) => {
   const props = properties.props ? properties.props.props : "";
-
-  // const activeNote = props != "" & props.activeNote!= undefined ? props.activeNote[0].id :""
 
   return (
     <IconButton
@@ -77,18 +71,7 @@ const showHintForTimedNotes = (expense, props) => {
   }
 };
 
-
-
 const ShowColKanban = (props, labelId) => {
-  // return (
-  //   <Button
-  //   onClick={()=>console.log("Props: ", props , "label ID", labelId)}
-  //   >
-  //     Show Props
-  //   </Button>
-
-  // )
-
   if (
     props.props.activeNote.length > 0 &&
     props.props.activeNote[0].id === labelId
@@ -126,11 +109,7 @@ export function ShowNotes(props) {
           const labelId = expense.id;
           return (
             <Paper key={expense.id} elevation={6}>
-              <Grid
-                container
-                direction="column"
-                // justifyContent="flex-end"
-              >
+              <Grid container direction="column">
                 <Grid item>
                   <ListItem key={expense.id}>
                     <ListItemButton
@@ -149,9 +128,11 @@ export function ShowNotes(props) {
                         <Grid item xs={1}>
                           {showHintForTimedNotes(expense, props)}
 
-                          { expense.countNoteStories === true ?
-                          <StickyNote2OutlinedIcon /> : ""}
-
+                          {expense.countNoteStories === true ? (
+                            <StickyNote2OutlinedIcon />
+                          ) : (
+                            ""
+                          )}
                         </Grid>
                         <Grid item xs={10}>
                           <ListItemText
@@ -188,7 +169,6 @@ export function ShowNotes(props) {
                             <Grid item xs={1}>
                               <SkipButton
                                 props={props}
-                                
                                 updates={{
                                   id: expense.id,
                                   datesToFinish: moment().add(1, "days"),
@@ -202,10 +182,7 @@ export function ShowNotes(props) {
                   </ListItem>
                 </Grid>
 
-                <Grid item>
-    
-                    {ShowColKanban(props, labelId)}
-                  </Grid>
+                <Grid item>{ShowColKanban(props, labelId)}</Grid>
               </Grid>
             </Paper>
           );

@@ -17,11 +17,6 @@ export function autoSaveFunc(props) {
       a.click();
 
       props.editGlobalVariables({ autoSave: 0 });
-      // this.setState({
-      //   notificationStatusAutoSave: true,
-      //   snackbarAutoSaveServety: "info",
-      //   snackBarAutoSaveMessage: " Auto Save",
-      // });
     } else {
       props.editGlobalVariables({ autoSave: autoSave + 1 });
     }
@@ -29,12 +24,9 @@ export function autoSaveFunc(props) {
 }
 
 export function AutoSave(properties) {
-
   const props = properties.props;
   const onOffSwitch = props.globalVariables.onOffSwitch;
   const autoSave = props.globalVariables.autoSave;
-
-
 
   const autoSaveSwitch = () => {
     const onOffSwitch = props.globalVariables.onOffSwitch;
@@ -48,12 +40,12 @@ export function AutoSave(properties) {
 
   const autoSaveLabel = () => {
     const onOffSwitch = props.globalVariables.onOffSwitch;
-    const autoSave = 11-props.globalVariables.autoSave ;
+    const autoSave = 11 - props.globalVariables.autoSave;
 
     if (onOffSwitch != true) {
       return "Auto Save OFF";
     } else {
-      return ("Auto Save in " +  autoSave + " Actions");
+      return "Auto Save in " + autoSave + " Actions";
     }
   };
 
@@ -64,18 +56,9 @@ export function AutoSave(properties) {
           checked={props.globalVariables.onOffSwitch != false ? false : true}
           onChange={() => autoSaveSwitch()}
           color="error"
-          // color="secondary"
         />
       }
       label={autoSaveLabel()}
-      // label={
-      //   onOffSwitch != true ?
-      //    "Auto Save Off" : 
-      //    ["Auto Save in ", 11 - autoSave, " Actions"]
-
-
-      // }
-      // label="AutoSave"
     />
   );
 }

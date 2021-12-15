@@ -1,25 +1,10 @@
-import {
-  Button,
-  FormControlLabel,
-  Grid,
-  Snackbar,
-  Switch,
-} from '@mui/material';
+import { Button, Grid } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
 import { editGlobalVariables } from "../actions/globalVariables";
 import { getGlobalVariables } from "../selectors/autoSave";
-
 import { locCache, setLocalStorageState } from "../store/configureStore";
 import { AutoSave } from "./inputs/autoSave";
-
-// class ImpExpData extends React.Component {
-// constructor (props) {
-//   super(props)
-//   this.state= {
-//     notificationStatus:   false
-//   }
-// }
 
 export function ImpExpData(props) {
   const expLocalStorage = (filename, text = locCache()) => {
@@ -43,10 +28,7 @@ export function ImpExpData(props) {
     window.location.reload();
   };
 
-
-
   return (
-    // <div className="impExpButton">
     <div>
       <Grid
         container
@@ -57,20 +39,6 @@ export function ImpExpData(props) {
       >
         <Grid item>
           <AutoSave props={props} />
-          {/* <FormControlLabel
-              control={
-                <Switch
-                  checked={
-                    this.props.globalVariables.onOffSwitch != false
-                      ? false
-                      : true
-                  }
-                  onChange={this.autoSaveSwitch}
-                  name="Info Note"
-                />
-              }
-              label={this.autoSaveLabel()}
-            /> */}
         </Grid>
 
         <Grid item>

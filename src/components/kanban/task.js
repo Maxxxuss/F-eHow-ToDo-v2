@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
-import {
-  Paper,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Box,
-} from "@mui/material";
+import { Paper, ListItem, ListItemText, Box } from "@mui/material";
 
 const Container = styled.div`
   border: 1px solid lightgrey;
@@ -38,12 +32,7 @@ export default function Task(props) {
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
             onClick={() =>
-              // console.log("PROPS TASK: ", props.task)
-              // // &&
               cprops.removeActiveUserStory() &&
-
-
-
               cprops.setActiveStory({
                 titel: props.task.titel,
                 description: props.task.description,
@@ -53,11 +42,9 @@ export default function Task(props) {
           >
             <Box
               sx={{
-                // background: 'primary.dark',
                 "&:hover": {
                   color: "primary.main",
                 },
-                // opacity: [0.9, 0.8, 0.7]},
               }}
             >
               <ListItem key={props.task.storieID}>

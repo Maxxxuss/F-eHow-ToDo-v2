@@ -1,5 +1,5 @@
 import {
-  Grid,
+
   TextField,
   Switch,
   Paper,
@@ -9,32 +9,10 @@ import {
 } from '@mui/material';
 import React from "react";
 import PDetailsAddSetRemoveButton from "./ProjDetailsButtonAddSetRemove";
-// import { createTheme, makeStyles } from '@mui/material/styles';
 
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     height: 180,
-//   },
-//   container: {
-//     display: "flex",
-//   },
-//   paper: {
-//     margin: theme.spacing(1),
-//   },
-//   svg: {
-//     width: 100,
-//     height: 100,
-//   },
-//   polygon: {
-//     fill: theme.palette.common.white,
-//     stroke: theme.palette.divider,
-//     strokeWidth: 1,
-//   },
-// }));
 
 export default function TabDetailsProDetails(props) {
-  // const classes = useStyles();
+
 
   const [sorting, setSorting] = React.useState("");
   const [catID, setCatID] = React.useState("");
