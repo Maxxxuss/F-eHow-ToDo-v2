@@ -19,6 +19,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { handelTakeChanges } from "./Button/AddNote";
 import moment from "moment";
 import { ColKanban, KanbanIndex } from "./kanban/KanbanIndex";
+import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 
 const SkipButton = (properties) => {
   const props = properties.props ? properties.props.props : "";
@@ -75,6 +76,8 @@ const showHintForTimedNotes = (expense, props) => {
     return <span></span>;
   }
 };
+
+
 
 const ShowColKanban = (props, labelId) => {
   // return (
@@ -145,6 +148,10 @@ export function ShowNotes(props) {
                       >
                         <Grid item xs={1}>
                           {showHintForTimedNotes(expense, props)}
+
+                          { expense.countNoteStories === true ?
+                          <StickyNote2OutlinedIcon /> : ""}
+
                         </Grid>
                         <Grid item xs={10}>
                           <ListItemText

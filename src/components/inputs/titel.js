@@ -53,6 +53,8 @@ export const ShortDescription = (properties) => {
   const [noteId, setNoteId] = useState("");
   const [aUserStorieID, setAUserStorieID] = useState("");
   const [counterNoteStories, setCounterNoteStories] = useState("");
+  const [storieClearer, setStorieClearer] = useState("");
+
 
 
   const space = "<p><br></p> ";
@@ -103,23 +105,24 @@ export const ShortDescription = (properties) => {
   }
 
   if (  
-
 props.activeNote != "" 
 && props.activeNote[0].id === activeNoteID 
 && props.activeUserStorie[0].collapse === true
-&& (description != "" || noteDecscription != "" )
+&& storieClearer != false
+// &&     props.activeUserStorie[0].storieID === aUserStorieID
 
 
-  ) {
-    // setActiveNoteID(props.activeNote[0].id);
-
-
+)
+   {
     setDescription("");
     setnoteDecscription("");
-    setAUserStorieID("");
+    // setAUserStorieID(false);
+    setStorieClearer(false)
     // setCounterNoteStories(props.activeNote[0].countNoteStories)
 
   }
+
+
 
  
 
@@ -127,8 +130,8 @@ props.activeNote != ""
   if (
     props.activeNote != "" &&
     props.activeNote[0].id != activeNoteID &&
-    props.activeUserStorie.length > 0 &&
-    props.activeUserStorie[0].storieID === ""
+    props.activeUserStorie.length > 0 
+    && props.activeUserStorie[0].storieID === ""
   ) {
     setActiveNoteID(props.activeNote[0].id);
     setDescription(props.activeNote[0].description);
@@ -142,6 +145,9 @@ props.activeNote != ""
     setinfoNote(props.activeNote[0].infoNote);
     seteffort(props.activeNote[0].effort);
     setnoteStatus(props.activeNote[0].noteStatus);
+    setStorieClearer(true)
+    setCounterNoteStories(props.activeNote[0].countNoteStories)
+
   }
 
   const updates = {
@@ -178,13 +184,13 @@ props.activeNote != ""
     storieID: uuidv4(),
     noteId: noteId,
     titel: description,
-    description: noteDecscription,
+    description: space + timeStamp + noteDecscription,
     column: "column-1",
   };
 
   const updateStorie = {
     titel: description,
-    description: noteDecscription,
+    description: space + timeStamp + noteDecscription,
   };
 
   function statusChange(props, updates) {
@@ -260,14 +266,15 @@ props.activeNote != ""
           color="secondary"
           onClick={() => 
             props.addStory((props.activeNote[0].id, addStorie)) &&
-            props.editExpense(props.activeNote[0].id, {countNoteStories:counterNoteStories+1})
+            props.editExpense(props.activeNote[0].id, {countNoteStories: true})
+          
           
           }
         >
           Add Story
         </Button>
-      );
-
+      )
+   
     if (
       props.activeNote.length > 0 &&
       props.activeUserStorie.length > 0 &&
@@ -278,10 +285,13 @@ props.activeNote != ""
           variant="outlined"
           color="secondary"
           onClick={() =>
+
             props.editUserStorie(
               props.activeUserStorie[0].storieID,
               updateStorie
-            )
+            ) &&
+            setStorieClearer(false)
+
           }
         >
           Edit Story
