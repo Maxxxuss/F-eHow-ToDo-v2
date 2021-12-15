@@ -2,22 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./column";
-import { connect } from "react-redux";
-import { getAllActiveNotes } from "../../selectors/activeNote";
+
 
 import { Box, Collapse, FormControlLabel, Grid, Switch } from "@mui/material";
-import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
-import {
-  addStory,
-  editUserStorie,
-  removeStory,
-} from "../../actions/kanbanBoard";
 
-import {
-  setActiveStory,
-  removeActiveUserStory,
-} from "../../actions/activeStorie";
-import { getAllActiveUserStories } from "../../selectors/activeStorie";
 
 const Container = styled.div`
   display: flex;
