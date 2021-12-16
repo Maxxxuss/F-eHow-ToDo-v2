@@ -8,11 +8,11 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import React, { useState } from "react";
-import { handelTakeChanges } from "../Button/AddNote";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import ReactQuill from "react-quill";
 import { v4 as uuidv4 } from "uuid";
+import { autoSaveFunc } from "./autoSave";
 
 export const ShortDescription = (properties) => {
   const props = properties.NotesDashboradProps;
@@ -161,11 +161,12 @@ export const ShortDescription = (properties) => {
   function statusChange(props, updates) {
     if (noteStatus === "open") {
       const noteStatus = { ...updates, ...{ noteStatus: "closed" } };
-      handelTakeChanges(props, noteStatus);
+      props.editExpense(props.activeNote[0].id, noteStatus)
+      autoSaveFunc(props)
     } else {
       const noteStatus = { ...updates, ...{ noteStatus: "open" } };
-      handelTakeChanges(props, noteStatus);
-    }
+      props.editExpense(props.activeNote[0].id, noteStatus)
+      autoSaveFunc(props)    }
   }
 
   var modules = {

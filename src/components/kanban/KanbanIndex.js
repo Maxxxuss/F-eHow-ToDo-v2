@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./column";
 
-
 import { Box, Collapse, FormControlLabel, Grid, Switch } from "@mui/material";
-
 
 const Container = styled.div`
   display: flex;
