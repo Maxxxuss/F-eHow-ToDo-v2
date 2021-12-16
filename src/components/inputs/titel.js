@@ -13,6 +13,7 @@ import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import ReactQuill from "react-quill";
 import { v4 as uuidv4 } from "uuid";
 import { autoSaveFunc } from "./autoSave";
+import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
 
 export const ShortDescription = (properties) => {
   const props = properties.NotesDashboradProps;
@@ -21,7 +22,9 @@ export const ShortDescription = (properties) => {
 
   const [relevance, setrelevance] = useState("");
   const [important, setimportant] = useState("");
-  const [noteDecscription, setnoteDecscription] = useState({ ops: [] });
+  const [noteDecscription, setnoteDecscription] = useState("");
+  // const [noteDecscription, setnoteDecscription] = useState({ ops: [] });
+
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
   const [infoNote, setinfoNote] = useState("");
@@ -30,11 +33,6 @@ export const ShortDescription = (properties) => {
 
   const [activeCategorie, setActiveCategorie] = useState("");
   const [inputCategorie, setInputCategorie] = useState("");
-
-  var EMPTY_DELTA = { ops: [] };
-
-  const [theme, setTheme] = useState("snow");
-  const [valueQuill, setValueQuill] = useState(EMPTY_DELTA);
 
   //KanbanIndex
   const [aNoteId, setaNoteId] = useState("");
@@ -52,7 +50,7 @@ export const ShortDescription = (properties) => {
     setDescription("");
     setrelevance("");
     setimportant("");
-    setnoteDecscription({ ops: [] });
+    setnoteDecscription("");
     setdatesToFinish("");
     setnextStep("");
     setinfoNote("");
@@ -66,7 +64,7 @@ export const ShortDescription = (properties) => {
     setDescription("");
     setrelevance("");
     setimportant("");
-    setnoteDecscription({ ops: [] });
+    setnoteDecscription("");
     setdatesToFinish("");
     setnextStep("");
     setinfoNote("");
@@ -161,12 +159,13 @@ export const ShortDescription = (properties) => {
   function statusChange(props, updates) {
     if (noteStatus === "open") {
       const noteStatus = { ...updates, ...{ noteStatus: "closed" } };
-      props.editExpense(props.activeNote[0].id, noteStatus)
-      autoSaveFunc(props)
+      props.editExpense(props.activeNote[0].id, noteStatus);
+      autoSaveFunc(props);
     } else {
       const noteStatus = { ...updates, ...{ noteStatus: "open" } };
-      props.editExpense(props.activeNote[0].id, noteStatus)
-      autoSaveFunc(props)    }
+      props.editExpense(props.activeNote[0].id, noteStatus);
+      autoSaveFunc(props);
+    }
   }
 
   var modules = {
@@ -212,7 +211,10 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => props.editExpense(props.activeNote[0].id, updates)}
+          onClick={() =>
+            props.editExpense(props.activeNote[0].id, updates) &&
+            clearInputValues(props)
+          }
         >
           Edit Note
         </Button>
@@ -232,7 +234,8 @@ export const ShortDescription = (properties) => {
             props.addStory((props.activeNote[0].id, addStorie)) &&
             props.editExpense(props.activeNote[0].id, {
               countNoteStories: true,
-            })
+            }) &&
+            clearStorieInput()
           }
         >
           Add Story
@@ -252,7 +255,9 @@ export const ShortDescription = (properties) => {
             props.editUserStorie(
               props.activeUserStorie[0].storieID,
               updateStorie
-            ) && setStorieClearer(false)
+            ) &&
+            setStorieClearer(false) &&
+            clearStorieInput()
           }
         >
           Edit Story
@@ -263,7 +268,7 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => props.addExpense(updates)}
+          onClick={() => props.addExpense(updates) && clearInputValues(props)}
         >
           Add NOte
         </Button>
@@ -311,7 +316,7 @@ export const ShortDescription = (properties) => {
   return (
     <div>
       <Grid mt={1} mb={1}>
-        <ButtonGroup>
+        <ButtonGroup fullWidth={true}>
           {decider(props)}
 
           {activeNoteID ? (
