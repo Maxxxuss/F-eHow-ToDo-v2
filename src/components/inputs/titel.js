@@ -134,7 +134,28 @@ export const ShortDescription = (properties) => {
     nextStep: nextStep,
     infoNote: infoNote,
     effort: effort,
-    kanbanboard: "",
+    kanbanboard: {
+      tasks: [],
+      columns: {
+        "column-1": {
+          id: "column-1",
+          title: "Backlock",
+          taskIds: [],
+        },
+
+        "column-3": {
+          id: "column-3",
+          title: "In Progress",
+          taskIds: [],
+        },
+        "column-4": {
+          id: "column-4",
+          title: "Done",
+          taskIds: [],
+        },
+      },
+      columnOrder: ["column-1", "column-3", "column-4"],
+    },
   };
 
   if (props.activeNote.length > 0 && props.activeNote[0].id != aNoteId) {
@@ -200,6 +221,15 @@ export const ShortDescription = (properties) => {
     "background",
   ];
 
+  const kanbanUpdates = {
+    aNoteId: aNoteId,
+    storieID: uuidv4(),
+    noteId: noteId,
+    titel: description,
+    description: space + timeStamp + noteDecscription,
+    column: "column-1",
+  };
+
   function decider(props) {
     if (
       props.activeNote.length > 0 &&
@@ -231,11 +261,10 @@ export const ShortDescription = (properties) => {
           variant="contained"
           color="secondary"
           onClick={() =>
-            props.addStory((props.activeNote[0].id, addStorie)) &&
-            props.editExpense(props.activeNote[0].id, {
-              countNoteStories: true,
-            }) &&
-            clearStorieInput()
+            props.addNoteStory(
+              activeNoteID, 
+              kanbanUpdates
+            ) && clearStorieInput()
           }
         >
           Add Story

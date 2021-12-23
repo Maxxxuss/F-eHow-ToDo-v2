@@ -8,7 +8,7 @@ import { getAllExpenses } from "../selectors/notes";
 import { ShortDescription } from "./inputs/titel";
 import { addActiveNote, removeActiveNote } from "../actions/activeNote";
 import { getAllActiveNotes } from "../selectors/activeNote";
-import { addExpense, editExpense, removeExpense } from "../actions/notes";
+import { addExpense, addNoteStory,  editExpense, removeExpense } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { SearchForNotes } from "./inputs/search";
@@ -17,9 +17,9 @@ import AddDeleteProject from "./AddDeleteProject";
 import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 
-import { addStory, editUserStorie, removeStory } from "../actions/kanbanBoard";
+// import { addStory, editUserStorie, removeStory } from "../actions/kanbanBoard";
 import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
-import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
+// import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
 import { getAllActiveUserStories } from "../selectors/activeStorie";
 
 export function setActiveNote(expense, props) {
@@ -146,7 +146,7 @@ const mapStateToProps = (state) => {
     globalVariables: getGlobalVariables(state),
     //KanbanIndex
     activeUserStorie: getAllActiveUserStories(state),
-    kanbanBoard: getAllgetKanbanBoard(state),
+    // kanbanBoard: getAllgetKanbanBoard(state),
   };
 };
 
@@ -167,6 +167,8 @@ const mapDispatchToProps = (dispatch) => ({
   removeActiveUserStory: () => dispatch(removeActiveUserStory()),
   editUserStorie: (sId, updates) => dispatch(editUserStorie(sId, updates)),
   removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
+  addNoteStory: (noteId, updates) =>dispatch(addNoteStory(noteId, updates)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

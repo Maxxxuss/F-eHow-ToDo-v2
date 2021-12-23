@@ -71,10 +71,9 @@ export const removeActiveNote = () => ({
 // }
 
 // EDIT_ACTIVE_NOTE
-export const editActiveNote = (id, updates) => ({
+export const editActiveNote = (updates) => ({
   type: "EDIT_ACTIVE_NOTE",
-  id,
-  updates,
+    updates,
 });
 
 export const changeStatus = (id, updates) => ({

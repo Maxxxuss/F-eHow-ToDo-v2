@@ -7,6 +7,17 @@ const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
     case "REMOVE_ACTIVE_NOTE":
       return (state = []);
 
+    case "EDIT_ACTIVE_NOTE":
+      return {
+        ...state,
+        kanbanboard: {
+          ...state.kanbanboard,
+          tasks: {
+            ...action.updates,
+          },
+        },
+      };
+
     default:
       return state;
   }

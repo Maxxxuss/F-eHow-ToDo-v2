@@ -34,7 +34,7 @@ class InnerList extends React.PureComponent {
 export default function KanbanIndex(properties) {
   const props = properties.props;
 
-  const [task, setTask] = useState(props.kanbanBoard);
+  const [task, setTask] = useState(props.activeNote[0].kanbanboard[0])
   const [titel, setTitel] = useState("");
   const [description, setDescription] = useState("");
   const [activeUserStorieID, setActiveUserStorieID] = useState("");
@@ -42,7 +42,11 @@ export default function KanbanIndex(properties) {
 
   const [noteId, setNoteId] = useState("");
 
-  useEffect(() => setTask(props.kanbanBoard), [props.kanbanBoard]);
+  // useEffect(() => setTask(props.activeNote[0]), [props.activeNote]);
+
+  // NEXT 
+  // (!) Working on Updae Kanban Index 
+  // (2) Updatede Active Note 
 
   if (
     props.activeUserStorie != "" &&

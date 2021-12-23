@@ -41,10 +41,87 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     snooze: expense.snooze ? expense.snooze : false,
     onHold: expense.onHold ? expense.onHold : false,
     effort: expense.effort ? expense.effort : "5",
-    kanbanboard: expense.kanbanboard,
     countNoteStories: expense.countNoteStories ? expense.countNoteStories : "",
+    kanbanboard:
+      expense.kanbanboard === ""
+        ? {
+            tasks: [],
+            columns: {
+              "column-1": {
+                id: "column-1",
+                title: "Backlock",
+                taskIds: [],
+              },
+
+              "column-3": {
+                id: "column-3",
+                title: "In Progress",
+                taskIds: [],
+              },
+              "column-4": {
+                id: "column-4",
+                title: "Done",
+                taskIds: [],
+              },
+            },
+            columnOrder: ["column-1", "column-3", "column-4"],
+          }
+        : {
+            tasks: expense.kanbanboard.tasks.map((storie) => ({
+              aNoteId: storie.aNoteId ? storie.aNoteId : "",
+              storieID: storie.storieID ? storie.storieID : "",
+              titel: storie.titel ? storie.titel : "",
+              description: storie.description ? storie.description : "",
+            })),
+            columns: {
+              "column-1": {
+                id: "column-1",
+                title: "Backlock",
+                taskIds:
+                  group(expense.kanbanboard.tasks, "column-1") === undefined
+                    ? []
+                    : group(expense.kanbanboard.tasks, "column-1"),
+              },
+
+              "column-3": {
+                id: "column-3",
+                title: "In Progress",
+                taskIds:
+                  group(expense.kanbanboard.tasks, "column-3") === undefined
+                    ? []
+                    : group(expense.kanbanboard.tasks, "column-3"),
+              },
+              "column-4": {
+                id: "column-4",
+                title: "Done",
+                taskIds:
+                  group(expense.kanbanboard.tasks, "column-4") === undefined
+                    ? []
+                    : group(expense.kanbanboard.tasks, "column-4"),
+              },
+            },
+            columnOrder: ["column-1", "column-3", "column-4"],
+          },
   }))
 );
+
+export function group(list, varCol) {
+  const grouped = groupBy(list, (pet) => pet.column);
+
+  function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+      const key = keyGetter(item);
+      if (!map.has(key)) {
+        map.set(key, [item.storieID]);
+      } else {
+        map.get(key).push(item.storieID);
+      }
+    });
+    return map;
+  }
+  return grouped.get(varCol);
+}
 
 export function absDatesToFin(datesToFinish) {
   var b = moment();
@@ -113,3 +190,5 @@ function calculatePrio(
     return calc;
   }
 }
+
+

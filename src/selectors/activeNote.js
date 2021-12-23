@@ -3,7 +3,7 @@ import moment from "moment";
 
 export const getActiveNotes = (state) => state.activeNote;
 
-export const getActiveK = (state) => state.activeNote[0].kanbanboard[0];
+// export const getActiveK = (state) => state.activeNote[0].kanbanboard[0];
 
 export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
   activeNotes.map((activeNote) => ({
@@ -30,41 +30,41 @@ export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
     snooze: activeNote.snooze ? activeNote.snooze : "",
     onHold: activeNote.onHold ? activeNote.onHold : "",
     effort: activeNote.effort ? activeNote.effort : "",
-    kabanboard: activeNote.kanbanboard ? activeNote.kanbanboard : "",
+    kanbanboard: activeNote.kanbanboard ? activeNote.kanbanboard : "",
     countNoteStories: activeNote.countNoteStories
       ? activeNote.countNoteStories
       : "",
   }))
 );
 
-export const getAllActiveNoteStories = createSelector(
-  getActiveK,
-  (activeNotes) => ({
-    tasks: activeNotes.map((activeColumn) => ({
-      id: activeColumn.k_id ? activeColumn.k_id : "",
-      titel: activeColumn.k_titel ? activeColumn.k_titel : "",
-      description: activeColumn.k_description ? activeColumn.k_description : "",
-    })),
+// export const getAllActiveNoteStories = createSelector(
+//   getActiveK,
+//   (activeNotes) => ({
+//     tasks: activeNotes.map((activeColumn) => ({
+//       id: activeColumn.k_id ? activeColumn.k_id : "",
+//       titel: activeColumn.k_titel ? activeColumn.k_titel : "",
+//       description: activeColumn.k_description ? activeColumn.k_description : "",
+//     })),
 
-    columnOrder: ["column-1", "column-2", "column-3", "column-4"],
-  })
-);
+//     columnOrder: ["column-1", "column-2", "column-3", "column-4"],
+//   })
+// );
 
-function group(list, varCol) {
-  const grouped = groupBy(list, (pet) => pet.k_colID);
+// function group(list, varCol) {
+//   const grouped = groupBy(list, (pet) => pet.k_colID);
 
-  function groupBy(list, keyGetter) {
-    const map = new Map();
-    list.forEach((item) => {
-      const key = keyGetter(item);
-      if (!map.has(key)) {
-        map.set(key, [item.k_id]);
-      } else {
-        map.get(key).push(item.k_id);
-      }
-    });
-    return map;
-  }
+//   function groupBy(list, keyGetter) {
+//     const map = new Map();
+//     list.forEach((item) => {
+//       const key = keyGetter(item);
+//       if (!map.has(key)) {
+//         map.set(key, [item.k_id]);
+//       } else {
+//         map.get(key).push(item.k_id);
+//       }
+//     });
+//     return map;
+//   }
 
-  return grouped.get(varCol);
-}
+//   return grouped.get(varCol);
+// }
