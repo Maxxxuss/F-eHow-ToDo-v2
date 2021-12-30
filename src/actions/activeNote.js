@@ -81,3 +81,16 @@ export const changeStatus = (id, updates) => ({
   id,
   updates,
 });
+
+export const addNoteStory_ActiveNote = (noteId, updates) => ({
+  type: "ADD_NOTE_STORY_ACTIVE_NOTE",
+  noteId,
+  updates,
+});
+
+export const editNoteStory_ActiveNote = (noteId, userStorieID,updates) => ({
+  type: "EDIT_NOTE_STORY_ACTIVE_NOTE",
+  noteId,
+  userStorieID,
+  updates,
+});

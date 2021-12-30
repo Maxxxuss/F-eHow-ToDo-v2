@@ -1,3 +1,8 @@
+// WORK on:
+// 1. Edit User Story
+// Entweder Edit expense && active Note
+// oper Dit Expense und Update Active Note
+
 import {
   TextField,
   Autocomplete,
@@ -14,9 +19,14 @@ import ReactQuill from "react-quill";
 import { v4 as uuidv4 } from "uuid";
 import { autoSaveFunc } from "./autoSave";
 import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
+import { getAllActiveNotes } from "../../selectors/activeNote";
+import { connect } from "react-redux";
+
+import store from "../../store/configureStore";
 
 export const ShortDescription = (properties) => {
-  const props = properties.NotesDashboradProps;
+  const props = properties;
+  const ndsProps = properties.NotesDashboradProps;
   const [activeNoteID, setActiveNoteID] = useState("");
   const [description, setDescription] = useState("");
 
@@ -44,8 +54,8 @@ export const ShortDescription = (properties) => {
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
 
-  const clearInputValues = (props) => {
-    props.removeActiveNote();
+  const clearInputValues = (ndsProps) => {
+    ndsProps.removeActiveNote();
     setActiveNoteID("");
     setDescription("");
     setrelevance("");
@@ -59,7 +69,7 @@ export const ShortDescription = (properties) => {
     setActiveCategorie("");
   };
 
-  const clearStorieInput = (props) => {
+  const clearStorieInput = (ndsProps) => {
     setActiveNoteID("");
     setDescription("");
     setrelevance("");
@@ -75,20 +85,25 @@ export const ShortDescription = (properties) => {
 
   //SET FOR ACTIVE USER STORIE
   if (
-    props.activeNote != "" &&
-    props.activeNote[0].id === activeNoteID &&
-    props.activeUserStorie[0].storieID != "" &&
-    props.activeUserStorie[0].storieID != aUserStorieID
+    ndsProps.activeNote.id != "" &&
+    ndsProps.activeUserStorie.length >0 &&
+
+    ndsProps.activeUserStorie[0].storieID != "" &&
+    ndsProps.activeUserStorie[0].storieID != aUserStorieID
   ) {
-    setDescription(props.activeUserStorie[0].titel);
-    setnoteDecscription(props.activeUserStorie[0].description);
-    setAUserStorieID(props.activeUserStorie[0].storieID);
+    setDescription(ndsProps.activeUserStorie[0].titel);
+    setnoteDecscription(ndsProps.activeUserStorie[0].description);
+    setAUserStorieID(ndsProps.activeUserStorie[0].storieID);
   }
 
   if (
-    props.activeNote != "" &&
-    props.activeNote[0].id === activeNoteID &&
-    props.activeUserStorie[0].collapse === true &&
+    ndsProps.activeNote.id != "" &&
+    ndsProps.activeNote.id === activeNoteID &&
+    ndsProps.activeUserStorie.length >0 &&
+
+    ndsProps.activeUserStorie[0].storieID != "" &&
+
+    ndsProps.activeUserStorie[0].collapse === true &&
     storieClearer != false
   ) {
     setDescription("");
@@ -98,25 +113,27 @@ export const ShortDescription = (properties) => {
 
   // SET - Active Note
   if (
-    props.activeNote != "" &&
-    props.activeNote[0].id != activeNoteID &&
-    props.activeUserStorie.length > 0 &&
-    props.activeUserStorie[0].storieID === ""
-  ) {
-    setActiveNoteID(props.activeNote[0].id);
-    setDescription(props.activeNote[0].description);
-    setrelevance(props.activeNote[0].relevance);
-    setimportant(props.activeNote[0].important);
-    setnoteDecscription(props.activeNote[0].noteDecscription);
+    ndsProps.activeNote.id != "" &&
+    ndsProps.activeUserStorie.length >0 &&
 
-    setInputCategorie(props.activeNote[0].categorie);
-    setdatesToFinish(props.activeNote[0].datesToFinish);
-    setnextStep(props.activeNote[0].nextStep);
-    setinfoNote(props.activeNote[0].infoNote);
-    seteffort(props.activeNote[0].effort);
-    setnoteStatus(props.activeNote[0].noteStatus);
+    ndsProps.activeNote.id != activeNoteID
+    // && ndsProps.activeUserStorie.length > 0 &&
+    // ndsProps.activeUserStorie[0].storieID === ""
+  ) {
+    setActiveNoteID(ndsProps.activeNote.id);
+    setDescription(ndsProps.activeNote.description);
+    setrelevance(ndsProps.activeNote.relevance);
+    setimportant(ndsProps.activeNote.important);
+    setnoteDecscription(ndsProps.activeNote.noteDecscription);
+
+    setInputCategorie(ndsProps.activeNote.categorie);
+    setdatesToFinish(ndsProps.activeNote.datesToFinish);
+    setnextStep(ndsProps.activeNote.nextStep);
+    setinfoNote(ndsProps.activeNote.infoNote);
+    seteffort(ndsProps.activeNote.effort);
+    setnoteStatus(ndsProps.activeNote.noteStatus);
     setStorieClearer(true);
-    setCounterNoteStories(props.activeNote[0].countNoteStories);
+    setCounterNoteStories(ndsProps.activeNote.countNoteStories);
   }
 
   const updates = {
@@ -128,8 +145,8 @@ export const ShortDescription = (properties) => {
     datesToFinish: datesToFinish ? datesToFinish : moment().add(1, "days"),
     categorie: inputCategorie
       ? inputCategorie
-      : props.activeNote != ""
-      ? props.activeNote[0].categorie
+      : ndsProps.activeNote.id != ""
+      ? ndsProps.activeNote.categorie
       : properties.activeCategorie.catName,
     nextStep: nextStep,
     infoNote: infoNote,
@@ -158,9 +175,9 @@ export const ShortDescription = (properties) => {
     },
   };
 
-  if (props.activeNote.length > 0 && props.activeNote[0].id != aNoteId) {
-    setaNoteId(props.activeNote[0].id);
-    setNoteId(props.activeNote[0].id);
+  if (ndsProps.activeNote.length > 0 && ndsProps.activeNote.id != aNoteId) {
+    setaNoteId(ndsProps.activeNote.id);
+    setNoteId(ndsProps.activeNote.id);
   }
 
   const addStorie = {
@@ -177,15 +194,15 @@ export const ShortDescription = (properties) => {
     description: space + timeStamp + noteDecscription,
   };
 
-  function statusChange(props, updates) {
+  function statusChange(ndsProps, updates) {
     if (noteStatus === "open") {
       const noteStatus = { ...updates, ...{ noteStatus: "closed" } };
-      props.editExpense(props.activeNote[0].id, noteStatus);
-      autoSaveFunc(props);
+      ndsProps.editExpense(ndsProps.activeNote.id, noteStatus);
+      autoSaveFunc(ndsProps);
     } else {
       const noteStatus = { ...updates, ...{ noteStatus: "open" } };
-      props.editExpense(props.activeNote[0].id, noteStatus);
-      autoSaveFunc(props);
+      ndsProps.editExpense(ndsProps.activeNote.id, noteStatus);
+      autoSaveFunc(ndsProps);
     }
   }
 
@@ -230,20 +247,20 @@ export const ShortDescription = (properties) => {
     column: "column-1",
   };
 
-  function decider(props) {
+  function decider(ndsProps) {
     if (
-      props.activeNote.length > 0 &&
-      props.activeUserStorie.length > 0 &&
-      props.activeUserStorie[0].collapse === false &&
-      props.activeUserStorie[0].storieID === ""
+      ndsProps.activeNote.id != "" &&
+      ndsProps.activeUserStorie.length > 0 &&
+      ndsProps.activeUserStorie[0].collapse === false &&
+      ndsProps.activeUserStorie[0].storieID === ""
     ) {
       return (
         <Button
           variant="outlined"
           color="primary"
           onClick={() =>
-            props.editExpense(props.activeNote[0].id, updates) &&
-            clearInputValues(props)
+            ndsProps.editExpense(ndsProps.activeNote.id, updates) &&
+            clearInputValues(ndsProps)
           }
         >
           Edit Note
@@ -252,19 +269,21 @@ export const ShortDescription = (properties) => {
     }
 
     if (
-      props.activeNote.length > 0 &&
-      props.activeUserStorie.length > 0 &&
-      props.activeUserStorie[0].storieID === ""
+      ndsProps.activeNote.id != "" &&
+      ndsProps.activeUserStorie.length > 0 &&
+      ndsProps.activeUserStorie[0].collapse > 0
+      //&& ndsProps.activeUserStorie[0].storieID === ""
     )
       return (
         <Button
           variant="contained"
           color="secondary"
           onClick={() =>
-            props.addNoteStory(
-              activeNoteID, 
-              kanbanUpdates
-            ) && clearStorieInput()
+            ndsProps.addNoteStory(activeNoteID, kanbanUpdates) 
+            // && editActiveNote()
+            && ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates)
+
+            &&clearStorieInput()
           }
         >
           Add Story
@@ -272,17 +291,25 @@ export const ShortDescription = (properties) => {
       );
 
     if (
-      props.activeNote.length > 0 &&
-      props.activeUserStorie.length > 0 &&
-      props.activeUserStorie[0].storieID != ""
+      ndsProps.activeNote.id != "" &&
+      ndsProps.activeUserStorie.length > 0 &&
+      ndsProps.activeUserStorie[0].storieID != ""
     )
       return (
         <Button
           variant="outlined"
           color="secondary"
           onClick={() =>
-            props.editUserStorie(
-              props.activeUserStorie[0].storieID,
+            ndsProps.editNoteStory(
+              activeNoteID,
+              ndsProps.activeUserStorie[0].storieID,
+              updateStorie
+
+            )
+
+            && ndsProps.editNoteStory_ActiveNote(
+              activeNoteID,
+              ndsProps.activeUserStorie[0].storieID,
               updateStorie
             ) &&
             setStorieClearer(false) &&
@@ -297,29 +324,31 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => props.addExpense(updates) && clearInputValues(props)}
+          onClick={() =>
+            ndsProps.addExpense(updates) && clearInputValues(ndsProps)
+          }
         >
           Add NOte
         </Button>
       );
   }
 
-  function deciderClearInputValue(props) {
+  function deciderClearInputValue(ndsProps) {
     // IF EDIT -CLEAR TO - ADD Story
     if (
-      props.activeNote.length > 0 &&
-      props.activeUserStorie.length > 0 &&
-      props.activeUserStorie[0].storieID != ""
+      ndsProps.activeNote.length > 0 &&
+      ndsProps.activeUserStorie.length > 0 &&
+      ndsProps.activeUserStorie[0].storieID != ""
     )
       return (
         <div>
           <IconButton
             onClick={() =>
-              props.removeActiveUserStory() &&
-              props.setActiveStory({
+              ndsProps.removeActiveUserStory() &&
+              ndsProps.setActiveStory({
                 collapse: true,
               }) &&
-              clearStorieInput(props)
+              clearStorieInput(ndsProps)
             }
             size="large"
             color="secondary"
@@ -332,7 +361,7 @@ export const ShortDescription = (properties) => {
       return (
         <div>
           <IconButton
-            onClick={() => clearInputValues(props)}
+            onClick={() => clearInputValues(ndsProps)}
             size="large"
             color="primary"
           >
@@ -346,13 +375,13 @@ export const ShortDescription = (properties) => {
     <div>
       <Grid mt={1} mb={1}>
         <ButtonGroup fullWidth={true}>
-          {decider(props)}
+          {decider(ndsProps)}
 
           {activeNoteID ? (
             <Button
               variant="outlined"
               onClick={() =>
-                statusChange(props, updates) + clearInputValues(props)
+                statusChange(ndsProps, updates) + clearInputValues(ndsProps)
               }
             >
               Set Satus: {noteStatus === "open" ? "close" : "open"}
@@ -363,15 +392,15 @@ export const ShortDescription = (properties) => {
 
           {activeNoteID ? (
             <DoubleCheckRemoveButton
-              activeNote={props.activeNote}
-              handelRemoveNote={props.removeExpense}
+              activeNote={ndsProps.activeNote}
+              handelRemoveNote={ndsProps.removeExpense}
             />
           ) : (
             ""
           )}
         </ButtonGroup>
 
-        <Button onClick={() => console.log("Show props: ", props)}>
+        <Button onClick={() => console.log("Show ndsProps: ", props)}>
           SHow Props
         </Button>
       </Grid>
@@ -386,7 +415,7 @@ export const ShortDescription = (properties) => {
       >
         <Grid container item spacing={1}>
           <Grid item xs={1}>
-            {deciderClearInputValue(props)}
+            {deciderClearInputValue(ndsProps)}
           </Grid>
 
           <Grid item xs={11}>
@@ -474,14 +503,14 @@ export const ShortDescription = (properties) => {
               inputValue={
                 inputCategorie
                   ? inputCategorie
-                  : props.activeNote != ""
-                  ? props.activeNote[0].categorie
+                  : ndsProps.activeNote.id != ""
+                  ? ndsProps.activeNote.categorie
                   : properties.activeCategorie.catName
               }
               onInputChange={(e, newInputValue) => {
                 setInputCategorie(newInputValue);
               }}
-              options={props.categories}
+              options={ndsProps.categories}
               getOptionLabel={(option) =>
                 option.catName ? option.catName : ""
               }
@@ -520,3 +549,18 @@ export function ButtonSwitch(add_edit, remove, updates, bTitel) {
     </div>
   );
 }
+
+console.log(store.getState());
+
+const mapStateToProps = (state) => {
+  return {
+    // noteStories: getAllActiveNoteStories(state),
+    activeNote: getAllActiveNotes(state),
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => ({
+
+// });
+
+export default connect(mapStateToProps, null)(ShortDescription);

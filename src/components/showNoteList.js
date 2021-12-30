@@ -73,8 +73,8 @@ const showHintForTimedNotes = (expense, props) => {
 
 const ShowColKanban = (props, labelId) => {
   if (
-    props.props.activeNote.length > 0 &&
-    props.props.activeNote[0].id === labelId
+    props.props.activeNote != "" &&
+    props.props.activeNote.id === labelId
   )
     return <ColKanban props={props} />;
   else return;

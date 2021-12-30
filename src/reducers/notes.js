@@ -1,4 +1,3 @@
-
 const expensesReducerDefaultState = [];
 
 const expensesReducer = (state = expensesReducerDefaultState, action) => {
@@ -20,7 +19,7 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
         }
       });
 
-      case "ADD_NOTE_STORY":
+    case "ADD_NOTE_STORY":
       return state.map((expense) => {
         if (expense.id === action.noteId) {
           return {
@@ -54,6 +53,34 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
           };
         } else {
           return expense;
+        }
+      });
+
+    case "EDIT_NOTE_STORY":
+      return state.map((expense) => {
+        if (expense.id === action.noteId) {
+          return {
+            ...expense,
+            kanbanboard: {
+              columns: expense.kanbanboard.columns,
+
+              columnOrder: expense.kanbanboard.columnOrder,
+              tasks: [
+                ...expense.kanbanboard.tasks.map((userStorie) => {
+                  if (userStorie.storieID === action.userStorieID) {
+                    return {
+                      ...userStorie,
+                      ...action.updates,
+                    };
+                  } else {
+                    return { ...userStorie };
+                  }
+                }),
+              ],
+            },
+          };
+        } else {
+          return { ...expense };
         }
       });
 

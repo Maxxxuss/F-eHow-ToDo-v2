@@ -1,9 +1,9 @@
 // import { createSelector } from "reselect";
 
 // export const getactiveNotes = (state) =>
-//   state.activeNote[0] != undefined
-//     ? state.activeNote[0].id
-//     : "7054f393-9cc1-460f-b8e7-eec9c007492a";
+//   state.activeNote != undefined
+//     ? state.activeNote.id
+//     : "";
 
 // export const getKanbanBoard = (state) => state.kanbanboards;
 

@@ -11,7 +11,7 @@ export function AddUserStory(props) {
   const [titel, setTitel] = useState("");
 
   const activeNoteID =
-    ndsProps.activeNote.length > 0 ? ndsProps.activeNote[0].id : "";
+    ndsProps.activeNote.length > 0 ? ndsProps.activeNote.id : "";
 
   const updates = {
     aNoteId: activeNoteID,

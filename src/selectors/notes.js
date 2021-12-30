@@ -69,7 +69,7 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
         : {
             tasks: expense.kanbanboard.tasks.map((storie) => ({
               aNoteId: storie.aNoteId ? storie.aNoteId : "",
-              storieID: storie.storieID ? storie.storieID : "",
+              storieID: storie.storieID ? storie.storieID : "defaultStorieID",
               titel: storie.titel ? storie.titel : "",
               description: storie.description ? storie.description : "",
             })),
@@ -105,6 +105,7 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
   }))
 );
 
+
 export function group(list, varCol) {
   const grouped = groupBy(list, (pet) => pet.column);
 
@@ -120,8 +121,10 @@ export function group(list, varCol) {
     });
     return map;
   }
+
   return grouped.get(varCol);
 }
+
 
 export function absDatesToFin(datesToFinish) {
   var b = moment();
@@ -190,5 +193,3 @@ function calculatePrio(
     return calc;
   }
 }
-
-

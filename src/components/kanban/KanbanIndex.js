@@ -34,7 +34,7 @@ class InnerList extends React.PureComponent {
 export default function KanbanIndex(properties) {
   const props = properties.props;
 
-  const [task, setTask] = useState(props.activeNote[0].kanbanboard[0])
+  const [task, setTask] = useState(props.activeNote.kanbanboard)
   const [titel, setTitel] = useState("");
   const [description, setDescription] = useState("");
   const [activeUserStorieID, setActiveUserStorieID] = useState("");
@@ -42,7 +42,7 @@ export default function KanbanIndex(properties) {
 
   const [noteId, setNoteId] = useState("");
 
-  // useEffect(() => setTask(props.activeNote[0]), [props.activeNote]);
+  useEffect(() => setTask(props.activeNote.kanbanboard), [props.activeNote.kanbanboard]);
 
   // NEXT 
   // (!) Working on Updae Kanban Index 
@@ -59,9 +59,9 @@ export default function KanbanIndex(properties) {
     setActiveUserStorieID(props.activeUserStorie[0].storieID);
   }
 
-  if (props.activeNote.length > 0 && props.activeNote[0].id != aNoteId) {
-    setaNoteId(props.activeNote[0].id);
-    setNoteId(props.activeNote[0].id);
+  if (props.activeNote.length > 0 && props.activeNote.id != aNoteId) {
+    setaNoteId(props.activeNote.id);
+    setNoteId(props.activeNote.id);
   }
 
   const onDragEnd = (result) => {
@@ -174,8 +174,8 @@ export function ColKanban(properties) {
 
   const props = properties.props.props;
 
-  if (props.activeNote.length > 0 && props.activeNote[0].id != aNote) {
-    setaNote(props.activeNote[0].id);
+  if (props.activeNote.length > 0 && props.activeNote.id != aNote) {
+    setaNote(props.activeNote.id);
     setCollapseCheck(false);
   }
   if (

@@ -19,13 +19,7 @@ export const addExpense = ({
   snooze,
   onHold,
   effort,
-  kanbanboard: {
-    tasks, 
-    columns, 
-    columnOrder
-
-  },
-
+  kanbanboard: { tasks, columns, columnOrder },
 } = {}) => ({
   type: "ADD_EXPENSE",
   expense: {
@@ -49,11 +43,10 @@ export const addExpense = ({
     onHold,
     effort,
     kanbanboard: {
-    tasks, 
-    columns, 
-    columnOrder
-
-  },
+      tasks,
+      columns,
+      columnOrder,
+    },
     //   k_id: uuidv4(),
     //   k_titel,
     //   k_description,
@@ -81,15 +74,22 @@ export const removeExpense = ({ id } = {}) => ({
 export const editExpense = (id, updates) => ({
   type: "EDIT_EXPENSE",
   id,
-  updates
+  updates,
 });
-
 
 export const addNoteStory = (noteId, updates) => ({
   type: "ADD_NOTE_STORY",
   noteId,
-  updates
+  updates,
 });
+
+export const editNoteStory = (noteId, userStorieID,updates) => ({
+  type: "EDIT_NOTE_STORY",
+  noteId,
+  userStorieID,
+  updates,
+});
+
 // export const startStory = (id, updates) => ({
 //   type: "START_KSTORY",
 //   id,
@@ -100,5 +100,3 @@ export const addNoteStory = (noteId, updates) => ({
 //   type: "REMOVE_KSTROY",
 //   id,
 // });
-
-

@@ -20,10 +20,10 @@ export default function DoubleCheckRemoveButton(props) {
 
     const handelRemoveNote =(props) => {
 
-    props.handelRemoveNote({id:props.activeNote[0].id})
+    props.handelRemoveNote({id:props.activeNote.id})
     handleClose()
 }
-    const propAcNote = props.activeNote[0] ? props.activeNote[0] : "" 
+    const propAcNote = props.activeNote ? props.activeNote : "" 
 
     return (
         <div>

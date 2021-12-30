@@ -3,38 +3,40 @@ import moment from "moment";
 
 export const getActiveNotes = (state) => state.activeNote;
 
-// export const getActiveK = (state) => state.activeNote[0].kanbanboard[0];
+// export const getActiveK = (state) => state.activeNote.kanbanboard[0];
 
 export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
-  activeNotes.map((activeNote) => ({
-    id: activeNote.id ? activeNote.id : "7054f393-9cc1-460f-b8e7-eec9c007492a",
-    categorie: activeNote.categorie ? activeNote.categorie : "",
-    noteUpdateDate: activeNote.noteUpdateDate ? activeNote.noteUpdateDate : "",
-    noteStatus: activeNote.noteStatus ? activeNote.noteStatus : "",
-    description: activeNote.description ? activeNote.description : "",
-    prio: activeNote.prio ? activeNote.prio : "",
-    sRelevance: activeNote.sRelevance ? activeNote.sRelevance : "",
-    relevance: activeNote.relevance ? activeNote.relevance : "",
-    important: activeNote.important ? activeNote.important : "",
-    noteDecscription: activeNote.noteDecscription
-      ? activeNote.noteDecscription
+  // activeNotes.map((activeNote) => ({
+({
+    id: activeNotes.id ? activeNotes.id : "",
+    categorie: activeNotes.categorie ? activeNotes.categorie : "",
+    noteUpdateDate: activeNotes.noteUpdateDate ? activeNotes.noteUpdateDate : "",
+    noteStatus: activeNotes.noteStatus ? activeNotes.noteStatus : "",
+    description: activeNotes.description ? activeNotes.description : "",
+    prio: activeNotes.prio ? activeNotes.prio : "",
+    sRelevance: activeNotes.sRelevance ? activeNotes.sRelevance : "",
+    relevance: activeNotes.relevance ? activeNotes.relevance : "",
+    important: activeNotes.important ? activeNotes.important : "",
+    noteDecscription: activeNotes.noteDecscription
+      ? activeNotes.noteDecscription
       : "",
-    datesToFinish: activeNote.datesToFinish ? activeNote.datesToFinish : "",
-    nextStep: activeNote.nextStep ? activeNote.nextStep : "",
-    riskAuswirkung: activeNote.riskAuswirkung ? activeNote.riskAuswirkung : "",
-    riskWahrscheinlichkeit: activeNote.riskWahrscheinlichkeit
-      ? activeNote.riskWahrscheinlichkeit
+    datesToFinish: activeNotes.datesToFinish ? activeNotes.datesToFinish : "",
+    nextStep: activeNotes.nextStep ? activeNotes.nextStep : "",
+    riskAuswirkung: activeNotes.riskAuswirkung ? activeNotes.riskAuswirkung : "",
+    riskWahrscheinlichkeit: activeNotes.riskWahrscheinlichkeit
+      ? activeNotes.riskWahrscheinlichkeit
       : "",
-    infoNote: activeNote.infoNote ? activeNote.infoNote : "",
-    journalNote: activeNote.journalNote ? activeNote.journalNote : "",
-    snooze: activeNote.snooze ? activeNote.snooze : "",
-    onHold: activeNote.onHold ? activeNote.onHold : "",
-    effort: activeNote.effort ? activeNote.effort : "",
-    kanbanboard: activeNote.kanbanboard ? activeNote.kanbanboard : "",
-    countNoteStories: activeNote.countNoteStories
-      ? activeNote.countNoteStories
+    infoNote: activeNotes.infoNote ? activeNotes.infoNote : "",
+    journalNote: activeNotes.journalNote ? activeNotes.journalNote : "",
+    snooze: activeNotes.snooze ? activeNotes.snooze : "",
+    onHold: activeNotes.onHold ? activeNotes.onHold : "",
+    effort: activeNotes.effort ? activeNotes.effort : "",
+    kanbanboard: activeNotes.kanbanboard ? activeNotes.kanbanboard : "",
+    countNoteStories: activeNotes.countNoteStories
+      ? activeNotes.countNoteStories
       : "",
-  }))
+      })
+  // }))
 );
 
 // export const getAllActiveNoteStories = createSelector(
