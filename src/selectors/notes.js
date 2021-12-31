@@ -43,7 +43,7 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     effort: expense.effort ? expense.effort : "5",
     countNoteStories: expense.countNoteStories ? expense.countNoteStories : "",
     kanbanboard:
-      expense.kanbanboard === ""
+      expense.kanbanboard === undefined
         ? {
             tasks: [],
             columns: {

@@ -6,7 +6,7 @@ import { AppBar, Tabs, Tab, Box, Grid, Link } from "@mui/material";
 import ImpExpData from "./ImpExpData";
 import { getAllExpenses } from "../selectors/notes";
 import  ShortDescription  from "./inputs/titel";
-import { addActiveNote, addNoteStory_ActiveNote, editNoteStory_ActiveNote, removeActiveNote } from "../actions/activeNote";
+import { addActiveNote, addNoteStory_ActiveNote, editNoteStoryColumn_ActiveNote, editNoteStory_ActiveNote, removeActiveNote } from "../actions/activeNote";
 import { getAllActiveNotes } from "../selectors/activeNote";
 import { addExpense, addNoteStory,  editExpense, editNoteStory, removeExpense } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
@@ -42,6 +42,8 @@ export function setActiveNote(expense, props) {
       countNoteStories: expense.countNoteStories,
     };
     props.addActiveNote(updates);
+    // props.removeActiveUserStory(); 
+    // props.setActiveStory({collapse:false})
     console.log("Active Notee: ", updates);
   }
 }
@@ -171,6 +173,7 @@ const mapDispatchToProps = (dispatch) => ({
   editNoteStory: (noteId, userStorieID,updates) =>dispatch(editNoteStory(noteId, userStorieID,updates)),
   editNoteStory_ActiveNote: (noteId, userStorieID,updates) =>dispatch(editNoteStory_ActiveNote(noteId, userStorieID,updates)),
 
+  editNoteStoryColumn_ActiveNote: (noteId, userStorieID,updates) =>dispatch(editNoteStoryColumn_ActiveNote(noteId, userStorieID,updates)),
 
 
 

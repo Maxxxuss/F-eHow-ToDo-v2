@@ -12,7 +12,7 @@ import {
   IconButton,
 } from "@mui/material";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import ReactQuill from "react-quill";
@@ -83,26 +83,28 @@ export const ShortDescription = (properties) => {
     setActiveCategorie("");
   };
 
+  // useEffect(setStorieClearer(ndsProps.activeUserStorie[0].collapse),[ndsProps.activeUserStorie[0].collapse])
+
+  // useEffect(console.log("storieClearer:", storieClearer), [storieClearer])
+
   //SET FOR ACTIVE USER STORIE
   if (
     ndsProps.activeNote.id != "" &&
-    ndsProps.activeUserStorie.length >0 &&
-
+    ndsProps.activeUserStorie.length > 0 &&
     ndsProps.activeUserStorie[0].storieID != "" &&
     ndsProps.activeUserStorie[0].storieID != aUserStorieID
   ) {
     setDescription(ndsProps.activeUserStorie[0].titel);
     setnoteDecscription(ndsProps.activeUserStorie[0].description);
     setAUserStorieID(ndsProps.activeUserStorie[0].storieID);
+    // setStorieClearer(false);
+
   }
 
   if (
     ndsProps.activeNote.id != "" &&
     ndsProps.activeNote.id === activeNoteID &&
-    ndsProps.activeUserStorie.length >0 &&
-
-    ndsProps.activeUserStorie[0].storieID != "" &&
-
+    ndsProps.activeUserStorie.length > 0 &&
     ndsProps.activeUserStorie[0].collapse === true &&
     storieClearer != false
   ) {
@@ -114,8 +116,7 @@ export const ShortDescription = (properties) => {
   // SET - Active Note
   if (
     ndsProps.activeNote.id != "" &&
-    ndsProps.activeUserStorie.length >0 &&
-
+    ndsProps.activeUserStorie.length > 0 &&
     ndsProps.activeNote.id != activeNoteID
     // && ndsProps.activeUserStorie.length > 0 &&
     // ndsProps.activeUserStorie[0].storieID === ""
@@ -132,7 +133,7 @@ export const ShortDescription = (properties) => {
     setinfoNote(ndsProps.activeNote.infoNote);
     seteffort(ndsProps.activeNote.effort);
     setnoteStatus(ndsProps.activeNote.noteStatus);
-    setStorieClearer(true);
+    // setStorieClearer(true);
     setCounterNoteStories(ndsProps.activeNote.countNoteStories);
   }
 
@@ -274,16 +275,17 @@ export const ShortDescription = (properties) => {
       ndsProps.activeUserStorie[0].collapse > 0
       //&& ndsProps.activeUserStorie[0].storieID === ""
     )
+    
       return (
+        
         <Button
           variant="contained"
           color="secondary"
           onClick={() =>
-            ndsProps.addNoteStory(activeNoteID, kanbanUpdates) 
+            ndsProps.addNoteStory(activeNoteID, kanbanUpdates) &&
             // && editActiveNote()
-            && ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates)
-
-            &&clearStorieInput()
+            ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates) &&
+            clearStorieInput()
           }
         >
           Add Story
@@ -304,10 +306,8 @@ export const ShortDescription = (properties) => {
               activeNoteID,
               ndsProps.activeUserStorie[0].storieID,
               updateStorie
-
-            )
-
-            && ndsProps.editNoteStory_ActiveNote(
+            ) &&
+            ndsProps.editNoteStory_ActiveNote(
               activeNoteID,
               ndsProps.activeUserStorie[0].storieID,
               updateStorie

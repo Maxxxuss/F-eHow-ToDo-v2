@@ -48,31 +48,55 @@ const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
         },
       };
 
-      case "EDIT_NOTE_STORY_ACTIVE_NOTE": 
+    case "EDIT_NOTE_STORY_ACTIVE_NOTE":
       return {
-        ...state, 
+        ...state,
         kanbanboard: {
-          columns: state.kanbanboard.columns, 
+          columns: state.kanbanboard.columns,
 
           columnOrder: state.kanbanboard.columnOrder,
-          tasks: [...state.kanbanboard.tasks.map((userStorie)=> {
-            if (userStorie.storieID === action.userStorieID) {
-              return { 
-                ...userStorie, 
-                ...action.updates
+          tasks: [
+            ...state.kanbanboard.tasks.map((userStorie) => {
+              if (userStorie.storieID === action.userStorieID) {
+                return {
+                  ...userStorie,
+                  ...action.updates,
+                };
+              } else {
+                return { ...userStorie };
               }
-              
-            } else {
-              return {...userStorie}
-              
-            }
-
-
-
-          }
-          )]
+            }),
+          ],
         },
-     }
+      };
+
+
+    // case "EDIT_NOTE_STORY_COLUMN_ACTIVE_NOTE":
+    //   return {
+    //     ...state,
+    //     kanbanboard: {
+    //       columns: convertArrayToObject(state)
+          
+    //       [action.updates],
+
+    //       columnOrder: state.kanbanboard.columnOrder,
+    //       tasks: state.kanbanboard.tasks, 
+    //       // tasks: [
+    //       //   ...state.kanbanboard.tasks.map((userStorie) => {
+    //       //     if (userStorie.storieID === action.userStorieID) {
+    //       //       return {
+    //       //         ...userStorie,
+    //       //         ...action.updates,
+    //       //       };
+    //       //     } else {
+    //       //       return { ...userStorie };
+    //       //     }
+    //       //   }),
+    //       // ],
+    //     },
+    //   };
+      
+      
 
     default:
       return state;
@@ -91,4 +115,3 @@ const convertArrayToObject = (columns, key = "id") => {
     };
   }, initialValue);
 };
-

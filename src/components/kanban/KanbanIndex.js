@@ -131,9 +131,21 @@ export default function KanbanIndex(properties) {
         [newForeign.id]: newForeign,
       },
     };
-    props.editUserStorie(props.activeUserStorie[0].storieID, {
-      column: newForeign.id,
-    });
+    props.editNoteStory(
+      props.activeNote.id,
+      props.activeUserStorie[0].storieID,
+      {column: newForeign.id,}
+    )
+    //  &&
+    // props.editNoteStory_ActiveNote(
+    //   props.activeNote.id,
+    //   props.activeUserStorie[0].storieID,
+    //   {column: newForeign.id,}
+    // )
+    
+    // props.editUserStorie(props.activeUserStorie[0].storieID, {
+    //   column: newForeign.id,
+    // });
   };
 
   var arrResult = [];

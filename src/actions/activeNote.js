@@ -94,3 +94,9 @@ export const editNoteStory_ActiveNote = (noteId, userStorieID,updates) => ({
   userStorieID,
   updates,
 });
+export const editNoteStoryColumn_ActiveNote = (noteId, userStorieID,updates) => ({
+  type: "EDIT_NOTE_STORY_COLUMN_ACTIVE_NOTE",
+  noteId,
+  userStorieID,
+  updates,
+});
