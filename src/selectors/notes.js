@@ -67,12 +67,12 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
             columnOrder: ["column-1", "column-3", "column-4"],
           }
         : {
-            tasks: expense.kanbanboard.tasks.map((storie) => ({
+            tasks:expense.kanbanboard.tasks ? expense.kanbanboard.tasks.map((storie) => ({
               aNoteId: storie.aNoteId ? storie.aNoteId : "",
               storieID: storie.storieID ? storie.storieID : "defaultStorieID",
               titel: storie.titel ? storie.titel : "",
               description: storie.description ? storie.description : "",
-            })),
+            })) : [],
             columns: {
               "column-1": {
                 id: "column-1",

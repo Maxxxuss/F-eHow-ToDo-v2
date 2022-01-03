@@ -9,7 +9,6 @@ import './styles/styles.scss'
 import { BrowserRouter as Router
     
   , Route, Switch,  } from 'react-router-dom';
-import {Editor} from './components/inputs/quillEditor/quillEditorIndex';
 import KanbanIndex from './components/kanban/KanbanIndex';
 
 
