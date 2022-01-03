@@ -3,19 +3,14 @@ const activeNoteReducerDefaultState = [];
 const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
   switch (action.type) {
     case "ADD_ACTIVE_NOTE":
-      return { state, ...action.activeNote };
+      return { ...action.activeNote };
     case "REMOVE_ACTIVE_NOTE":
       return (state = []);
 
     case "EDIT_ACTIVE_NOTE":
       return {
         ...state,
-        kanbanboard: {
-          ...state.kanbanboard,
-          tasks: {
-            ...action.updates,
-          },
-        },
+        ...action.updates,
       };
 
     case "ADD_NOTE_STORY_ACTIVE_NOTE":
@@ -69,34 +64,6 @@ const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
           ],
         },
       };
-
-
-    // case "EDIT_NOTE_STORY_COLUMN_ACTIVE_NOTE":
-    //   return {
-    //     ...state,
-    //     kanbanboard: {
-    //       columns: convertArrayToObject(state)
-          
-    //       [action.updates],
-
-    //       columnOrder: state.kanbanboard.columnOrder,
-    //       tasks: state.kanbanboard.tasks, 
-    //       // tasks: [
-    //       //   ...state.kanbanboard.tasks.map((userStorie) => {
-    //       //     if (userStorie.storieID === action.userStorieID) {
-    //       //       return {
-    //       //         ...userStorie,
-    //       //         ...action.updates,
-    //       //       };
-    //       //     } else {
-    //       //       return { ...userStorie };
-    //       //     }
-    //       //   }),
-    //       // ],
-    //     },
-    //   };
-      
-      
 
     default:
       return state;

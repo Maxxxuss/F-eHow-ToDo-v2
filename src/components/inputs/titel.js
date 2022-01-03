@@ -1,8 +1,3 @@
-// WORK on:
-// 1. Edit User Story
-// Entweder Edit expense && active Note
-// oper Dit Expense und Update Active Note
-
 import {
   TextField,
   Autocomplete,
@@ -12,13 +7,12 @@ import {
   IconButton,
 } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import ReactQuill from "react-quill";
 import { v4 as uuidv4 } from "uuid";
 import { autoSaveFunc } from "./autoSave";
-import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
 import { getAllActiveNotes } from "../../selectors/activeNote";
 import { connect } from "react-redux";
 
@@ -33,7 +27,6 @@ export const ShortDescription = (properties) => {
   const [relevance, setrelevance] = useState("");
   const [important, setimportant] = useState("");
   const [noteDecscription, setnoteDecscription] = useState("");
-  // const [noteDecscription, setnoteDecscription] = useState({ ops: [] });
 
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
@@ -44,12 +37,12 @@ export const ShortDescription = (properties) => {
   const [activeCategorie, setActiveCategorie] = useState("");
   const [inputCategorie, setInputCategorie] = useState("");
 
-  //KanbanIndex
   const [aNoteId, setaNoteId] = useState("");
   const [noteId, setNoteId] = useState("");
   const [aUserStorieID, setAUserStorieID] = useState("");
   const [counterNoteStories, setCounterNoteStories] = useState("");
   const [storieClearer, setStorieClearer] = useState("");
+  const [buttonHandler, setButtonHandler] = useState("AddNote");
 
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
@@ -67,59 +60,25 @@ export const ShortDescription = (properties) => {
     seteffort("");
     setInputCategorie("");
     setActiveCategorie("");
+    setStorieClearer("");
+    setButtonHandler("AddNote");
   };
 
   const clearStorieInput = (ndsProps) => {
-    setActiveNoteID("");
+    console.log("Clearer: ", ndsProps);
+
     setDescription("");
-    setrelevance("");
-    setimportant("");
+
     setnoteDecscription("");
-    setdatesToFinish("");
-    setnextStep("");
-    setinfoNote("");
-    seteffort("");
-    setInputCategorie("");
-    setActiveCategorie("");
+
+    setStorieClearer("rfBoard");
+    setButtonHandler("AddStorie");
   };
 
-  // useEffect(setStorieClearer(ndsProps.activeUserStorie[0].collapse),[ndsProps.activeUserStorie[0].collapse])
-
-  // useEffect(console.log("storieClearer:", storieClearer), [storieClearer])
-
-  //SET FOR ACTIVE USER STORIE
   if (
-    ndsProps.activeNote.id != "" &&
     ndsProps.activeUserStorie.length > 0 &&
-    ndsProps.activeUserStorie[0].storieID != "" &&
-    ndsProps.activeUserStorie[0].storieID != aUserStorieID
-  ) {
-    setDescription(ndsProps.activeUserStorie[0].titel);
-    setnoteDecscription(ndsProps.activeUserStorie[0].description);
-    setAUserStorieID(ndsProps.activeUserStorie[0].storieID);
-    // setStorieClearer(false);
-
-  }
-
-  if (
-    ndsProps.activeNote.id != "" &&
-    ndsProps.activeNote.id === activeNoteID &&
-    ndsProps.activeUserStorie.length > 0 &&
-    ndsProps.activeUserStorie[0].collapse === true &&
-    storieClearer != false
-  ) {
-    setDescription("");
-    setnoteDecscription("");
-    setStorieClearer(false);
-  }
-
-  // SET - Active Note
-  if (
-    ndsProps.activeNote.id != "" &&
-    ndsProps.activeUserStorie.length > 0 &&
-    ndsProps.activeNote.id != activeNoteID
-    // && ndsProps.activeUserStorie.length > 0 &&
-    // ndsProps.activeUserStorie[0].storieID === ""
+    ndsProps.activeUserStorie[0].collapse === false &&
+    activeNoteID != ndsProps.activeNote.id
   ) {
     setActiveNoteID(ndsProps.activeNote.id);
     setDescription(ndsProps.activeNote.description);
@@ -133,11 +92,34 @@ export const ShortDescription = (properties) => {
     setinfoNote(ndsProps.activeNote.infoNote);
     seteffort(ndsProps.activeNote.effort);
     setnoteStatus(ndsProps.activeNote.noteStatus);
-    // setStorieClearer(true);
+    setStorieClearer("rfBoard");
     setCounterNoteStories(ndsProps.activeNote.countNoteStories);
+    setButtonHandler("EditNote");
   }
 
-  const updates = {
+  if (
+    ndsProps.activeUserStorie.length > 0 &&
+    ndsProps.activeUserStorie[0].collapse === true &&
+    storieClearer === "rfBoard"
+  ) {
+    setDescription("");
+    setnoteDecscription("");
+    setStorieClearer("rfStorie");
+    setButtonHandler("AddStorie");
+  }
+
+  if (
+    storieClearer === "rfStorie" &&
+    ndsProps.activeUserStorie.length > 0 &&
+    aUserStorieID != ndsProps.activeUserStorie[0].storieID
+  ) {
+    setDescription(ndsProps.activeUserStorie[0].titel);
+    setnoteDecscription(ndsProps.activeUserStorie[0].description);
+    setAUserStorieID(ndsProps.activeUserStorie[0].storieID);
+    setButtonHandler("EditStorie");
+  }
+
+  const startNewNote = {
     id: activeNoteID,
     description: description,
     relevance: relevance ? relevance : 1,
@@ -174,6 +156,23 @@ export const ShortDescription = (properties) => {
       },
       columnOrder: ["column-1", "column-3", "column-4"],
     },
+  };
+
+  const updates = {
+    id: activeNoteID,
+    description: description,
+    relevance: relevance ? relevance : 1,
+    important: important ? important : 1,
+    noteDecscription: space + timeStamp + noteDecscription,
+    datesToFinish: datesToFinish ? datesToFinish : moment().add(1, "days"),
+    categorie: inputCategorie
+      ? inputCategorie
+      : ndsProps.activeNote.id != ""
+      ? ndsProps.activeNote.categorie
+      : properties.activeCategorie.catName,
+    nextStep: nextStep,
+    infoNote: infoNote,
+    effort: effort,
   };
 
   if (ndsProps.activeNote.length > 0 && ndsProps.activeNote.id != aNoteId) {
@@ -249,18 +248,14 @@ export const ShortDescription = (properties) => {
   };
 
   function decider(ndsProps) {
-    if (
-      ndsProps.activeNote.id != "" &&
-      ndsProps.activeUserStorie.length > 0 &&
-      ndsProps.activeUserStorie[0].collapse === false &&
-      ndsProps.activeUserStorie[0].storieID === ""
-    ) {
+    if (buttonHandler === "EditNote") {
       return (
         <Button
           variant="outlined"
           color="primary"
           onClick={() =>
             ndsProps.editExpense(ndsProps.activeNote.id, updates) &&
+            ndsProps.editActiveNote(updates) &&
             clearInputValues(ndsProps)
           }
         >
@@ -269,34 +264,22 @@ export const ShortDescription = (properties) => {
       );
     }
 
-    if (
-      ndsProps.activeNote.id != "" &&
-      ndsProps.activeUserStorie.length > 0 &&
-      ndsProps.activeUserStorie[0].collapse > 0
-      //&& ndsProps.activeUserStorie[0].storieID === ""
-    )
-    
+    if (buttonHandler === "AddStorie")
       return (
-        
         <Button
           variant="contained"
           color="secondary"
           onClick={() =>
-            ndsProps.addNoteStory(activeNoteID, kanbanUpdates) &&
-            // && editActiveNote()
             ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates) &&
-            clearStorieInput()
+            ndsProps.addNoteStory(activeNoteID, kanbanUpdates) &&
+            clearStorieInput(ndsProps)
           }
         >
           Add Story
         </Button>
       );
 
-    if (
-      ndsProps.activeNote.id != "" &&
-      ndsProps.activeUserStorie.length > 0 &&
-      ndsProps.activeUserStorie[0].storieID != ""
-    )
+    if (buttonHandler === "EditStorie")
       return (
         <Button
           variant="outlined"
@@ -312,8 +295,8 @@ export const ShortDescription = (properties) => {
               ndsProps.activeUserStorie[0].storieID,
               updateStorie
             ) &&
-            setStorieClearer(false) &&
-            clearStorieInput()
+            ndsProps.removeActiveUserStory() &&
+            clearStorieInput(ndsProps)
           }
         >
           Edit Story
@@ -325,7 +308,7 @@ export const ShortDescription = (properties) => {
           variant="contained"
           color="primary"
           onClick={() =>
-            ndsProps.addExpense(updates) && clearInputValues(ndsProps)
+            ndsProps.addExpense(startNewNote) && clearInputValues(ndsProps)
           }
         >
           Add NOte
@@ -334,22 +317,49 @@ export const ShortDescription = (properties) => {
   }
 
   function deciderClearInputValue(ndsProps) {
-    // IF EDIT -CLEAR TO - ADD Story
-    if (
-      ndsProps.activeNote.length > 0 &&
-      ndsProps.activeUserStorie.length > 0 &&
-      ndsProps.activeUserStorie[0].storieID != ""
-    )
+    if (buttonHandler === "EditStorie")
       return (
         <div>
           <IconButton
             onClick={() =>
               ndsProps.removeActiveUserStory() &&
               ndsProps.setActiveStory({
-                collapse: true,
+                aNoteId: "defauldID",
+                storieID: "",
+                noteId: "noteId",
+                titel: "description",
+                description: "noteDecscription",
+                column: "column-1",
+                collapse: "false",
               }) &&
               clearStorieInput(ndsProps)
             }
+            size="large"
+            color="secondary"
+          >
+            <ClearIcon fontSize="large" />
+          </IconButton>
+        </div>
+      );
+    if (buttonHandler === "AddStorie")
+      return (
+        <div>
+          <IconButton
+            onClick={() => {
+              setDescription(ndsProps.activeNote.description),
+                setnoteDecscription(ndsProps.activeNote.noteDecscription),
+                setrelevance(ndsProps.activeNote.relevance),
+                setimportant(ndsProps.activeNote.important),
+                setInputCategorie(ndsProps.activeNote.categorie),
+                setdatesToFinish(ndsProps.activeNote.datesToFinish),
+                setnextStep(ndsProps.activeNote.nextStep),
+                setinfoNote(ndsProps.activeNote.infoNote),
+                seteffort(ndsProps.activeNote.effort),
+                setnoteStatus(ndsProps.activeNote.noteStatus),
+                setStorieClearer(""),
+                setCounterNoteStories(ndsProps.activeNote.countNoteStories),
+                setButtonHandler("EditNote");
+            }}
             size="large"
             color="secondary"
           >
@@ -377,7 +387,7 @@ export const ShortDescription = (properties) => {
         <ButtonGroup fullWidth={true}>
           {decider(ndsProps)}
 
-          {activeNoteID ? (
+          {buttonHandler === "EditNote" ? (
             <Button
               variant="outlined"
               onClick={() =>
@@ -390,7 +400,7 @@ export const ShortDescription = (properties) => {
             ""
           )}
 
-          {activeNoteID ? (
+          {buttonHandler === "EditNote" ? (
             <DoubleCheckRemoveButton
               activeNote={ndsProps.activeNote}
               handelRemoveNote={ndsProps.removeExpense}
@@ -400,13 +410,12 @@ export const ShortDescription = (properties) => {
           )}
         </ButtonGroup>
 
-        <Button onClick={() => console.log("Show ndsProps: ", props)}>
-          SHow Props
+        <Button onClick={() => console.log("SHOW Props: ", props)}>
+          Props
         </Button>
       </Grid>
 
       <Grid
-        // ml={1}
         container
         spacing={2}
         direction="column"
@@ -426,105 +435,107 @@ export const ShortDescription = (properties) => {
               onChange={(e) => setDescription(e.target.value)}
               color="secondary"
               fullWidth
-              //
             />
           </Grid>
         </Grid>
+        {storieClearer === "rfStorie" ? (
+          ""
+        ) : (
+          <Grid
+            container
+            spacing={1}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={1}>
+              <TextField
+                label="Days"
+                onChange={(e) =>
+                  setdatesToFinish(moment().add(e.target.value, "days"))
+                }
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                label="Finish Till"
+                value={
+                  datesToFinish
+                    ? moment(datesToFinish).format("ddd - DD.MM.YY")
+                    : ""
+                }
+                onChange={(e) =>
+                  setdatesToFinish(moment().add(e.target.value, "days"))
+                }
+                variant="filled"
+                color="secondary"
+                fullWidth
+              />
+            </Grid>
 
-        <Grid
-          container
-          spacing={1}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={1}>
-            <TextField
-              label="Days"
-              onChange={(e) =>
-                setdatesToFinish(moment().add(e.target.value, "days"))
-              }
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <TextField
-              label="Finish Till"
-              value={
-                datesToFinish
-                  ? moment(datesToFinish).format("ddd - DD.MM.YY")
-                  : ""
-              }
-              onChange={(e) =>
-                setdatesToFinish(moment().add(e.target.value, "days"))
-              }
-              variant="filled"
-              color="secondary"
-              fullWidth
-            />
-          </Grid>
+            <Grid item xs>
+              <TextField
+                label="Dringlich"
+                variant="filled"
+                value={relevance}
+                onChange={(e) => setrelevance(e.target.value)}
+                color="secondary"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs>
+              <TextField
+                label="Wichtig"
+                variant="filled"
+                color="secondary"
+                value={important}
+                onChange={(e) => setimportant(e.target.value)}
+                fullWidth
+              />
+            </Grid>
 
-          <Grid item xs>
-            <TextField
-              label="Dringlich"
-              variant="filled"
-              value={relevance}
-              onChange={(e) => setrelevance(e.target.value)}
-              color="secondary"
-              fullWidth
-            />
+            <Grid item xs>
+              <TextField
+                label="Aufwand"
+                variant="filled"
+                value={effort}
+                onChange={(e) => seteffort(e.target.value)}
+                color="secondary"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Autocomplete
+                value={activeCategorie}
+                onChange={(e, newValue) => {
+                  setActiveCategorie(newValue);
+                }}
+                inputValue={
+                  inputCategorie
+                    ? inputCategorie
+                    : ndsProps.activeNote.id != ""
+                    ? ndsProps.activeNote.categorie
+                    : properties.activeCategorie.catName
+                }
+                onInputChange={(e, newInputValue) => {
+                  setInputCategorie(newInputValue);
+                }}
+                options={ndsProps.categories}
+                getOptionLabel={(option) =>
+                  option.catName ? option.catName : ""
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Project"
+                    variant="filled"
+                    color="secondary"
+                  />
+                )}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs>
-            <TextField
-              label="Wichtig"
-              variant="filled"
-              color="secondary"
-              value={important}
-              onChange={(e) => setimportant(e.target.value)}
-              fullWidth
-            />
-          </Grid>
-
-          <Grid item xs>
-            <TextField
-              label="Aufwand"
-              variant="filled"
-              value={effort}
-              onChange={(e) => seteffort(e.target.value)}
-              color="secondary"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Autocomplete
-              value={activeCategorie}
-              onChange={(e, newValue) => {
-                setActiveCategorie(newValue);
-              }}
-              inputValue={
-                inputCategorie
-                  ? inputCategorie
-                  : ndsProps.activeNote.id != ""
-                  ? ndsProps.activeNote.categorie
-                  : properties.activeCategorie.catName
-              }
-              onInputChange={(e, newInputValue) => {
-                setInputCategorie(newInputValue);
-              }}
-              options={ndsProps.categories}
-              getOptionLabel={(option) =>
-                option.catName ? option.catName : ""
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Project"
-                  variant="filled"
-                  color="secondary"
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
+        )}
       </Grid>
 
       <ReactQuill
@@ -554,13 +565,8 @@ console.log(store.getState());
 
 const mapStateToProps = (state) => {
   return {
-    // noteStories: getAllActiveNoteStories(state),
     activeNote: getAllActiveNotes(state),
   };
 };
-
-// const mapDispatchToProps = (dispatch) => ({
-
-// });
 
 export default connect(mapStateToProps, null)(ShortDescription);

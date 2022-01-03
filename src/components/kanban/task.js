@@ -37,6 +37,7 @@ export default function Task(props) {
                 titel: props.task.titel,
                 description: props.task.description,
                 storieID: props.task.storieID,
+                collapse: true
               })
             }
           >

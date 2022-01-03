@@ -5,10 +5,23 @@ import { AppBar, Tabs, Tab, Box, Grid, Link } from "@mui/material";
 
 import ImpExpData from "./ImpExpData";
 import { getAllExpenses } from "../selectors/notes";
-import  ShortDescription  from "./inputs/titel";
-import { addActiveNote, addNoteStory_ActiveNote, editNoteStoryColumn_ActiveNote, editNoteStory_ActiveNote, removeActiveNote } from "../actions/activeNote";
+import ShortDescription from "./inputs/titel";
+import {
+  addActiveNote,
+  addNoteStory_ActiveNote,
+  editNoteStoryColumn_ActiveNote,
+  editNoteStory_ActiveNote,
+  removeActiveNote,
+  editActiveNote,
+} from "../actions/activeNote";
 import { getAllActiveNotes } from "../selectors/activeNote";
-import { addExpense, addNoteStory,  editExpense, editNoteStory, removeExpense } from "../actions/notes";
+import {
+  addExpense,
+  addNoteStory,
+  editExpense,
+  editNoteStory,
+  removeExpense,
+} from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { SearchForNotes } from "./inputs/search";
@@ -17,14 +30,13 @@ import AddDeleteProject from "./AddDeleteProject";
 import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 
-// import { addStory, editUserStorie, removeStory } from "../actions/kanbanBoard";
 import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
-// import { getAllgetKanbanBoard } from "../selectors/kanbanBoard";
+
 import { getAllActiveUserStories } from "../selectors/activeStorie";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
-  // props.removeActiveNote();
+
   if (expense != "" && expense != null && expense != undefined) {
     const updates = {
       id: expense.id,
@@ -42,8 +54,7 @@ export function setActiveNote(expense, props) {
       countNoteStories: expense.countNoteStories,
     };
     props.addActiveNote(updates);
-    // props.removeActiveUserStory(); 
-    // props.setActiveStory({collapse:false})
+
     console.log("Active Notee: ", updates);
   }
 }
@@ -135,7 +146,6 @@ console.log(store.getState());
 
 const mapStateToProps = (state) => {
   return {
-    // noteStories: getAllActiveNoteStories(state),
     activeNote: getAllActiveNotes(state),
     expenses: getAllExpenses(state).sort((a, b) => (a.prio > b.prio ? -1 : 1)),
     openExpenses: getAllExpenses(state)
@@ -144,11 +154,10 @@ const mapStateToProps = (state) => {
     categories: getAllCategories(state).sort((a, b) =>
       a.sorting > b.sorting ? 1 : -1
     ),
-    //   historyCategorie: getHistorieCategorie(state),
+
     globalVariables: getGlobalVariables(state),
     //KanbanIndex
     activeUserStorie: getAllActiveUserStories(state),
-    // kanbanBoard: getAllgetKanbanBoard(state),
   };
 };
 
@@ -156,6 +165,7 @@ const mapDispatchToProps = (dispatch) => ({
   setCategorie: (categorie) => dispatch(setCategorie(categorie)),
   removeCategorie: (id) => dispatch(removeCategorie(id)),
   addActiveNote: (activeNote) => dispatch(addActiveNote(activeNote)),
+  editActiveNote: (updates) => dispatch(editActiveNote(updates)),
   removeActiveNote: () => dispatch(removeActiveNote()),
   removeExpense: (id) => dispatch(removeExpense(id)),
   addExpense: (expense) => dispatch(addExpense(expense)),
@@ -168,16 +178,16 @@ const mapDispatchToProps = (dispatch) => ({
   setActiveStory: (updates) => dispatch(setActiveStory(updates)),
   removeActiveUserStory: () => dispatch(removeActiveUserStory()),
   removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
-  addNoteStory: (noteId, updates) =>dispatch(addNoteStory(noteId, updates)),
-  addNoteStory_ActiveNote: (noteId, updates) =>dispatch(addNoteStory_ActiveNote(noteId, updates)),
-  editNoteStory: (noteId, userStorieID,updates) =>dispatch(editNoteStory(noteId, userStorieID,updates)),
-  editNoteStory_ActiveNote: (noteId, userStorieID,updates) =>dispatch(editNoteStory_ActiveNote(noteId, userStorieID,updates)),
+  addNoteStory: (noteId, updates) => dispatch(addNoteStory(noteId, updates)),
+  addNoteStory_ActiveNote: (noteId, updates) =>
+    dispatch(addNoteStory_ActiveNote(noteId, updates)),
+  editNoteStory: (noteId, userStorieID, updates) =>
+    dispatch(editNoteStory(noteId, userStorieID, updates)),
+  editNoteStory_ActiveNote: (noteId, userStorieID, updates) =>
+    dispatch(editNoteStory_ActiveNote(noteId, userStorieID, updates)),
 
-  editNoteStoryColumn_ActiveNote: (noteId, userStorieID,updates) =>dispatch(editNoteStoryColumn_ActiveNote(noteId, userStorieID,updates)),
-
-
-
-
+  editNoteStoryColumn_ActiveNote: (noteId, userStorieID, updates) =>
+    dispatch(editNoteStoryColumn_ActiveNote(noteId, userStorieID, updates)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);
