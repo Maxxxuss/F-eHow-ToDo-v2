@@ -72,10 +72,7 @@ const showHintForTimedNotes = (expense, props) => {
 };
 
 const ShowColKanban = (props, labelId) => {
-  if (
-    props.props.activeNote != "" &&
-    props.props.activeNote.id === labelId
-  )
+  if (props.props.activeNote != "" && props.props.activeNote.id === labelId)
     return <ColKanban props={props} />;
   else return;
 };
@@ -128,8 +125,18 @@ export function ShowNotes(props) {
                         <Grid item xs={1}>
                           {showHintForTimedNotes(expense, props)}
 
-                          {expense.countNoteStories === true ? (
-                            <StickyNote2OutlinedIcon />
+                          {expense.countNoteStories != 0 ? (
+                            <Grid
+                              container
+                              direction="column"
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Grid item>
+                                <StickyNote2OutlinedIcon />
+                              </Grid>
+                              <Grid item>({expense.countNoteStories})</Grid>
+                            </Grid>
                           ) : (
                             ""
                           )}

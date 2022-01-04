@@ -12,15 +12,9 @@ const Container = styled.div`
 `;
 
 export default function Task(props) {
-  const [activeStorie, setActiveStory] = useState("");
 
   const cprops = props.props.props.props.props;
 
-  useEffect(
-    () => console.log("Active story setted: ", props),
-
-    [activeStorie]
-  );
 
   return (
     <Draggable draggableId={props.task.storieID} index={props.index}>

@@ -41,9 +41,9 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     snooze: expense.snooze ? expense.snooze : false,
     onHold: expense.onHold ? expense.onHold : false,
     effort: expense.effort ? expense.effort : "5",
-    countNoteStories: expense.countNoteStories ? expense.countNoteStories : "",
+    countNoteStories: expense.countNoteStories ? expense.countNoteStories : 0,
     kanbanboard:
-      expense.kanbanboard  
+      expense.kanbanboard 
         ? {
             tasks: expense.kanbanboard.tasks
               ? expense.kanbanboard.tasks.map((storie) => ({

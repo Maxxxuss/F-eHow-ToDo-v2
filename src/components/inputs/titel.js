@@ -1,3 +1,5 @@
+// Show if not Committet cahnges
+
 import {
   TextField,
   Autocomplete,
@@ -7,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import ReactQuill from "react-quill";
@@ -15,6 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import { autoSaveFunc } from "./autoSave";
 import { getAllActiveNotes } from "../../selectors/activeNote";
 import { connect } from "react-redux";
+import PublishedWithChangesOutlinedIcon from "@mui/icons-material/PublishedWithChangesOutlined";
 
 import store from "../../store/configureStore";
 
@@ -40,7 +43,7 @@ export const ShortDescription = (properties) => {
   const [aNoteId, setaNoteId] = useState("");
   const [noteId, setNoteId] = useState("");
   const [aUserStorieID, setAUserStorieID] = useState("");
-  const [counterNoteStories, setCounterNoteStories] = useState("");
+  const [counterNoteStories, setCounterNoteStories] = useState(0);
   const [storieClearer, setStorieClearer] = useState("");
   const [buttonHandler, setButtonHandler] = useState("AddNote");
 
@@ -74,6 +77,8 @@ export const ShortDescription = (properties) => {
     setStorieClearer("rfBoard");
     setButtonHandler("AddStorie");
   };
+
+  useEffect(() => []);
 
   if (
     ndsProps.activeUserStorie.length > 0 &&
@@ -259,6 +264,19 @@ export const ShortDescription = (properties) => {
             clearInputValues(ndsProps)
           }
         >
+          {ndsProps.activeNote.noteDecscription.replace(/<[^>]+>/g, "").length -
+            1 !=
+          noteDecscription.replace(/<[^>]+>/g, "").length ? (
+            <PublishedWithChangesOutlinedIcon
+              color="warning"
+              fontSize="medium"
+              sx={{
+                mr: 2,
+              }}
+            />
+          ) : (
+            ""
+          )}
           Edit Note
         </Button>
       );
@@ -269,11 +287,15 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() =>
-            ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates) &&
-            ndsProps.addNoteStory(activeNoteID, kanbanUpdates) &&
-            clearStorieInput(ndsProps)
-          }
+          onClick={() => {
+            ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates),
+              ndsProps.addNoteStory(activeNoteID, kanbanUpdates),
+              ndsProps.editExpense(ndsProps.activeNote.id, {
+                countNoteStories: counterNoteStories + 1,
+              }),
+              setCounterNoteStories(counterNoteStories + 1),
+              clearStorieInput(ndsProps);
+          }}
         >
           Add Story
         </Button>
@@ -299,6 +321,20 @@ export const ShortDescription = (properties) => {
             clearStorieInput(ndsProps)
           }
         >
+          {ndsProps.activeUserStorie[0].description.replace(/<[^>]+>/g, "")
+            .length -
+            1 !=
+          noteDecscription.replace(/<[^>]+>/g, "").length ? (
+            <PublishedWithChangesOutlinedIcon
+              color="warning"
+              fontSize="medium"
+              sx={{
+                mr: 2,
+              }}
+            />
+          ) : (
+            ""
+          )}
           Edit Story
         </Button>
       );

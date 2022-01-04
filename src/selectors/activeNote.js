@@ -34,7 +34,7 @@ export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
     kanbanboard: activeNotes.kanbanboard ? activeNotes.kanbanboard : "",
     countNoteStories: activeNotes.countNoteStories
       ? activeNotes.countNoteStories
-      : "",
+      : 0,
       })
   // }))
 );
