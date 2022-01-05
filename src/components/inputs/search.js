@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { setActiveNote } from "../NotesDashboard";
 import { ShowNotes } from "../showNoteList";
-import ReactQuill from "react-quill";
 
 export function SearchForNotes(properties) {
   const props = properties.props;
@@ -35,7 +34,7 @@ export function SearchForNotes(properties) {
                 ? filteredNotes.description +
                   "  -  " +
                
-                  filteredNotes.noteDecscription.substr(17, 235).replace(/<[^>]+>/g, '')
+                  filteredNotes.noteDecscription.substr(17, 300).replace(/<[^>]+>/g, '')
                 : ""
             }
             style={{
