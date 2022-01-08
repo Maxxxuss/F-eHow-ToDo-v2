@@ -21,6 +21,7 @@ export const addActiveNote = ({
   onHold,
   effort,
   kanbanboard,
+  buzwords,
   countNoteStories,
 } = {}) => ({
   type: "ADD_ACTIVE_NOTE",
@@ -46,6 +47,7 @@ export const addActiveNote = ({
     effort,
     kanbanboard,
     countNoteStories,
+    buzwords,
   },
 });
 

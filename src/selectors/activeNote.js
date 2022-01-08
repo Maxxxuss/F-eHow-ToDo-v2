@@ -32,6 +32,8 @@ export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
     onHold: activeNotes.onHold ? activeNotes.onHold : "",
     effort: activeNotes.effort ? activeNotes.effort : "",
     kanbanboard: activeNotes.kanbanboard ? activeNotes.kanbanboard : "",
+    buzwords: activeNotes.buzwords ? activeNotes.buzwords : [ ],
+
     countNoteStories: activeNotes.countNoteStories
       ? activeNotes.countNoteStories
       : 0,

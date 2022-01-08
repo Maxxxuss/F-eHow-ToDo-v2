@@ -24,6 +24,8 @@ import {
 } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
+import { addBuzword, editBuzword } from "../actions/buzwords";
+
 import { SearchForNotes } from "./inputs/search";
 import { getAllCategories } from "../selectors/categories";
 import AddDeleteProject from "./AddDeleteProject";
@@ -33,6 +35,7 @@ import { editGlobalVariables } from "../actions/globalVariables";
 import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
 
 import { getAllActiveUserStories } from "../selectors/activeStorie";
+import { getAllBuzwords } from "../selectors/buzwords";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -52,6 +55,7 @@ export function setActiveNote(expense, props) {
       noteStatus: expense.noteStatus,
       kanbanboard: expense.kanbanboard,
       countNoteStories: expense.countNoteStories,
+      buzwords: expense.buzwords,
     };
     props.addActiveNote(updates);
 
@@ -158,6 +162,7 @@ const mapStateToProps = (state) => {
     globalVariables: getGlobalVariables(state),
     //KanbanIndex
     activeUserStorie: getAllActiveUserStories(state),
+    buzwords: getAllBuzwords(state),
   };
 };
 
@@ -188,6 +193,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   editNoteStoryColumn_ActiveNote: (noteId, userStorieID, updates) =>
     dispatch(editNoteStoryColumn_ActiveNote(noteId, userStorieID, updates)),
+
+  // BuzWords
+  addBuzword: (buzword) => dispatch(addBuzword(buzword)),
+  editBuzword: (id, updates) => dispatch(editBuzword(id, updates)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

@@ -9,6 +9,7 @@ import activeNoteReducer from "../reducers/activeNote";
 // import kanbanBoardReducer from "../reducers/kanbanBoard";
 import kColumReducer from "../reducers/kColumn";
 import activeUserStorieReducer from "../reducers/activeStorie";
+import buzwordsReducer from "../reducers/buzwords"
 
 
 const composerFunction = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -37,6 +38,7 @@ const store = combineReducers({
   // kanbanboards: kanbanBoardReducer, 
   kColumns: kColumReducer,
   activeUserStorie: activeUserStorieReducer, 
+  buzwords: buzwordsReducer
 });
 
 const loggingMiddleware = (store) => (next) => (action) => {

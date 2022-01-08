@@ -7,6 +7,8 @@ import {
   Grid,
   ButtonGroup,
   IconButton,
+  Modal,
+  Typography,
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -20,6 +22,8 @@ import { connect } from "react-redux";
 import PublishedWithChangesOutlinedIcon from "@mui/icons-material/PublishedWithChangesOutlined";
 
 import store from "../../store/configureStore";
+import BuzwordTags from "../Buzwords/buzwords";
+import { Box } from "@mui/system";
 
 export const ShortDescription = (properties) => {
   const props = properties;
@@ -161,6 +165,18 @@ export const ShortDescription = (properties) => {
       },
       columnOrder: ["column-1", "column-3", "column-4"],
     },
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 800,
+    bgcolor: 'white',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
   };
 
   const updates = {
@@ -417,6 +433,10 @@ export const ShortDescription = (properties) => {
       );
   }
 
+  const [open, setOpen] = React.useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <div>
       <Grid mt={1} mb={1}>
@@ -572,6 +592,30 @@ export const ShortDescription = (properties) => {
             </Grid>
           </Grid>
         )}
+        <Grid item>
+          <BuzwordTags 
+          titelNdsProps ={properties}
+          activeNoteID={activeNoteID}
+
+          />
+          <Button onClick={handleOpen}>Open modal</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+                 <BuzwordTags 
+          titelNdsProps ={properties}
+          activeNoteID={activeNoteID}
+
+          />
+           
+          
+            </Box>
+          </Modal>
+        </Grid>
       </Grid>
 
       <ReactQuill
