@@ -32,7 +32,9 @@ export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
     onHold: activeNotes.onHold ? activeNotes.onHold : "",
     effort: activeNotes.effort ? activeNotes.effort : "",
     kanbanboard: activeNotes.kanbanboard ? activeNotes.kanbanboard : "",
-    buzwords: activeNotes.buzwords ? activeNotes.buzwords : [ ],
+    buzwords: activeNotes.buzwords ? activeNotes.buzwords : [],
+    bTitel: activeNotes.bTitel ? activeNotes.bTitel : [],
+
 
     countNoteStories: activeNotes.countNoteStories
       ? activeNotes.countNoteStories

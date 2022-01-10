@@ -26,3 +26,10 @@ export const editBuzword = (id, updates) => ({
     id,
     updates,
   });
+
+
+  // export const AddNoteToBuzword = (id, updates) => ({
+  //   type: "ADD_NOTE_TO_BUZWORD",
+  //   id,
+  //   updates,
+  // });

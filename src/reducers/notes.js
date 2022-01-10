@@ -19,6 +19,21 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
         }
       });
 
+    case "EDIT_EXPENSE_BUZWORD":
+      return state.map((expense) => {
+        if (expense.id === action.id) {
+          return {
+            ...expense,
+            ...action.updates,
+            bTitel: action.updates.buzwords.map((titel) => {
+              return titel.titel;
+            }),
+          };
+        } else {
+          return expense;
+        }
+      });
+
     case "ADD_NOTE_STORY":
       return state.map((expense) => {
         if (expense.id === action.noteId) {
@@ -83,7 +98,7 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
           return { ...expense };
         }
       });
-      
+
     default:
       return state;
   }

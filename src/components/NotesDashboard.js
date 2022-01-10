@@ -19,6 +19,7 @@ import {
   addExpense,
   addNoteStory,
   editExpense,
+  editExpenseBuzword,
   editNoteStory,
   removeExpense,
 } from "../actions/notes";
@@ -56,6 +57,8 @@ export function setActiveNote(expense, props) {
       kanbanboard: expense.kanbanboard,
       countNoteStories: expense.countNoteStories,
       buzwords: expense.buzwords,
+      bTitel: expense.bTitel,
+
     };
     props.addActiveNote(updates);
 
@@ -175,6 +178,8 @@ const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(removeExpense(id)),
   addExpense: (expense) => dispatch(addExpense(expense)),
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
+  editExpenseBuzword: (id, updates) => dispatch(editExpenseBuzword(id, updates)),
+
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
   startStory: (id) => dispatch(startStory(id)),
 

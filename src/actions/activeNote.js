@@ -102,3 +102,11 @@ export const editNoteStoryColumn_ActiveNote = (noteId, userStorieID,updates) => 
   userStorieID,
   updates,
 });
+
+
+
+export const editActiveNoteBuzword = (id, updates) => ({
+  type: "EDIT_ACtiVENOTE_BUZWORD",
+  id,
+  updates,
+});

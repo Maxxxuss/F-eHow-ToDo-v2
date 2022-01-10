@@ -90,6 +90,14 @@ export const editNoteStory = (noteId, userStorieID,updates) => ({
   updates,
 });
 
+
+export const editExpenseBuzword = (id, updates) => ({
+  type: "EDIT_EXPENSE_BUZWORD",
+  id,
+  updates,
+});
+
+
 // export const startStory = (id, updates) => ({
 //   type: "START_KSTORY",
 //   id,

@@ -7,6 +7,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
+import titel from "../inputs/titel";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -28,6 +29,8 @@ export default function BuzwordTags(props) {
 
   const [addEditBuzword, setAddEditBuzword] = useState("");
 
+  const [upJustTitel, setUpJustTitel] = useState("")
+
   //   function indMap(value) {
   //     top100Films.map((value, index) => {
   //       console.log("VAlue are: ", value, "index is: ", index);
@@ -41,10 +44,17 @@ export default function BuzwordTags(props) {
 
 
 
-  function indMao(value) {
-    selectedOptions.map((value) => {
-      console.log("VAlue are: ", value.indexId);
-      setIndexOptions([...indexOptions, value.indexId]);
+
+  function titelMap(value) {
+    indexOptions.map((value) => {
+
+    
+      // setUpJustTitel([...upJustTitel,value.titel])
+      setUpJustTitel(value.titel)
+
+      // console.log("indexOptions; ", indexOptions);
+      // console.log("VAlue are: ", value.titel);
+      // console.log("indexOpt: ", upJustTitel);
     });
   }
 
@@ -59,6 +69,8 @@ export default function BuzwordTags(props) {
   const updates = {
     buzwords: indexOptions,
   };
+
+
 
   //   React.useEffect(
   //     () => (
@@ -76,7 +88,7 @@ export default function BuzwordTags(props) {
         //     console.log("VAlue are: ", value);
         //     setIndexOptions(value)
         //   }) }
-        onChange={(event, value) => setIndexOptions(value)}
+        onChange={(event, value) =>{ setIndexOptions(value)}}
         // }}
         // onChange={(event, value, reason) => console.log("Autocomplete ", value)}
         id="checkboxes-tags-demo"
@@ -91,7 +103,7 @@ export default function BuzwordTags(props) {
               checkedIcon={checkedIcon}
               style={{ marginRight: 8 }}
               checked={selected}
-              //   onChange={(event, value) => console.log("CheckBock ", value)}
+                // onChange={(event, value, selected) => console.log("CheckBock ", event)}
             />
             {option.titel}
           </li>
@@ -108,7 +120,13 @@ export default function BuzwordTags(props) {
       />
       <Button
         onClick={() =>
-          console.log("Buzword Props ", tNdsProps, "checkd ", selectedOptions)
+          console.log
+          (
+            // "Buzword Props ", tNdsProps, "checkd ", selectedOptions
+            "upJustTitel ", upJustTitel
+            // "indexOptions ", indexOptions
+
+          )
         }
       >
         Show B-Props
@@ -116,8 +134,10 @@ export default function BuzwordTags(props) {
       <Button
         variant="outlined"
         onClick={() => {
-          tNdsProps.editExpense(tNdsProps.activeNote.id, updates),
+          tNdsProps.editExpenseBuzword(tNdsProps.activeNote.id, updates),
             tNdsProps.editActiveNote(updates);
+            // tNdsProps.editBuzword()
+
         }}
       >
         Add NotBuz
@@ -128,12 +148,13 @@ export default function BuzwordTags(props) {
         color="warning"
         onClick={() => {
           console.log("defaultOptions", defaultOptions),
-            tNdsProps.activeNote.buzwords.map((indexId) => {
-              console.log("index Id: ", [top100Films[indexId.indexId]]);
+          titelMap()
+            // tNdsProps.activeNote.buzwords.map((indexId) => {
+            //   console.log("index Id: ", [top100Films[indexId.indexId]]);
 
               // setDefaultOptions([top100Films[indexId.indexId]]);
               // setDefaultOptions([top100Films[1]])
-            });
+            // });
         }}
       >
         Show 0.expense

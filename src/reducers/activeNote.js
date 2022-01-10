@@ -65,6 +65,21 @@ const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
         },
       };
 
+      case "EDIT_ACtiVENOTE_BUZWORD":
+        return state.map((expense) => {
+          if (expense.id === action.id) {
+            return {
+              ...expense,
+              ...action.updates,
+              bTitel: action.updates.buzwords.map((titel) => {
+                return titel.titel;
+              }),
+            };
+          } else {
+            return expense;
+          }
+        });
+
     default:
       return state;
   }

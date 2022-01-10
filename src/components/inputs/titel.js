@@ -9,6 +9,9 @@ import {
   IconButton,
   Modal,
   Typography,
+  Chip,
+  Paper,
+  ListItem,
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -24,6 +27,51 @@ import PublishedWithChangesOutlinedIcon from "@mui/icons-material/PublishedWithC
 import store from "../../store/configureStore";
 import BuzwordTags from "../Buzwords/buzwords";
 import { Box } from "@mui/system";
+import { styled } from "@mui/material/styles";
+
+function BuzChips(props) {
+  const [chipData, setChipData] = useState(props);
+
+  // return(
+  //   <Button
+  //   onClick={()=> console.log("Buz Chio Props", props) }
+  //   >
+  //     Props Buz Chis
+  //   </Button>
+  // )
+  const ListItem = styled("li")(({ theme }) => ({
+    margin: theme.spacing(0.5),
+  }));
+
+  // const handleDelete = (chipToDelete) => () => {
+  //   setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  // };
+  return (
+    <Paper
+      sx={{
+        display: "flex",
+        justifyContent: "row",
+        flexWrap: "wrap",
+        listStyle: "none",
+        p: 0.5,
+        m: 0,
+      }}
+      component="ul"
+    >
+      {chipData.map((data) => {
+        return (
+          <ListItem key={data.id}>
+            <Chip
+              // icon={icon}
+              label={data.titel}
+              // onDelete={data.label === 'React' ? undefined : handleDelete(data)}
+            />
+          </ListItem>
+        );
+      })}
+    </Paper>
+  );
+}
 
 export const ShortDescription = (properties) => {
   const props = properties;
@@ -168,13 +216,13 @@ export const ShortDescription = (properties) => {
   };
 
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 800,
-    bgcolor: 'white',
-    border: '2px solid #000',
+    bgcolor: "white",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -593,11 +641,10 @@ export const ShortDescription = (properties) => {
           </Grid>
         )}
         <Grid item>
-          <BuzwordTags 
-          titelNdsProps ={properties}
-          activeNoteID={activeNoteID}
+          {/* <BuzwordTags titelNdsProps={properties} activeNoteID={activeNoteID} /> */}
+          {BuzChips(ndsProps.activeNote.buzwords)}
+          {/* <Chip label/> */}
 
-          />
           <Button onClick={handleOpen}>Open modal</Button>
           <Modal
             open={open}
@@ -606,13 +653,10 @@ export const ShortDescription = (properties) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-                 <BuzwordTags 
-          titelNdsProps ={properties}
-          activeNoteID={activeNoteID}
-
-          />
-           
-          
+              <BuzwordTags
+                titelNdsProps={properties}
+                activeNoteID={activeNoteID}
+              />
             </Box>
           </Modal>
         </Grid>
