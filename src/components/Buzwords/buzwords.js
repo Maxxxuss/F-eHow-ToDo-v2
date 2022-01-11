@@ -14,83 +14,37 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function BuzwordTags(props) {
   const tNdsProps = props.titelNdsProps.NotesDashboradProps;
-  const [selectedOptions, setSelectedOptions] = useState("");
 
-  const [top100Films , setTopFilms] = useState(tNdsProps.buzwords)
+  const [top100Films, setTopFilms] = useState(tNdsProps.buzwords);
 
   const [indexOptions, setIndexOptions] = useState("");
   const [defaultOptions, setDefaultOptions] = useState(
-    // [top100Films[1]],
     tNdsProps.activeNote.buzwords
       ? tNdsProps.activeNote.buzwords
       : top100Films[0]
-    // tNdsProps.activeNote.buzwords
   );
 
   const [addEditBuzword, setAddEditBuzword] = useState("");
 
-  const [upJustTitel, setUpJustTitel] = useState("")
-
-  //   function indMap(value) {
-  //     top100Films.map((value, index) => {
-  //       console.log("VAlue are: ", value, "index is: ", index);
-  //     });
-  //   }
-
-  // useEffect(()=>{
-  //   setTopFilms
-  //   ,[tNdsProps.buzwords]
-  // })
-
-
-
+  const [upJustTitel, setUpJustTitel] = useState("");
 
   function titelMap(value) {
     indexOptions.map((value) => {
-
-    
-      // setUpJustTitel([...upJustTitel,value.titel])
-      setUpJustTitel(value.titel)
-
-      // console.log("indexOptions; ", indexOptions);
-      // console.log("VAlue are: ", value.titel);
-      // console.log("indexOpt: ", upJustTitel);
+      setUpJustTitel(value.titel);
     });
   }
-
-  // useEffect(()=>{
-  //   tNdsProps.activeNote.buzwords.map((indexId) => {
-  //     setDefaultOptions([top100Films[indexId.indexId]]);
-
-  // }, [tNdsProps.activeNote])})
-
-  // const defaultOptions = [top100Films[1], top100Films[2]];
 
   const updates = {
     buzwords: indexOptions,
   };
 
-
-
-  //   React.useEffect(
-  //     () => (
-  //       setSelectedOptions(tNdsProps.expenses[0].buzwords),
-  //       console.log("Selectet options changed", selectedOptions)
-  //     ),
-  //     [tNdsProps.activeNote]
-  //   );
-
   return (
     <Grid>
       <Autocomplete
         multiple
-        // onChange={(event, value)  =>    value.map((value) => {
-        //     console.log("VAlue are: ", value);
-        //     setIndexOptions(value)
-        //   }) }
-        onChange={(event, value) =>{ setIndexOptions(value)}}
-        // }}
-        // onChange={(event, value, reason) => console.log("Autocomplete ", value)}
+        onChange={(event, value) => {
+          setIndexOptions(value);
+        }}
         id="checkboxes-tags-demo"
         options={top100Films}
         disableCloseOnSelect
@@ -103,32 +57,16 @@ export default function BuzwordTags(props) {
               checkedIcon={checkedIcon}
               style={{ marginRight: 8 }}
               checked={selected}
-                // onChange={(event, value, selected) => console.log("CheckBock ", event)}
             />
             {option.titel}
           </li>
         )}
         style={{ width: 500 }}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Checkboxes"
-            placeholder="Favorites"
-            // onClick={(event, value) => console.log("Textfield  ", value, event, params)}
-          />
+          <TextField {...params} label="Checkboxes" placeholder="Favorites" />
         )}
       />
-      <Button
-        onClick={() =>
-          console.log
-          (
-            // "Buzword Props ", tNdsProps, "checkd ", selectedOptions
-            "upJustTitel ", upJustTitel
-            // "indexOptions ", indexOptions
-
-          )
-        }
-      >
+      <Button onClick={() => console.log("upJustTitel ", upJustTitel)}>
         Show B-Props
       </Button>
       <Button
@@ -136,8 +74,6 @@ export default function BuzwordTags(props) {
         onClick={() => {
           tNdsProps.editExpenseBuzword(tNdsProps.activeNote.id, updates),
             tNdsProps.editActiveNote(updates);
-            // tNdsProps.editBuzword()
-
         }}
       >
         Add NotBuz
@@ -147,14 +83,7 @@ export default function BuzwordTags(props) {
         variant="contained"
         color="warning"
         onClick={() => {
-          console.log("defaultOptions", defaultOptions),
-          titelMap()
-            // tNdsProps.activeNote.buzwords.map((indexId) => {
-            //   console.log("index Id: ", [top100Films[indexId.indexId]]);
-
-              // setDefaultOptions([top100Films[indexId.indexId]]);
-              // setDefaultOptions([top100Films[1]])
-            // });
+          console.log("defaultOptions", defaultOptions), titelMap();
         }}
       >
         Show 0.expense
@@ -169,26 +98,15 @@ export default function BuzwordTags(props) {
       ></TextField>
 
       <Button
-      variant="outlined"
-      color="warning"
-      onClick={()=>{
-        tNdsProps.addBuzword({titel: addEditBuzword}), 
-        console.log("NDS Props - BNuzword: ", tNdsProps.buzwords);
-      }}
+        variant="outlined"
+        color="warning"
+        onClick={() => {
+          tNdsProps.addBuzword({ titel: addEditBuzword }),
+            console.log("NDS Props - BNuzword: ", tNdsProps.buzwords);
+        }}
       >
         Add new Buz
       </Button>
     </Grid>
   );
 }
-
-// // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-// const top100Films = [
-//   // { indexId: "1", titel: "The Shawshank Redemption", year: 1994 },
-//   // { indexId: "2", titel: "The Godfather", year: 1972 },
-//   // { indexId: "3", titel: "The Godfather: Part II", year: 1974 },
-//   // { indexId: "4", titel: "The Dark Knight", year: 2008 },
-//   // { indexId: "5", titel: "12 Angry Men", year: 1957 },
-//   // { indexId: "6", titel: "Schindler's List", year: 1993 },
-//   // { indexId: "7", titel: "Pulp Fiction", year: 1994 },
-// ];
