@@ -22,7 +22,12 @@ export function SearchForNotes(properties) {
   const [filteredNotes, setFilteredNotes] = useState("");
   const [noteListStatus, setnoteListStatus] = useState("open");
   const [buzwords, setBuzwords] = useState(props.buzwords);
-  const [filteredExpenses, setFilteredExpenses] = useState(props.expenses);
+
+  const [searchBuzwords, setSearchBuzwords] = useState("");
+  const [filteredExpenses, setFilteredExpenses] = useState("");
+
+  const [filteredNotesOnBuz, setFilteredNotesOnBuz] = useState(props.expenses);
+
 
   const icon = <CheckBoxOutlineBlank fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -32,6 +37,31 @@ export function SearchForNotes(properties) {
   // filteredExpenses(filteredExpenses)=>{
   //   filteredExpenses.filter
 
+  // }
+
+  // useEffect(()=>{
+  //   setFilteredExpenses(searchBuzwords.map((titel)=> console.log(titel)))
+  //   , [searchBuzwords]
+  // })
+
+  function filterNotes(filterCriteria) {
+    // var maptitel= filteredExpenses.map((titel)=>titel).toString()
+    const result = props.expenses.filter(
+      (filterNotes) =>
+        filterNotes.bTitel.includes(
+          // "1Buzw"
+          maptitel
+        )
+      // ['1Buzw', '2Buzw']
+    );
+
+    console.log("Filtered Notes: ", result);
+  }
+
+  // function filterNotes(arr, query) {
+  //   return arr.filter(function (el) {
+  //     return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
+  //   });
   // }
 
   return (
@@ -85,7 +115,26 @@ export function SearchForNotes(properties) {
       <Grid item xs>
         <Autocomplete
           multiple
-          onChange={(event, value) => console.log("File Change",value)}
+          onChange={(event, value) => {
+            setFilteredExpenses(
+              value.map(
+                (titel) =>
+                  //  console.log("Auto Buz Titel",titel.titel)
+                  titel.titel
+              )
+            );
+
+              // value.map(
+              //   (titel) =>
+              //     //  console.log("Auto Buz Titel",titel.titel)
+              //     titel.titel
+              // )
+
+            
+
+            setSearchBuzwords(value);
+            console.log("File Change", filteredExpenses);
+          }}
           id="tags-filter-Buz"
           options={buzwords}
           getOptionLabel={(option) => option.titel}
@@ -103,11 +152,36 @@ export function SearchForNotes(properties) {
           )}
           style={{ width: 500 }}
           renderInput={(params) => (
-            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+            <TextField
+              {...params}
+              label="Search Buzwords"
+              placeholder="Favorites"
+            />
           )}
         />
-        <Button onClick={() => console.log("Buzwrods Search: - ", buzwords)}>
+        <Button
+          onClick={() =>
+          //   console.log(
+          //     "filteredExpenses",
+          //     filteredExpenses[filteredExpenses.length - 1]
+          //   )
+          console.log("Filtered Notes: ", filteredNotesOnBuz)     
+          } 
+
+        >
           Show B-Sear
+        </Button>
+
+        <Button
+        onClick={()  =>{
+          setFilteredNotesOnBuz(
+            filteredNotesOnBuz.filter(filteredNotes => filteredNotes.bTitel.includes(filteredExpenses[filteredExpenses.length - 1]) )  
+          ),
+          console.log("Filtered Notes: ", filteredNotesOnBuz)     
+      
+      }}
+        >
+          Start Filter 
         </Button>
       </Grid>
       <Grid item xs>
