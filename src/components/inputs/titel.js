@@ -12,6 +12,9 @@ import {
   Chip,
   Paper,
   ListItem,
+  List,
+  ListItemText,
+  ListItemButton,
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -29,49 +32,31 @@ import BuzwordTags from "../Buzwords/buzwords";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
 
-function BuzChips(props) {
-  const [chipData, setChipData] = useState(props);
+// const style = {
+//   position: 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   pt: 2,
+//   px: 4,
+//   pb: 3,
+// };
 
-  // return(
-  //   <Button
-  //   onClick={()=> console.log("Buz Chio Props", props) }
-  //   >
-  //     Props Buz Chis
-  //   </Button>
-  // )
-  const ListItem = styled("li")(({ theme }) => ({
-    margin: theme.spacing(0.5),
-  }));
-
-  // const handleDelete = (chipToDelete) => () => {
-  //   setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  // };
-  return (
-    <Paper
-      sx={{
-        display: "flex",
-        justifyContent: "row",
-        flexWrap: "wrap",
-        listStyle: "none",
-        p: 0.5,
-        m: 0,
-      }}
-      component="ul"
-    >
-      {chipData.map((data) => {
-        return (
-          <ListItem key={data.id}>
-            <Chip
-              // icon={icon}
-              label={data.titel}
-              // onDelete={data.label === 'React' ? undefined : handleDelete(data)}
-            />
-          </ListItem>
-        );
-      })}
-    </Paper>
-  );
-}
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 800,
+  bgcolor: "white",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export const ShortDescription = (properties) => {
   const props = properties;
@@ -130,7 +115,11 @@ export const ShortDescription = (properties) => {
     setButtonHandler("AddStorie");
   };
 
-  useEffect(() => []);
+  const ListItem = styled("li")(({ theme }) => ({
+    margin: theme.spacing(0.5),
+  }));
+
+  // useEffect(() => []);
 
   if (
     ndsProps.activeUserStorie.length > 0 &&
@@ -322,10 +311,14 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() =>
-            ndsProps.editExpense(ndsProps.activeNote.id, updates) &&
-            ndsProps.editActiveNote(updates) &&
-            clearInputValues(ndsProps)
+          onClick={() =>{
+            ndsProps.editExpense(ndsProps.activeNote.id, updates),
+            ndsProps.editActiveNote(updates),
+            clearInputValues(ndsProps), 
+            autoSaveFunc(ndsProps);
+
+          
+          }
           }
         >
           {ndsProps.activeNote.noteDecscription.replace(/<[^>]+>/g, "").length -
@@ -359,6 +352,7 @@ export const ShortDescription = (properties) => {
               }),
               setCounterNoteStories(counterNoteStories + 1),
               clearStorieInput(ndsProps);
+            autoSaveFunc(ndsProps);
           }}
         >
           Add Story
@@ -370,19 +364,20 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() =>
+          onClick={() =>{
             ndsProps.editNoteStory(
               activeNoteID,
               ndsProps.activeUserStorie[0].storieID,
               updateStorie
-            ) &&
+            ),
             ndsProps.editNoteStory_ActiveNote(
               activeNoteID,
               ndsProps.activeUserStorie[0].storieID,
               updateStorie
-            ) &&
-            ndsProps.removeActiveUserStory() &&
-            clearStorieInput(ndsProps)
+            ),
+            ndsProps.removeActiveUserStory(),
+            clearStorieInput(ndsProps),
+            autoSaveFunc(ndsProps)}
           }
         >
           {ndsProps.activeUserStorie[0].description.replace(/<[^>]+>/g, "")
@@ -407,8 +402,10 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() =>
-            ndsProps.addExpense(startNewNote) && clearInputValues(ndsProps)
+          onClick={() =>{
+            ndsProps.addExpense(startNewNote),
+            clearInputValues(ndsProps),
+            autoSaveFunc(ndsProps)}
           }
         >
           Add NOte
@@ -421,8 +418,8 @@ export const ShortDescription = (properties) => {
       return (
         <div>
           <IconButton
-            onClick={() =>
-              ndsProps.removeActiveUserStory() &&
+            onClick={() =>{
+              ndsProps.removeActiveUserStory(),
               ndsProps.setActiveStory({
                 aNoteId: "defauldID",
                 storieID: "",
@@ -431,8 +428,8 @@ export const ShortDescription = (properties) => {
                 description: "noteDecscription",
                 column: "column-1",
                 collapse: "false",
-              }) &&
-              clearStorieInput(ndsProps)
+              }),
+              clearStorieInput(ndsProps)}
             }
             size="large"
             color="secondary"
@@ -480,8 +477,8 @@ export const ShortDescription = (properties) => {
         </div>
       );
   }
-
-  const [open, setOpen] = React.useState(true);
+  //MODAL STATE
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -498,7 +495,7 @@ export const ShortDescription = (properties) => {
                 statusChange(ndsProps, updates) + clearInputValues(ndsProps)
               }
             >
-              Set Satus: {noteStatus === "open" ? "close" : "open"}
+              Set Status: {noteStatus === "open" ? "close" : "open"}
             </Button>
           ) : (
             ""
@@ -640,12 +637,29 @@ export const ShortDescription = (properties) => {
             </Grid>
           </Grid>
         )}
-        <Grid item>
-          {/* <BuzwordTags titelNdsProps={properties} activeNoteID={activeNoteID} /> */}
-          {BuzChips(ndsProps.activeNote.buzwords)}
-          {/* <Chip label/> */}
+        <Grid item xs={10}>
+          <Paper
+            sx={{
+              display: "flex",
+              justifyContent: "row",
+              flexWrap: "wrap",
+              listStyle: "none",
+              p: 0.2,
+              m: 0,
+              width: "100%",
+            }}
+            component="ul"
+          >
+            {ndsProps.activeNote.buzwords.map((data) => {
+              return (
+                <ListItem key={data.id}>
+                  <Chip label={data.titel} />
+                </ListItem>
+              );
+            })}
+          </Paper>
 
-          <Button onClick={handleOpen}>Open modal</Button>
+          <Button onClick={handleOpen}>Add Buzword</Button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -656,6 +670,11 @@ export const ShortDescription = (properties) => {
               <BuzwordTags
                 titelNdsProps={properties}
                 activeNoteID={activeNoteID}
+              />
+              <ChildModal
+                propsBuzword={props.NotesDashboradProps.buzwords}
+                addBuzword={props.NotesDashboradProps.addBuzword}
+                editBuzword={props.NotesDashboradProps.editBuzword}
               />
             </Box>
           </Modal>
@@ -682,6 +701,131 @@ export function ButtonSwitch(add_edit, remove, updates, bTitel) {
         </Button>
       </ButtonGroup>
     </div>
+  );
+}
+
+function ChildModal(props) {
+  const [open, setOpen] = useState(false);
+  const [activeBuz, setActiveBuz] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState("");
+
+  const [titel, setTitel] = useState("");
+
+  const handleListItemClick = (buzword, props, event, index) => {
+    setSelectedIndex(index);
+    setActiveBuz(buzword, props.props);
+    setTitel(buzword.titel);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Button variant="outlined" color="success" onClick={handleOpen}>
+        Add & Edit Buzwords
+      </Button>
+
+      <Modal
+        hideBackdrop
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box overflow="auto" sx={{ ...style, width: 900, maxHeight: 600 }}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={6}>
+              <List>
+                {props.propsBuzword.map((buzword, index) => {
+                  return (
+                    <Paper elevation={4}>
+                      <ListItem key={buzword.id}>
+                        <ListItemButton
+                          dense={true}
+                          selected={selectedIndex === index}
+                          onClick={(event) =>
+                            handleListItemClick(buzword, props, event, index)
+                          }
+                        >
+                          <ListItemText
+                            id={buzword.id}
+                            primary={buzword.titel.substr(0, 30)}
+                          ></ListItemText>
+                        </ListItemButton>
+                      </ListItem>
+                    </Paper>
+                  );
+                })}
+              </List>
+            </Grid>
+            <Grid item xs={5} ml={1}>
+              <Grid container direction="column">
+                <Grid item xs={6}>
+                  <TextField
+                    label="Titel"
+                    variant="filled"
+                    color="secondary"
+                    value={titel}
+                    onChange={(e) => setTitel(e.target.value)}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <ButtonGroup>
+                    {activeBuz === "" ? (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          props.addBuzword({ titel: titel });
+                          setTitel("");
+                        }}
+                      >
+                        Add new Buz
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outlined"
+                        onClick={() => {
+                          props.editBuzword(activeBuz.id, { titel: titel });
+                          setTitel("");
+                          setActiveBuz("");
+
+                          // console.log(activeBuz);
+                        }}
+                      >
+                        Take Change
+                      </Button>
+                    )}
+                    <Button
+                      onClick={() => {
+                        setTitel("");
+                        setActiveBuz("");
+                      }}
+                    >
+                      Clear
+                    </Button>
+                    <Button color="secondary" onClick={handleClose}>
+                      Close Window
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
+    </React.Fragment>
   );
 }
 

@@ -22,7 +22,7 @@ export const addBuzword = ({
   });
 
 export const editBuzword = (id, updates) => ({
-    type: "ADD_BUZWORD",
+    type: "EDIT_BUZWORD",
     id,
     updates,
   });
