@@ -16,9 +16,14 @@ export default function BuzwordTags(props) {
   const buzOptions = tNdsProps.buzwords;
 
   const [indexOptions, setIndexOptions] = useState("");
-  const defaultOptions = tNdsProps.activeNote.buzwords
-    ? tNdsProps.activeNote.buzwords
-    : buzOptions[0];
+
+  const [defaultOptions, setDefaultOptions] = useState(tNdsProps.activeNote.buzwords);
+
+
+
+  // const defaultOptions = tNdsProps.activeNote.buzwords
+  //   ? tNdsProps.activeNote.buzwords
+  //   : [];
 
   const updates = {
     buzwords: indexOptions,
@@ -32,7 +37,10 @@ export default function BuzwordTags(props) {
         <Autocomplete
           multiple
           onChange={(event, value) => {
-            setIndexOptions(value);
+
+            tNdsProps.editExpenseBuzword(tNdsProps.activeNote.id, {buzwords:value}),
+            tNdsProps.editActiveNote({buzwords:value});
+
           }}
           id="checkboxes-tags-demo"
           options={buzOptions}
@@ -59,15 +67,7 @@ export default function BuzwordTags(props) {
       <Grid item xs
       ml={2}
       >
-        <Button
-          variant="contained"
-          onClick={() => {
-            tNdsProps.editExpenseBuzword(tNdsProps.activeNote.id, updates),
-              tNdsProps.editActiveNote(updates);
-          }}
-        >
-          Add to Note
-        </Button>
+
       </Grid>
     </Grid>
   );

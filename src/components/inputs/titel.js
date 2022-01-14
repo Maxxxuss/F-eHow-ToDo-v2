@@ -748,7 +748,9 @@ function ChildModal(props) {
               <List>
                 {props.propsBuzword.map((buzword, index) => {
                   return (
-                    <Paper elevation={4}>
+                    <Paper elevation={4}
+                    key={buzword.id}
+                    >
                       <ListItem key={buzword.id}>
                         <ListItemButton
                           dense={true}
