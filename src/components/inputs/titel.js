@@ -58,6 +58,8 @@ const style = {
   p: 4,
 };
 
+
+
 export const ShortDescription = (properties) => {
   const props = properties;
   const ndsProps = properties.NotesDashboradProps;
@@ -477,13 +479,23 @@ export const ShortDescription = (properties) => {
         </div>
       );
   }
+
+  function handleKeyDown (e) {
+    if (e.key === 75 && e.metaKey) {
+      console.log("search")
+      handleOpen()
+    }
+  };
   //MODAL STATE
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <div
+    onKeyDown={handleKeyDown}
+
+    >
       <Grid mt={1} mb={1}>
         <ButtonGroup fullWidth={true}>
           {decider(ndsProps)}
@@ -659,7 +671,9 @@ export const ShortDescription = (properties) => {
             })}
           </Paper>
 
-          <Button onClick={handleOpen}>Add Buzword</Button>
+          <Button onClick={handleOpen}
+          
+          >Add Buzword</Button>
           <Modal
             open={open}
             onClose={handleClose}
