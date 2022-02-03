@@ -58,8 +58,6 @@ const style = {
   p: 4,
 };
 
-
-
 export const ShortDescription = (properties) => {
   const props = properties;
   const ndsProps = properties.NotesDashboradProps;
@@ -313,15 +311,12 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() =>{
+          onClick={() => {
             ndsProps.editExpense(ndsProps.activeNote.id, updates),
-            ndsProps.editActiveNote(updates),
-            clearInputValues(ndsProps), 
-            autoSaveFunc(ndsProps);
-
-          
-          }
-          }
+              ndsProps.editActiveNote(updates),
+              clearInputValues(ndsProps),
+              autoSaveFunc(ndsProps);
+          }}
         >
           {ndsProps.activeNote.noteDecscription.replace(/<[^>]+>/g, "").length -
             1 !=
@@ -366,21 +361,21 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() =>{
+          onClick={() => {
             ndsProps.editNoteStory(
               activeNoteID,
               ndsProps.activeUserStorie[0].storieID,
               updateStorie
             ),
-            ndsProps.editNoteStory_ActiveNote(
-              activeNoteID,
-              ndsProps.activeUserStorie[0].storieID,
-              updateStorie
-            ),
-            ndsProps.removeActiveUserStory(),
-            clearStorieInput(ndsProps),
-            autoSaveFunc(ndsProps)}
-          }
+              ndsProps.editNoteStory_ActiveNote(
+                activeNoteID,
+                ndsProps.activeUserStorie[0].storieID,
+                updateStorie
+              ),
+              ndsProps.removeActiveUserStory(),
+              clearStorieInput(ndsProps),
+              autoSaveFunc(ndsProps);
+          }}
         >
           {ndsProps.activeUserStorie[0].description.replace(/<[^>]+>/g, "")
             .length -
@@ -404,11 +399,11 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() =>{
+          onClick={() => {
             ndsProps.addExpense(startNewNote),
-            clearInputValues(ndsProps),
-            autoSaveFunc(ndsProps)}
-          }
+              clearInputValues(ndsProps),
+              autoSaveFunc(ndsProps);
+          }}
         >
           Add NOte
         </Button>
@@ -420,19 +415,19 @@ export const ShortDescription = (properties) => {
       return (
         <div>
           <IconButton
-            onClick={() =>{
+            onClick={() => {
               ndsProps.removeActiveUserStory(),
-              ndsProps.setActiveStory({
-                aNoteId: "defauldID",
-                storieID: "",
-                noteId: "noteId",
-                titel: "description",
-                description: "noteDecscription",
-                column: "column-1",
-                collapse: "false",
-              }),
-              clearStorieInput(ndsProps)}
-            }
+                ndsProps.setActiveStory({
+                  aNoteId: "defauldID",
+                  storieID: "",
+                  noteId: "noteId",
+                  titel: "description",
+                  description: "noteDecscription",
+                  column: "column-1",
+                  collapse: "false",
+                }),
+                clearStorieInput(ndsProps);
+            }}
             size="large"
             color="secondary"
           >
@@ -480,22 +475,23 @@ export const ShortDescription = (properties) => {
       );
   }
 
-  function handleKeyDown (e) {
-    if (e.key === 75 && e.metaKey) {
-      console.log("search")
-      handleOpen()
+  function handleKeyDown_Categorie(e) {
+    if (
+      // e.key === 67 &&
+      e.key === "c" &&
+      e.metaKey
+    ) {
+      console.log("search");
+      handleOpen();
     }
-  };
+  }
   //MODAL STATE
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <div
-    onKeyDown={handleKeyDown}
-
-    >
+    <div onKeyDown={handleKeyDown_Categorie}>
       <Grid mt={1} mb={1}>
         <ButtonGroup fullWidth={true}>
           {decider(ndsProps)}
@@ -671,9 +667,7 @@ export const ShortDescription = (properties) => {
             })}
           </Paper>
 
-          <Button onClick={handleOpen}
-          
-          >Add Buzword</Button>
+          <Button onClick={handleOpen}>Add Buzword</Button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -694,14 +688,14 @@ export const ShortDescription = (properties) => {
           </Modal>
         </Grid>
       </Grid>
-
+{/* 
       <ReactQuill
         theme="snow"
         value={noteDecscription}
         onChange={setnoteDecscription}
         modules={modules}
         formats={formats}
-      />
+      /> */}
     </div>
   );
 };
@@ -762,9 +756,7 @@ function ChildModal(props) {
               <List>
                 {props.propsBuzword.map((buzword, index) => {
                   return (
-                    <Paper elevation={4}
-                    key={buzword.id}
-                    >
+                    <Paper elevation={4} key={buzword.id}>
                       <ListItem key={buzword.id}>
                         <ListItemButton
                           dense={true}

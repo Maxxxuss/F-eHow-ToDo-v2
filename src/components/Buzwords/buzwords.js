@@ -60,7 +60,9 @@ export default function BuzwordTags(props) {
           )}
           style={{ width: 500 }}
           renderInput={(params) => (
-            <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+            <TextField 
+            autoFocus
+            {...params} label="Checkboxes" placeholder="Favorites" />
           )}
         />
       </Grid>
