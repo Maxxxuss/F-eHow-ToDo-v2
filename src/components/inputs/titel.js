@@ -20,7 +20,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import { v4 as uuidv4 } from "uuid";
 import { autoSaveFunc } from "./autoSave";
 import { getAllActiveNotes } from "../../selectors/activeNote";
@@ -31,20 +31,17 @@ import store from "../../store/configureStore";
 import BuzwordTags from "../Buzwords/buzwords";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
+import { Editor, EditorState, RichUtils } from "draft-js";
+import "draft-js/dist/Draft.css";
+import {
+  InlineStyleControls,
+  styleMap,
+} from "./richTextEditor/InlineStyleControls";
+import { BlockStyleControls } from "./richTextEditor/BlockStyleControls";
+import ReactQuill from "react-quill";
 
-// const style = {
-//   position: 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   width: 400,
-//   bgcolor: 'background.paper',
-//   border: '2px solid #000',
-//   boxShadow: 24,
-//   pt: 2,
-//   px: 4,
-//   pb: 3,
-// };
+import "./richTextEditor/index.css";
+import DraftJsEditor from "./richTextEditor/index.js"
 
 const style = {
   position: "absolute",
@@ -83,6 +80,10 @@ export const ShortDescription = (properties) => {
   const [counterNoteStories, setCounterNoteStories] = useState(0);
   const [storieClearer, setStorieClearer] = useState("");
   const [buttonHandler, setButtonHandler] = useState("AddNote");
+
+  const [editorState, setEditorState] = React.useState(() =>
+    EditorState.createEmpty()
+  );
 
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
@@ -214,6 +215,14 @@ export const ShortDescription = (properties) => {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+  };
+  const richTextStyleMap = {
+    "HIGHLIGHT-Y": {
+      backgroundColor: "#fffe0d",
+    },
+    "HIGHLIGHT-G": {
+      backgroundColor: "#ccff88",
+    },
   };
 
   const updates = {
@@ -490,6 +499,42 @@ export const ShortDescription = (properties) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // draft-js
+  function handleKeyCommand(command, editorState) {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+
+    if (newState) {
+      onRichtTextChange(newState);
+      return "handled";
+    }
+    return "not-handled";
+  }
+
+  function onBoldClick() {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "STRIKETHROUGH"));
+  }
+
+  function onYellowHighlight() {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "HIGHLIGHT-Y"));
+  }
+
+  function onGreenHighlight() {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "HIGHLIGHT-G"));
+  }
+
+  function onRichtTextChange(editorState) {
+    console.log(
+      "content",
+      editorState.getCurrentContent().getPlainText("\u0001")
+    );
+    setEditorState(editorState), 
+    setnoteDecscription(editorState)
+  }
+
+  function toggleBlockType(blockType) {
+    onRichtTextChange(RichUtils.toggleBlockType(editorState, blockType));
+  }
+
   return (
     <div onKeyDown={handleKeyDown_Categorie}>
       <Grid mt={1} mb={1}>
@@ -688,8 +733,27 @@ export const ShortDescription = (properties) => {
           </Modal>
         </Grid>
       </Grid>
-{/* 
-      <ReactQuill
+      <Grid>
+        {/* <div> */}
+         <div>
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={toggleBlockType}
+          />
+          {/* <InlineStyleControls editorState={editorState} /> */}
+        </div>
+
+        <Editor
+          handleKeyCommand={handleKeyCommand}
+          customStyleMap={styleMap}
+          editorState={editorState}
+          onChange={onRichtTextChange}
+          placeholder="Add your Note"
+        /> 
+        {/* <DraftJsEditor/> */}
+      </Grid>
+
+      {/* <ReactQuill
         theme="snow"
         value={noteDecscription}
         onChange={setnoteDecscription}
