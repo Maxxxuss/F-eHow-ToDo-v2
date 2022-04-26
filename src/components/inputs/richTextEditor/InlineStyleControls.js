@@ -2,23 +2,37 @@ import React from 'react';
 import {StyleButton} from './StyleButton';
 
 const INLINE_STYLES = [
-  {label: 'Bold', style: 'BOLD'},
-  {label: 'Italic', style: 'ITALIC'},
-  {label: 'Underline', style: 'UNDERLINE'},
-  {label: 'Monospace', style: 'CODE'},
+  {label: 'HY', style: "HIGHLIGHTY"},
+  {label: 'HG', style: "HIGHLIGHTG"},
+
+ 
+
+
 ];
 
 const styleMap = {
-  CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2,
+  // CODE: {
+  //   backgroundColor: '#fffe0d',
+  //   fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+  //   fontSize: 36,
+  //   padding: 9
+  // },
+  HIGHLIGHTY: {
+    backgroundColor: '#fffe0d',
   },
+  HIGHLIGHTG: {
+    backgroundColor: "#ccff88",
+ 
+  },
+
 };
 
 const InlineStyleControls = props => {
-  const currentStyle = props.editorState.getCurrentInlineStyle();
+  const selection = props.editorState.getSelection();
+
+  const currentStyle = props.editorState
+  // .getCurrentContent()
+  .getCurrentInlineStyle(selection.getStartKey());
   return (
     <div className="RichEditor-controls">
       {INLINE_STYLES.map(type => (

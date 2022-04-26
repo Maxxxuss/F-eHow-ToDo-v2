@@ -63,7 +63,9 @@ export const ShortDescription = (properties) => {
 
   const [relevance, setrelevance] = useState("");
   const [important, setimportant] = useState("");
-  const [noteDecscription, setnoteDecscription] = useState("");
+  const [noteDecscription, setnoteDecscription] = useState(() =>
+  EditorState.createEmpty()
+);
 
   const [datesToFinish, setdatesToFinish] = useState("");
   const [nextStep, setnextStep] = useState("");
@@ -81,7 +83,7 @@ export const ShortDescription = (properties) => {
   const [storieClearer, setStorieClearer] = useState("");
   const [buttonHandler, setButtonHandler] = useState("AddNote");
 
-  const [editorState, setEditorState] = React.useState(() =>
+  const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
@@ -94,7 +96,7 @@ export const ShortDescription = (properties) => {
     setDescription("");
     setrelevance("");
     setimportant("");
-    setnoteDecscription("");
+    setnoteDecscription(EditorState.createEmpty());
     setdatesToFinish("");
     setnextStep("");
     setinfoNote("");
@@ -110,7 +112,7 @@ export const ShortDescription = (properties) => {
 
     setDescription("");
 
-    setnoteDecscription("");
+    setnoteDecscription(EditorState.createEmpty());
 
     setStorieClearer("rfBoard");
     setButtonHandler("AddStorie");
@@ -150,7 +152,7 @@ export const ShortDescription = (properties) => {
     storieClearer === "rfBoard"
   ) {
     setDescription("");
-    setnoteDecscription("");
+    setnoteDecscription(EditorState.createEmpty());
     setStorieClearer("rfStorie");
     setButtonHandler("AddStorie");
   }
@@ -500,8 +502,8 @@ export const ShortDescription = (properties) => {
   const handleClose = () => setOpen(false);
 
   // draft-js
-  function handleKeyCommand(command, editorState) {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+  function handleKeyCommand(command, noteDecscription) {
+    const newState = RichUtils.handleKeyCommand(noteDecscription, command);
 
     if (newState) {
       onRichtTextChange(newState);
@@ -510,30 +512,37 @@ export const ShortDescription = (properties) => {
     return "not-handled";
   }
 
+
   function onBoldClick() {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, "STRIKETHROUGH"));
+    setEditorState(RichUtils.toggleInlineStyle(noteDecscription, "STRIKETHROUGH"));
   }
 
   function onYellowHighlight() {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, "HIGHLIGHT-Y"));
+    setEditorState(RichUtils.toggleInlineStyle(noteDecscription, "HIGHLIGHT-Y"));
   }
 
   function onGreenHighlight() {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, "HIGHLIGHT-G"));
+    setEditorState(RichUtils.toggleInlineStyle(noteDecscription, "HIGHLIGHT-G"));
   }
 
-  function onRichtTextChange(editorState) {
+  function onRichtTextChange(noteDecscription) {
     console.log(
       "content",
-      editorState.getCurrentContent().getPlainText("\u0001")
+      noteDecscription.getCurrentContent().getPlainText("\u0001")
     );
-    setEditorState(editorState), 
-    setnoteDecscription(editorState)
+    setEditorState(noteDecscription), 
+    setnoteDecscription(noteDecscription)
   }
 
   function toggleBlockType(blockType) {
-    onRichtTextChange(RichUtils.toggleBlockType(editorState, blockType));
+    onRichtTextChange(RichUtils.toggleBlockType(noteDecscription, blockType));
   }
+
+  function toggleInlineStyle (inlineStyle ){
+
+    onRichtTextChange(RichUtils.toggleInlineStyle(noteDecscription, inlineStyle))
+  
+  };
 
   return (
     <div onKeyDown={handleKeyDown_Categorie}>
@@ -737,15 +746,18 @@ export const ShortDescription = (properties) => {
         {/* <div> */}
          <div>
           <BlockStyleControls
-            editorState={editorState}
+            editorState={noteDecscription}
             onToggle={toggleBlockType}
           />
-          {/* <InlineStyleControls editorState={editorState} /> */}
+          <InlineStyleControls 
+          editorState={noteDecscription} 
+          onToggle={toggleInlineStyle}
+          />
         </div>
 
         <Editor
           handleKeyCommand={handleKeyCommand}
-          customStyleMap={styleMap}
+           customStyleMap={styleMap}
           editorState={editorState}
           onChange={onRichtTextChange}
           placeholder="Add your Note"
