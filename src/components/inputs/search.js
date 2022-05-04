@@ -20,7 +20,7 @@ import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 export function SearchForNotes(properties) {
-  const props = properties.props;
+  const props = properties.props != "" ? properties.props : "" ;
 
   const [filteredNotes, setFilteredNotes] = useState("");
   const [noteListStatus, setnoteListStatus] = useState("open");
@@ -51,7 +51,7 @@ export function SearchForNotes(properties) {
     return setter;
   }
 
-  if (filteredNotesOnBuz.length === 0 && props.expenses.length != 0) {
+  if (filteredNotesOnBuz.length === 0 && props.expenses.length != 0 && props.expenses.length != NULL) {
     setFilteredNotesOnBuz(props.expenses);
   }
 
@@ -74,7 +74,7 @@ export function SearchForNotes(properties) {
                   ? filteredNotes.description +
                     "  -  " +
                     filteredNotes.noteDecscription
-                      .substr(17, 300)
+                      .substr(0, 600)
                       .replace(/<[^>]+>/g, "")
                   : ""
               }
