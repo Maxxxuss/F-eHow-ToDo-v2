@@ -51,7 +51,7 @@ export function SearchForNotes(properties) {
     return setter;
   }
 
-  if (filteredNotesOnBuz.length === 0 && props.expenses.length != 0 && props.expenses.length != NULL) {
+  if (filteredNotesOnBuz.length === 0 && props.expenses.length != 0 && props.expenses.length != null) {
     setFilteredNotesOnBuz(props.expenses);
   }
 
