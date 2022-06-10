@@ -13,6 +13,7 @@ import {
   Collapse,
   FormControlLabel,
   Switch,
+  Button,
 } from "@mui/material";
 import { setActiveNote } from "../NotesDashboard";
 import { ShowNotes } from "../showNoteList";
@@ -20,7 +21,7 @@ import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 export function SearchForNotes(properties) {
-  const props = properties.props != "" ? properties.props : "" ;
+  const props = properties.props != "" ? properties.props : "";
 
   const [filteredNotes, setFilteredNotes] = useState("");
   const [noteListStatus, setnoteListStatus] = useState("open");
@@ -30,7 +31,7 @@ export function SearchForNotes(properties) {
   const icon = <CheckBoxOutlineBlank fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(true);
   const handleChange = () => {
     setChecked((prev) => !prev);
   };
@@ -47,11 +48,31 @@ export function SearchForNotes(properties) {
         filteredNotes.bTitel.includes(arrIn)
       )
     );
-
     return setter;
   }
 
-  if (filteredNotesOnBuz.length === 0 && props.expenses.length != 0 && props.expenses.length != null) {
+  const handelMultiRemoveNote = (props) => {
+    const delNotes = props.expenses.filter(
+      (delNotes) =>
+        delNotes.absDatesToFinish < -45 && delNotes.noteStatus === "closed"
+    );
+
+    console.log("delNotes +=45d are: ", delNotes.length);
+
+    var i = delNotes.length;
+
+    do {
+      i -= 1;
+      console.log(delNotes[i].id, "=", i);
+      props.removeExpense({ id: delNotes[i].id });
+    } while (i != 0);
+  };
+
+  if (
+    filteredNotesOnBuz.length === 0 &&
+    props.expenses.length != 0 &&
+    props.expenses.length != null
+  ) {
     setFilteredNotesOnBuz(props.expenses);
   }
 
@@ -105,6 +126,15 @@ export function SearchForNotes(properties) {
                 <MenuItem value={"closed"}>closed</MenuItem>
               </Select>
             </FormControl>
+
+            <Button
+              onClick={() => handelMultiRemoveNote(props)}
+              variant="contained"
+              color="error"
+            >
+              {" "}
+              Del Closed +45 D
+            </Button>
 
             <Autocomplete
               multiple

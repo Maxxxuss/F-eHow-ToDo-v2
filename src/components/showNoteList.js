@@ -181,6 +181,7 @@ export function ShowNotes(props) {
                                   datesToFinish: moment().add(1, "days"),
                                 }}
                               />
+ 
                             </Grid>
                           </Grid>
                         </Grid>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import store from "../store/configureStore";
-import { AppBar, Tabs, Tab, Box, Grid, Link } from "@mui/material";
+import { AppBar, Tabs, Tab, Box, Grid, Link, Typography } from "@mui/material";
 
 import ImpExpData from "./ImpExpData";
 import { getAllExpenses } from "../selectors/notes";
@@ -58,7 +58,6 @@ export function setActiveNote(expense, props) {
       countNoteStories: expense.countNoteStories,
       buzwords: expense.buzwords,
       bTitel: expense.bTitel,
-
     };
     props.addActiveNote(updates);
 
@@ -143,9 +142,24 @@ export function NotesDashboardPage(props) {
         </Grid>
       </Box>
 
-      <Grid item xs={12}>
-        <ImpExpData props={props} />
-      </Grid>
+      <Box mt={2} mb={2} mr={2} ml={2}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item>
+            <ImpExpData props={props} />
+          </Grid>
+
+          <Grid item>
+            <Typography variant="overline">
+              Ideas or Support: ehow.todo.mn@gmail.com
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
     </Box>
   );
 }
@@ -178,7 +192,8 @@ const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(removeExpense(id)),
   addExpense: (expense) => dispatch(addExpense(expense)),
   editExpense: (id, updates) => dispatch(editExpense(id, updates)),
-  editExpenseBuzword: (id, updates) => dispatch(editExpenseBuzword(id, updates)),
+  editExpenseBuzword: (id, updates) =>
+    dispatch(editExpenseBuzword(id, updates)),
 
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
   startStory: (id) => dispatch(startStory(id)),
