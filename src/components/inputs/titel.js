@@ -84,6 +84,7 @@ export const ShortDescription = (properties) => {
   const [storieClearer, setStorieClearer] = useState("");
   const [buttonHandler, setButtonHandler] = useState("AddNote");
 
+
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
 
@@ -311,15 +312,12 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() =>{
+          onClick={() => {
             ndsProps.editExpense(ndsProps.activeNote.id, updates),
-            ndsProps.editActiveNote(updates),
-            clearInputValues(ndsProps), 
-            autoSaveFunc(ndsProps);
-
-          
-          }
-          }
+              ndsProps.editActiveNote(updates),
+              clearInputValues(ndsProps),
+              autoSaveFunc(ndsProps);
+          }}
         >
           {ndsProps.activeNote.noteDecscription.replace(/<[^>]+>/g, "").length -
             1 !=
@@ -364,21 +362,21 @@ export const ShortDescription = (properties) => {
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() =>{
+          onClick={() => {
             ndsProps.editNoteStory(
               activeNoteID,
               ndsProps.activeUserStorie[0].storieID,
               updateStorie
             ),
-            ndsProps.editNoteStory_ActiveNote(
-              activeNoteID,
-              ndsProps.activeUserStorie[0].storieID,
-              updateStorie
-            ),
-            ndsProps.removeActiveUserStory(),
-            clearStorieInput(ndsProps),
-            autoSaveFunc(ndsProps)}
-          }
+              ndsProps.editNoteStory_ActiveNote(
+                activeNoteID,
+                ndsProps.activeUserStorie[0].storieID,
+                updateStorie
+              ),
+              ndsProps.removeActiveUserStory(),
+              clearStorieInput(ndsProps),
+              autoSaveFunc(ndsProps);
+          }}
         >
           {ndsProps.activeUserStorie[0].description.replace(/<[^>]+>/g, "")
             .length -
@@ -402,11 +400,11 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() =>{
+          onClick={() => {
             ndsProps.addExpense(startNewNote),
-            clearInputValues(ndsProps),
-            autoSaveFunc(ndsProps)}
-          }
+              clearInputValues(ndsProps),
+              autoSaveFunc(ndsProps);
+          }}
         >
           Add NOte
         </Button>
@@ -418,19 +416,19 @@ export const ShortDescription = (properties) => {
       return (
         <div>
           <IconButton
-            onClick={() =>{
+            onClick={() => {
               ndsProps.removeActiveUserStory(),
-              ndsProps.setActiveStory({
-                aNoteId: "defauldID",
-                storieID: "",
-                noteId: "noteId",
-                titel: "description",
-                description: "noteDecscription",
-                column: "column-1",
-                collapse: "false",
-              }),
-              clearStorieInput(ndsProps)}
-            }
+                ndsProps.setActiveStory({
+                  aNoteId: "defauldID",
+                  storieID: "",
+                  noteId: "noteId",
+                  titel: "description",
+                  description: "noteDecscription",
+                  column: "column-1",
+                  collapse: "false",
+                }),
+                clearStorieInput(ndsProps);
+            }}
             size="large"
             color="secondary"
           >
@@ -511,9 +509,9 @@ export const ShortDescription = (properties) => {
           )}
         </ButtonGroup>
 
-        <Button onClick={() => console.log("SHOW Props: ", props)}>
+        {/* <Button onClick={() => console.log("SHOW Props: ", props)}>
           Props
-        </Button>
+        </Button> */}
       </Grid>
 
       <Grid
@@ -549,7 +547,7 @@ export const ShortDescription = (properties) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid item xs={1}>
+            <Grid item xs>
               <TextField
                 label="Days"
                 onChange={(e) =>

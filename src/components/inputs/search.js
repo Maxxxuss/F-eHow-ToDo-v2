@@ -31,7 +31,7 @@ export function SearchForNotes(properties) {
   const icon = <CheckBoxOutlineBlank fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
   const handleChange = () => {
     setChecked((prev) => !prev);
   };
@@ -76,93 +76,112 @@ export function SearchForNotes(properties) {
   }
 
   return (
-    <Box>
+    <Box mr={2} ml={1}>
       <Grid container direction="row">
         <FormControlLabel
           control={<Switch checked={checked} onChange={handleChange} />}
           label="Filter"
         />
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <Collapse in={checked}>
-            <Autocomplete
-              options={props.expenses}
-              onChange={(event, expense) => {
-                setFilteredNotes(expense);
-              }}
-              getOptionLabel={(filteredNotes) =>
-                filteredNotes.description
-                  ? filteredNotes.description +
-                    "  -  " +
-                    filteredNotes.noteDecscription
-                      .substr(0, 600)
-                      .replace(/<[^>]+>/g, "")
-                  : ""
-              }
-              style={{
-                marginBottom: "10px",
-                background: "rgba(238, 238, 238, 0.405)",
-              }}
-              fullWidth
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search Note"
-                  variant="outlined"
-                  onChange={filteredNotes.description}
-                />
-              )}
-            />
-
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-              <Select
-                value={noteListStatus}
-                label="Status"
-                onChange={(e) => setnoteListStatus(e.target.value)}
-              >
-                <MenuItem value={"open"}>Open</MenuItem>
-                <MenuItem value={"allOpen"}>Just Do´s</MenuItem>
-                <MenuItem value={"closed"}>closed</MenuItem>
-              </Select>
-            </FormControl>
-
-            <Button
-              onClick={() => handelMultiRemoveNote(props)}
-              variant="contained"
-              color="error"
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              {" "}
-              Del Closed +45 D
-            </Button>
-
-            <Autocomplete
-              multiple
-              onChange={(event, value) => {
-                searchBuzSetting(value.map((titel) => titel.titel));
-              }}
-              id="tags-filter-Buz"
-              options={props.buzwords}
-              getOptionLabel={(option) => option.titel}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
-                  {option.titel}
-                </li>
-              )}
-              style={{ width: 500 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search Buzwords"
-                  placeholder="Favorites"
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={props.expenses}
+                  onChange={(event, expense) => {
+                    setFilteredNotes(expense);
+                  }}
+                  getOptionLabel={(filteredNotes) =>
+                    filteredNotes.description
+                      ? filteredNotes.description +
+                        "  -  " +
+                        filteredNotes.noteDecscription
+                          .substr(0, 600)
+                          .replace(/<[^>]+>/g, "")
+                      : ""
+                  }
+                  style={{
+                    marginBottom: "10px",
+                    background: "rgba(238, 238, 238, 0.405)",
+                  }}
+                  fullWidth
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search Note"
+                      variant="outlined"
+                      onChange={filteredNotes.description}
+                    />
+                  )}
                 />
-              )}
-            />
+              </Grid>
+              <Grid item>
+                <FormControl>
+                  <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+                  <Select
+                    value={noteListStatus}
+                    label="Status"
+                    onChange={(e) => setnoteListStatus(e.target.value)}
+                  >
+                    <MenuItem value={"open"}>Open</MenuItem>
+                    <MenuItem value={"allOpen"}>Just Do´s</MenuItem>
+                    <MenuItem value={"closed"}>closed</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item>
+                {noteListStatus === "closed" ? (
+                  <Button
+                    onClick={() => handelMultiRemoveNote(props)}
+                    variant="contained"
+                    color="error"
+                    ml={2}
+                    mr={3}
+                  >
+                    {" "}
+                    Del Closed +45 D
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </Grid>
+              <Grid item>
+                <Autocomplete
+                  multiple
+                  onChange={(event, value) => {
+                    searchBuzSetting(value.map((titel) => titel.titel));
+                  }}
+                  id="tags-filter-Buz"
+                  options={props.buzwords}
+                  getOptionLabel={(option) => option.titel}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.titel}
+                    </li>
+                  )}
+                  style={{ width: 500 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search Buzwords"
+                      placeholder="Favorites"
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
           </Collapse>
         </Grid>
 
