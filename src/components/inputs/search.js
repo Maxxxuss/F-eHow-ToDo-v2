@@ -57,13 +57,12 @@ export function SearchForNotes(properties) {
         delNotes.absDatesToFinish < -45 && delNotes.noteStatus === "closed"
     );
 
-    console.log("delNotes +=45d are: ", delNotes.length);
+    console.log("delNotes +=45d are: ", delNotes.length, delNotes);
 
     var i = delNotes.length;
 
     do {
       i -= 1;
-      console.log(delNotes[i].id, "=", i);
       props.removeExpense({ id: delNotes[i].id });
     } while (i != 0);
   };
