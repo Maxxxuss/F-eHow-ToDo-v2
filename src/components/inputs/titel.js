@@ -131,7 +131,12 @@ export const ShortDescription = (properties) => {
     setDescription(ndsProps.activeNote.description);
     setrelevance(ndsProps.activeNote.relevance);
     setimportant(ndsProps.activeNote.important);
-    setnoteDecscription(ndsProps.activeNote.noteDecscription);
+    // </p><p><br></p><p><br></p>
+    setnoteDecscription(ndsProps.activeNote.noteDecscription.replaceAll("</p><p><br></p><p><br></p>", "")
+      // .replaceAll("</p><p><br></p><ul><li>", "<ul><li>")
+      // .replaceAll("</p><p><br></p><p><br></p>", "")
+    // .replace(/</p><p><br></p><p><br></p>\*/g,"")
+    );
 
     setInputCategorie(ndsProps.activeNote.categorie);
     setdatesToFinish(ndsProps.activeNote.datesToFinish);
