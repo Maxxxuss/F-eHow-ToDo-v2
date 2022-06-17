@@ -45,6 +45,8 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     buzwords: expense.buzwords ? expense.buzwords : [],
     bTitel: expense.bTitel ? expense.bTitel : [],
 
+
+
     kanbanboard:
       expense.kanbanboard 
         ? {

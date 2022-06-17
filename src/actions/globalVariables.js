@@ -1,11 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 
 // ADD_GLOBALVARIABLES
-export const addGlobalVariables = ({
-} = {}) => ({
+export const addGlobalVariables = ({} = {}) => ({
   type: "ADD_GLOBALVARIABLES",
   globalVariables: {
-      autoSave,  
+    autoSave,
+    dayCounter,
+    weekCounter,
+    oneMonthCoutner,
+    twoMonthCoutner,
+    threeMonthCoutner,
   },
 });
 
@@ -25,10 +29,15 @@ export const addGlobalVariables = ({
 // }
 
 // EDIT_GLOBALVARIABLES
-export const editGlobalVariables = ( updates) => ({
+export const editGlobalVariables = (updates) => ({
   type: "EDIT_GLOBALVARIABLES",
-  updates
-  
+  updates,
+});
+
+// EDIT_CounterVariables
+export const editGlobalCounterVariables = (updates) => ({
+  type: "EDIT_GLOBALCOUNTERVARIABLES",
+  updates,
 });
 
 // export const changeStatus = (id, updates) => ({

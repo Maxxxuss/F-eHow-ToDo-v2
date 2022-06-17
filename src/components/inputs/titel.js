@@ -84,7 +84,6 @@ export const ShortDescription = (properties) => {
   const [storieClearer, setStorieClearer] = useState("");
   const [buttonHandler, setButtonHandler] = useState("AddNote");
 
-
   const space = "<p><br></p> ";
   const timeStamp = moment().format("ddd - DD.MM.YY");
 
@@ -132,7 +131,11 @@ export const ShortDescription = (properties) => {
     setrelevance(ndsProps.activeNote.relevance);
     setimportant(ndsProps.activeNote.important);
     // </p><p><br></p><p><br></p>
-    setnoteDecscription(ndsProps.activeNote.noteDecscription.replaceAll("</p><p><br></p><p><br></p>", "")
+    setnoteDecscription(
+      ndsProps.activeNote.noteDecscription.replaceAll(
+        "</p><p><br></p><p><br></p>",
+        ""
+      )
     );
 
     setInputCategorie(ndsProps.activeNote.categorie);
