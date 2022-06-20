@@ -1,11 +1,21 @@
+// const globalVariablesDefaultState = {
+//   autoSave: 1,
+//   onOffSwitch: true,
+//   // dayCounter:0,
+//   // weekCounter:0,
+//   // oneMonthCoutner:0,
+//   // twoMonthCoutner:0,
+//   // threeMonthCoutner:0,
+// };
+
 const globalVariablesDefaultState = {
   autoSave: 1,
   onOffSwitch: true,
-  // dayCounter:0,
-  // weekCounter:0,
-  // oneMonthCoutner:0,
-  // twoMonthCoutner:0,
-  // threeMonthCoutner:0,
+  dayCounter:"",
+  weekCounter:"",
+  oneMonthCoutner:"",
+  twoMonthCoutner:"",
+  threeMonthCoutner:"",
 };
 
 const globalVariabels = (state = globalVariablesDefaultState, action) => {

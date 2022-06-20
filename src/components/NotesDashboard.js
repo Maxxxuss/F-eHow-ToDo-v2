@@ -106,6 +106,7 @@ export function NotesDashboardPage(props) {
       
       <Counter
       counter={props.globalVariables}
+      editCounter={props.editGlobalVariables}
       
       />
       
