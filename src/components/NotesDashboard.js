@@ -37,7 +37,7 @@ import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
 
 import { getAllActiveUserStories } from "../selectors/activeStorie";
 import { getAllBuzwords } from "../selectors/buzwords";
-import { Counter } from "./Counter/counter";
+// import { counter } from "../Counter/counter";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -103,12 +103,12 @@ export function NotesDashboardPage(props) {
       >
         Project Dashboard
       </Link>
-      
+{/*       
       <Counter
       counter={props.globalVariables}
       editCounter={props.editGlobalVariables}
       
-      />
+      /> */}
       
       <Box mt={2} mb={2} mr={2} ml={2}>
         <AppBar position="static" color="default">

@@ -1,4 +1,5 @@
 import { Button, Grid } from "@mui/material";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 
 // { }
@@ -56,21 +57,36 @@ import React, { useEffect, useState } from "react";
 //   );
 // };
 
-export const counter = (properties) => {
-  const [dayCounter, setDayCounter] = useState(
-    properties.counter.dayCounter ? properties.counter.dayCounter : 0
-  );
+export const counterWorking = (properties) => {
+  const counter = properties.globalVariables;
+  const editCounter = properties.editGlobalVariables;
+
+  const currentDate = counter.dateTime_current;
+  moment.locale("de");
+
+  if (currentDate === moment().format("LL")) {
+    editCounter({ dayCounter_current: counter.dayCounter_current + 1 });
+  } else {
+    editCounter({
+      dateTime_current: moment().format("LL"),
+      dateTime_one: counter.dateTime_current,
+      dateTime_tow: counter.dateTime_one,
+      dayCounter_current: 1,
+      dayCounter_one: counter.dayCounter_current,
+      dayCounter_tow: counter.dayCounter_one,
+    });
+  }
+
+  console.log("Handek Daz Counter:", counter.dateTime_current);
+  console.log("Handek Daz Counter:", counter);
+};
 
 
-  var schritt;
-for (schritt = 0; schritt === 1; schritt++) {
-  properties.editCounter({ dayCounter: dayCounter });
+export const counter =(properties) =>{
+  const task = properties.globalVariables
+  const taskEditor = properties.editGlobalVariables;
 
-  setDayCounter(dayCounter + 1);
-
-  console.log("Handek Daz Counter:", dayCounter)
+  console.log(moment().format());
 
 
-  
-}}
-
+}

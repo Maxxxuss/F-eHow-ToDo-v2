@@ -11,11 +11,18 @@
 const globalVariablesDefaultState = {
   autoSave: 1,
   onOffSwitch: true,
-  dayCounter:"",
-  weekCounter:"",
+  dayCounter_current:"",
+  dayCounter_one:"",
+  dayCounter_tow:"", 
+   weekCounter:"",
   oneMonthCoutner:"",
   twoMonthCoutner:"",
   threeMonthCoutner:"",
+  dateTime_current:"", 
+  dateTime_one:"", 
+  dateTime_tow:"", 
+
+
 };
 
 const globalVariabels = (state = globalVariablesDefaultState, action) => {
