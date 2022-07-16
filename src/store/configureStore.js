@@ -10,6 +10,7 @@ import activeNoteReducer from "../reducers/activeNote";
 import kColumReducer from "../reducers/kColumn";
 import activeUserStorieReducer from "../reducers/activeStorie";
 import buzwordsReducer from "../reducers/buzwords"
+import { getAllExpenses } from "../selectors/notes";
 
 
 const composerFunction = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -48,6 +49,7 @@ const loggingMiddleware = (store) => (next) => (action) => {
   const result = next(action);
   console.log("State - After:", store.getState());
   console.groupEnd(action.type);
+
   return result;
 };
 

@@ -130,6 +130,9 @@ export function SearchForNotes(properties) {
                   >
                     <MenuItem value={"open"}>Open</MenuItem>
                     <MenuItem value={"allOpen"}>Just Do´s</MenuItem>
+                    <MenuItem value={"openTomorrow"}>Do´s +1 Day</MenuItem>
+                    <MenuItem value={"openAfterTomorrow"}>Do´s +2 Day</MenuItem>
+
                     <MenuItem value={"closed"}>closed</MenuItem>
                   </Select>
                 </FormControl>

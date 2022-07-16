@@ -21,6 +21,9 @@ const globalVariablesDefaultState = {
   dateTime_current:"", 
   dateTime_one:"", 
   dateTime_tow:"", 
+  task_current:"", 
+  task_tomorrow:"",
+  task_afert_Tomorrow:""
 
 
 };

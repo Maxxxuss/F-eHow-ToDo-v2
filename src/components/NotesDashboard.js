@@ -37,7 +37,7 @@ import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
 
 import { getAllActiveUserStories } from "../selectors/activeStorie";
 import { getAllBuzwords } from "../selectors/buzwords";
-// import { counter } from "../Counter/counter";
+import { taskCounter } from "../components/Counter/counter";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -103,13 +103,17 @@ export function NotesDashboardPage(props) {
       >
         Project Dashboard
       </Link>
-{/*       
-      <Counter
-      counter={props.globalVariables}
-      editCounter={props.editGlobalVariables}
-      
-      /> */}
-      
+      <p>
+        {taskCounter(props.expenses, 0, -100, "closed")}/{" "}
+        {taskCounter(props.expenses, 1, 0, "closed")}/ 
+        {taskCounter(props.expenses, 2, 1, "closed")}
+        / {taskCounter(props.expenses, 3, 2, "closed")}/{" "}
+        {taskCounter(props.expenses, 4, 3, "closed")}
+      </p>
+
+
+
+
       <Box mt={2} mb={2} mr={2} ml={2}>
         <AppBar position="static" color="default">
           <Grid container alignItems="row">
@@ -171,7 +175,6 @@ export function NotesDashboardPage(props) {
     </Box>
   );
 }
-console.log(store.getState());
 
 const mapStateToProps = (state) => {
   return {

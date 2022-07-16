@@ -3,10 +3,12 @@ import moment from "moment";
 
 export const getExpenses = (state) => state.expenses;
 
+var counter = 0
+
 export const getAllExpenses = createSelector(getExpenses, (expenses) =>
   expenses.map((expense) => ({
-    id: expense.id,
     categorie: expense.categorie ? expense.categorie : "",
+    id: expense.id,
     noteUpdateDate: expense.noteUpdateDate ? expense.noteUpdateDate : "",
     noteStatus: expense.noteStatus ? expense.noteStatus : "open",
     description: expense.description ? expense.description : "",
@@ -45,72 +47,73 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     buzwords: expense.buzwords ? expense.buzwords : [],
     bTitel: expense.bTitel ? expense.bTitel : [],
 
+    // task_current: absDatesToFin(expense.datesToFinish) > 0 ? counter+1: counter,
+    
+    // taskCurrent(expense.datesToFinish),
+    task_tomorrow: 0,
+    task_afert_Tomorrow: 0,
 
-
-    kanbanboard:
-      expense.kanbanboard 
-        ? {
-            tasks: expense.kanbanboard.tasks
-              ? expense.kanbanboard.tasks.map((storie) => ({
-                  aNoteId: storie.aNoteId ? storie.aNoteId : "",
-                  storieID: storie.storieID
-                    ? storie.storieID
-                    : "defaultStorieID",
-                  titel: storie.titel ? storie.titel : "",
-                  description: storie.description ? storie.description : "",
-                }))
-              : [],
-            columns:  {
-              "column-1": {
-                id: "column-1",
-                title: "Backlock",
-                taskIds:
-                  group(expense.kanbanboard.tasks, "column-1") === undefined
-                    ? []
-                    : group(expense.kanbanboard.tasks, "column-1"),
-              },
-
-              "column-3": {
-                id: "column-3",
-                title: "In Progress",
-                taskIds:
-                  group(expense.kanbanboard.tasks, "column-3") === undefined
-                    ? []
-                    : group(expense.kanbanboard.tasks, "column-3"),
-              },
-              "column-4": {
-                id: "column-4",
-                title: "Done",
-                taskIds:
-                  group(expense.kanbanboard.tasks, "column-4") === undefined
-                    ? []
-                    : group(expense.kanbanboard.tasks, "column-4"),
-              },
+    kanbanboard: expense.kanbanboard
+      ? {
+          tasks: expense.kanbanboard.tasks
+            ? expense.kanbanboard.tasks.map((storie) => ({
+                aNoteId: storie.aNoteId ? storie.aNoteId : "",
+                storieID: storie.storieID ? storie.storieID : "defaultStorieID",
+                titel: storie.titel ? storie.titel : "",
+                description: storie.description ? storie.description : "",
+              }))
+            : [],
+          columns: {
+            "column-1": {
+              id: "column-1",
+              title: "Backlock",
+              taskIds:
+                group(expense.kanbanboard.tasks, "column-1") === undefined
+                  ? []
+                  : group(expense.kanbanboard.tasks, "column-1"),
             },
-            columnOrder: ["column-1", "column-3", "column-4"],
-          }
-          : {
-            tasks: [],
-            columns: {
-              "column-1": {
-                id: "column-1",
-                title: "Backlock",
-                taskIds: [],
-              },
 
-              "column-3": {
-                id: "column-3",
-                title: "In Progress",
-                taskIds: [],
-              },
-              "column-4": {
-                id: "column-4",
-                title: "Done",
-                taskIds: [],
-              },
+            "column-3": {
+              id: "column-3",
+              title: "In Progress",
+              taskIds:
+                group(expense.kanbanboard.tasks, "column-3") === undefined
+                  ? []
+                  : group(expense.kanbanboard.tasks, "column-3"),
             },
-            columnOrder: ["column-1", "column-3", "column-4"],
-          }
+            "column-4": {
+              id: "column-4",
+              title: "Done",
+              taskIds:
+                group(expense.kanbanboard.tasks, "column-4") === undefined
+                  ? []
+                  : group(expense.kanbanboard.tasks, "column-4"),
+            },
+          },
+          columnOrder: ["column-1", "column-3", "column-4"],
+        }
+      : {
+          tasks: [],
+          columns: {
+            "column-1": {
+              id: "column-1",
+              title: "Backlock",
+              taskIds: [],
+            },
+
+            "column-3": {
+              id: "column-3",
+              title: "In Progress",
+              taskIds: [],
+            },
+            "column-4": {
+              id: "column-4",
+              title: "Done",
+              taskIds: [],
+            },
+          },
+          columnOrder: ["column-1", "column-3", "column-4"],
+        },
   }))
 );
 
@@ -199,4 +202,16 @@ function calculatePrio(
   } else {
     return calc;
   }
+}
+
+export function taskCurrent(datesToFinish) {
+  var absDate = absDatesToFin(datesToFinish);
+
+  var counter = 0;
+
+  if (absDate > 0) {
+    return counter+1 ;
+  }
+
+  console.log("task CUrren Notes Count: ", counter);
 }

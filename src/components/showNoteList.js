@@ -92,10 +92,31 @@ export function ShowNotes(props) {
   return (
     <List>
       {expenses
-        .filter((expense) =>
-          noteListStatus != "allOpen"
-            ? expense.noteStatus === noteListStatus
-            : expense.noteStatus === "open" && expense.absDatesToFinish < "0.6"
+        .filter(
+          (expense) => {
+            if (noteListStatus === "allOpen") {
+              return (
+                expense.noteStatus === "open" &&
+                expense.absDatesToFinish < "0.6"
+              );
+            }
+            if (noteListStatus === "openTomorrow") {
+              return (
+                expense.absDatesToFinish < 1 &&
+                expense.absDatesToFinish > 0 &&
+                expense.noteStatus != "closed"
+              );
+            }
+            if (noteListStatus === "openAfterTomorrow") {
+              return (
+                expense.absDatesToFinish < 2 &&
+                expense.absDatesToFinish > 1 &&
+                expense.noteStatus != "closed"
+              );
+            } else {
+              return expense.noteStatus === noteListStatus;
+            }
+          }
         )
         .filter((expense) =>
           props.activeCategorie.catName === "ALL"
@@ -181,7 +202,6 @@ export function ShowNotes(props) {
                                   datesToFinish: moment().add(1, "days"),
                                 }}
                               />
- 
                             </Grid>
                           </Grid>
                         </Grid>

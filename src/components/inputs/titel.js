@@ -31,7 +31,7 @@ import store from "../../store/configureStore";
 import BuzwordTags from "../Buzwords/buzwords";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
-import {counter} from "../Counter/counter"
+// import {counter} from "../Counter/counter"
 
 // const style = {
 //   position: 'absolute',
@@ -406,16 +406,12 @@ export const ShortDescription = (properties) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={
-            () => {
+          onClick={() => {
             ndsProps.addExpense(startNewNote),
               clearInputValues(ndsProps),
-              autoSaveFunc(ndsProps),
-              counter(ndsProps)
-
-
-          }
-        }
+              autoSaveFunc(ndsProps);
+            // counter(ndsProps)
+          }}
         >
           Add NOte
         </Button>

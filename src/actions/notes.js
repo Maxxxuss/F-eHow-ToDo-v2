@@ -20,6 +20,9 @@ export const addExpense = ({
   onHold,
   effort,
   kanbanboard: { tasks, columns, columnOrder },
+  task_current,
+  task_tomorrow, 
+  task_afert_Tomorrow, 
 } = {}) => ({
   type: "ADD_EXPENSE",
   expense: {
@@ -47,6 +50,9 @@ export const addExpense = ({
       columns,
       columnOrder,
     },
+    task_current,
+    task_tomorrow, 
+    task_afert_Tomorrow, 
     //   k_id: uuidv4(),
     //   k_titel,
     //   k_description,
