@@ -3,7 +3,7 @@ import moment from "moment";
 
 export const getExpenses = (state) => state.expenses;
 
-var counter = 0
+// var counter = 0
 
 export const getAllExpenses = createSelector(getExpenses, (expenses) =>
   expenses.map((expense) => ({
@@ -204,14 +204,14 @@ function calculatePrio(
   }
 }
 
-export function taskCurrent(datesToFinish) {
-  var absDate = absDatesToFin(datesToFinish);
+// export function taskCurrent(datesToFinish) {
+//   var absDate = absDatesToFin(datesToFinish);
 
-  var counter = 0;
+//   var counter = 0;
 
-  if (absDate > 0) {
-    return counter+1 ;
-  }
+//   if (absDate > 0) {
+//     return counter+1 ;
+//   }
 
-  console.log("task CUrren Notes Count: ", counter);
-}
+//   console.log("task CUrren Notes Count: ", counter);
+// }
