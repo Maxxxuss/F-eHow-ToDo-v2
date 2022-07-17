@@ -90,7 +90,7 @@ export function SearchForNotes(properties) {
           boxShadow: 1,
           // borderRadius: 1,
           p: 2,
-          maxWidth: 80,
+          maxWidth: 100,
         }}
       >
         {taskCounter(props.expenses, 0, -100, "closed")}/{" "}
