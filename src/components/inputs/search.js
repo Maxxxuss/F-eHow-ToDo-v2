@@ -19,6 +19,7 @@ import { setActiveNote } from "../NotesDashboard";
 import { ShowNotes } from "../showNoteList";
 import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { taskCounter } from "../Counter/counter";
 
 export function SearchForNotes(properties) {
   const props = properties.props != "" ? properties.props : "";
@@ -82,6 +83,23 @@ export function SearchForNotes(properties) {
           control={<Switch checked={checked} onChange={handleChange} />}
           label="Filter"
         />
+              <Box
+        sx={{
+          bgcolor: "background.paper",
+          color : 'text.secondary', 
+          boxShadow: 1,
+          // borderRadius: 1,
+          p: 2,
+          maxWidth: 80,
+        }}
+      >
+        {taskCounter(props.expenses, 0, -100, "closed")}/{" "}
+        {taskCounter(props.expenses, 1, 0, "closed")}/{" "}
+        {taskCounter(props.expenses, 2, 1, "closed")}/{" "}
+        {taskCounter(props.expenses, 3, 2, "closed")}/{" "}
+        {taskCounter(props.expenses, 4, 3, "closed")}{" "}
+      </Box>
+        
         <Grid item xs={12}>
           <Collapse in={checked}>
             <Grid

@@ -37,7 +37,6 @@ import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
 
 import { getAllActiveUserStories } from "../selectors/activeStorie";
 import { getAllBuzwords } from "../selectors/buzwords";
-import { taskCounter } from "../components/Counter/counter";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -103,15 +102,6 @@ export function NotesDashboardPage(props) {
       >
         Project Dashboard
       </Link>
-      <p>
-        {taskCounter(props.expenses, 0, -100, "closed")}/{" "}
-        {taskCounter(props.expenses, 1, 0, "closed")}/ 
-        {taskCounter(props.expenses, 2, 1, "closed")}
-        / {taskCounter(props.expenses, 3, 2, "closed")}/{" "}
-        {taskCounter(props.expenses, 4, 3, "closed")}
-      </p>
-
-
 
 
       <Box mt={2} mb={2} mr={2} ml={2}>
