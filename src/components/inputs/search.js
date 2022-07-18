@@ -90,14 +90,16 @@ export function SearchForNotes(properties) {
           boxShadow: 1,
           // borderRadius: 1,
           p: 2,
-          maxWidth: 100,
+          maxWidth: 140,
         }}
       >
-        {taskCounter(props.expenses, 0, -100, "closed")}/{" "}
-        {taskCounter(props.expenses, 1, 0, "closed")}/{" "}
-        {taskCounter(props.expenses, 2, 1, "closed")}/{" "}
-        {taskCounter(props.expenses, 3, 2, "closed")}/{" "}
-        {taskCounter(props.expenses, 4, 3, "closed")}{" "}
+        {taskCounter(props.expenses, 0.6, -0.4, "closed")}/{" "}
+        {taskCounter(props.expenses, 1.4, 0.6, "closed")}/{" "}
+        {taskCounter(props.expenses, 2.2, 1.4, "closed")}/{" "}
+        {taskCounter(props.expenses, 3, 2,2, "closed")}/{" "}
+        {taskCounter(props.expenses, 3.8, 3, "closed")}{" "}
+        ({taskCounter(props.expenses, 100, -100, "closed")})
+
       </Box>
         
         <Grid item xs={12}>

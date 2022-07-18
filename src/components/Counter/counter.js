@@ -45,11 +45,19 @@ import React, { useEffect, useState } from "react";
 //   });
 // };
 
-export const taskCounter = (props, varDay, varPrefDay,noteStatus) => {
-
-
-  return props.filter((obj) => obj.absDatesToFinish < varDay && obj.absDatesToFinish > varPrefDay && obj.noteStatus != noteStatus).length;
-
-
-
+export const taskCounter = (props, varDay, varPrefDay, noteStatus) => {
+  return props.filter(
+    (obj) =>
+      obj.absDatesToFinish < varDay &&
+      obj.absDatesToFinish > varPrefDay &&
+      obj.noteStatus != noteStatus
+  ).length;
 };
+
+export const categorieCounter = (props) => {
+  return props.filter(
+    (obj)=>
+    obj.categorie === props.catName
+  ).length
+  // console.log("Cat Props", props);
+}

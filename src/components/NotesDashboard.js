@@ -38,6 +38,8 @@ import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
 import { getAllActiveUserStories } from "../selectors/activeStorie";
 import { getAllBuzwords } from "../selectors/buzwords";
 
+import { categorieCounter } from "./Counter/counter";
+
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
 
@@ -61,7 +63,8 @@ export function setActiveNote(expense, props) {
     };
     props.addActiveNote(updates);
 
-    console.log("Active Notee: ", updates);
+    console.log("Active Notee: ", expense);
+
   }
 }
 
@@ -80,7 +83,7 @@ export function NotesDashboardPage(props) {
     categories.map((categorie, index) => (
       <Tab
         key={categorie.sorting ? categorie.sorting : index}
-        label={categorie.catName}
+        label= {categorie.catName}
         onClick={() => setActiveCategorie(categorie)}
       ></Tab>
     ));
@@ -115,7 +118,7 @@ export function NotesDashboardPage(props) {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-                {ProjectTab(props.categories)}
+                {ProjectTab(props.categories)} 
               </Tabs>
             </Grid>
             <Grid item xs>

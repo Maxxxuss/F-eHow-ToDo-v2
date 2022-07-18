@@ -102,15 +102,15 @@ export function ShowNotes(props) {
             }
             if (noteListStatus === "openTomorrow") {
               return (
-                expense.absDatesToFinish < 1 &&
-                expense.absDatesToFinish > 0 &&
+                expense.absDatesToFinish < 1.4 &&
+                expense.absDatesToFinish > 0.6 &&
                 expense.noteStatus != "closed"
               );
             }
             if (noteListStatus === "openAfterTomorrow") {
               return (
-                expense.absDatesToFinish < 2 &&
-                expense.absDatesToFinish > 1 &&
+                expense.absDatesToFinish < 2.2 &&
+                expense.absDatesToFinish > 1.4 &&
                 expense.noteStatus != "closed"
               );
             } else {
