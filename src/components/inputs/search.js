@@ -93,7 +93,8 @@ export function SearchForNotes(properties) {
           maxWidth: 140,
         }}
       >
-        {taskCounter(props.expenses, 0.6, -0.4, "closed")}/{" "}
+        {/* //Note Counter  */}
+        {taskCounter(props.expenses, 0.6, -100.4, "closed")}/{" "}
         {taskCounter(props.expenses, 1.4, 0.6, "closed")}/{" "}
         {taskCounter(props.expenses, 2.2, 1.4, "closed")}/{" "}
         {taskCounter(props.expenses, 3, 2,2, "closed")}/{" "}

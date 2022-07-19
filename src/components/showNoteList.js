@@ -166,7 +166,7 @@ export function ShowNotes(props) {
                             id={expense.id}
                             primary={expense.description}
                             secondary={expense.noteDecscription
-                              .substr(33, 250)
+                              .substr( 0 , 270)
                               .replace(/<[^>]+>/g, "")}
                           />
                           <Typography
