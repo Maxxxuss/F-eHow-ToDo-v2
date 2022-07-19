@@ -20,7 +20,7 @@ export const addActiveNote = ({
   snooze,
   onHold,
   effort,
-  kanbanboard,
+
   buzwords,
   countNoteStories,
 } = {}) => ({
@@ -45,37 +45,20 @@ export const addActiveNote = ({
     snooze,
     onHold,
     effort,
-    kanbanboard,
+
     countNoteStories,
     buzwords,
   },
 });
 
-// export const addActiveNote=({updates}) =>({
-//   type: "ADD_ACTIVE_NOTE",
-//   updates
-// })
-
-// REMOVE_ACTIVE_NOTE
 export const removeActiveNote = () => ({
   type: "REMOVE_ACTIVE_NOTE",
-  activeNote:""
-  
+  activeNote: "",
 });
-// export const removeActiveNote = ({ id } = {}) => {
-//   return (dispatch) => {
-//     dispatch(({
-//       type: 'REMOVE_ACTIVE_NOTE',
-//       id
 
-//     }));
-//   }
-// }
-
-// EDIT_ACTIVE_NOTE
 export const editActiveNote = (updates) => ({
   type: "EDIT_ACTIVE_NOTE",
-    updates,
+  updates,
 });
 
 export const changeStatus = (id, updates) => ({
@@ -90,20 +73,22 @@ export const addNoteStory_ActiveNote = (noteId, updates) => ({
   updates,
 });
 
-export const editNoteStory_ActiveNote = (noteId, userStorieID,updates) => ({
+export const editNoteStory_ActiveNote = (noteId, userStorieID, updates) => ({
   type: "EDIT_NOTE_STORY_ACTIVE_NOTE",
   noteId,
   userStorieID,
   updates,
 });
-export const editNoteStoryColumn_ActiveNote = (noteId, userStorieID,updates) => ({
+export const editNoteStoryColumn_ActiveNote = (
+  noteId,
+  userStorieID,
+  updates
+) => ({
   type: "EDIT_NOTE_STORY_COLUMN_ACTIVE_NOTE",
   noteId,
   userStorieID,
   updates,
 });
-
-
 
 export const editActiveNoteBuzword = (id, updates) => ({
   type: "EDIT_ACtiVENOTE_BUZWORD",

@@ -39,32 +39,6 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
         if (expense.id === action.noteId) {
           return {
             ...expense,
-
-            kanbanboard: {
-              columns: convertArrayToObject(
-                expense.kanbanboard.columnOrder.map((columnId) => {
-                  const column = expense.kanbanboard.columns[columnId];
-
-                  if (column.id === action.updates.column) {
-                    return {
-                      ...column,
-                      taskIds: [...column.taskIds, action.updates.storieID],
-                    };
-                  } else {
-                    column;
-                  }
-                  return column;
-                })
-              ),
-
-              columnOrder: expense.kanbanboard.columnOrder,
-              tasks: [
-                ...expense.kanbanboard.tasks,
-                {
-                  ...action.updates,
-                },
-              ],
-            },
           };
         } else {
           return expense;
@@ -72,32 +46,7 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
       });
 
     case "EDIT_NOTE_STORY":
-      return state.map((expense) => {
-        if (expense.id === action.noteId) {
-          return {
-            ...expense,
-            kanbanboard: {
-              columns: expense.kanbanboard.columns,
-
-              columnOrder: expense.kanbanboard.columnOrder,
-              tasks: [
-                ...expense.kanbanboard.tasks.map((userStorie) => {
-                  if (userStorie.storieID === action.userStorieID) {
-                    return {
-                      ...userStorie,
-                      ...action.updates,
-                    };
-                  } else {
-                    return { ...userStorie };
-                  }
-                }),
-              ],
-            },
-          };
-        } else {
-          return { ...expense };
-        }
-      });
+      return { ...expense };
 
     default:
       return state;

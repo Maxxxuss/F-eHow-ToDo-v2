@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { startStory, addStory, removeStory } from "../../actions/kanbanBoard";
 import { v4 as uuidv4 } from "uuid";
-import { getAllgetKanbanBoard } from "../../selectors/kanbanBoard";
 
 export function AddUserStory(props) {
   const ndsProps = props.props;
@@ -56,12 +55,6 @@ export function AddUserStory(props) {
     </Grid>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    allStories: getAllgetKanbanBoard(state),
-  };
-};
 
 const mapDispatchToProps = (dispatch) => ({
   startStory: (updates) => dispatch(startStory(updates)),

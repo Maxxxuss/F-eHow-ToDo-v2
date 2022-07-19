@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 
-// ADD_EXPENSE
 export const addExpense = ({
   description,
   relevance,
@@ -19,10 +18,10 @@ export const addExpense = ({
   snooze,
   onHold,
   effort,
-  kanbanboard: { tasks, columns, columnOrder },
+
   task_current,
-  task_tomorrow, 
-  task_afert_Tomorrow, 
+  task_tomorrow,
+  task_afert_Tomorrow,
 } = {}) => ({
   type: "ADD_EXPENSE",
   expense: {
@@ -45,38 +44,18 @@ export const addExpense = ({
     snooze,
     onHold,
     effort,
-    kanbanboard: {
-      tasks,
-      columns,
-      columnOrder,
-    },
+
     task_current,
-    task_tomorrow, 
-    task_afert_Tomorrow, 
-    //   k_id: uuidv4(),
-    //   k_titel,
-    //   k_description,
-    //   k_dastesToFinish,
-    //   k_colID,
+    task_tomorrow,
+    task_afert_Tomorrow,
   },
 });
 
-// REMOVE_EXPENSE
 export const removeExpense = ({ id } = {}) => ({
   type: "REMOVE_EXPENSE",
   id,
 });
-// export const removeExpense = ({ id } = {}) => {
-//   return (dispatch) => {
-//     dispatch(({
-//       type: 'REMOVE_EXPENSE',
-//       id
 
-//     }));
-//   }
-// }
-
-// EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
   type: "EDIT_EXPENSE",
   id,
@@ -89,28 +68,15 @@ export const addNoteStory = (noteId, updates) => ({
   updates,
 });
 
-export const editNoteStory = (noteId, userStorieID,updates) => ({
+export const editNoteStory = (noteId, userStorieID, updates) => ({
   type: "EDIT_NOTE_STORY",
   noteId,
   userStorieID,
   updates,
 });
 
-
 export const editExpenseBuzword = (id, updates) => ({
   type: "EDIT_EXPENSE_BUZWORD",
   id,
   updates,
 });
-
-
-// export const startStory = (id, updates) => ({
-//   type: "START_KSTORY",
-//   id,
-//   updates
-// });
-
-// export const removeStory  = ({ id } ) => ({
-//   type: "REMOVE_KSTROY",
-//   id,
-// });

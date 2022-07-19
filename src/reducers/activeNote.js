@@ -16,69 +16,27 @@ const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
     case "ADD_NOTE_STORY_ACTIVE_NOTE":
       return {
         ...state,
-        kanbanboard: {
-          columns: convertArrayToObject(
-            state.kanbanboard.columnOrder.map((columnId) => {
-              const column = state.kanbanboard.columns[columnId];
-
-              if (column.id === action.updates.column) {
-                return {
-                  ...column,
-                  taskIds: [...column.taskIds, action.updates.storieID],
-                };
-              } else {
-                column;
-              }
-              return column;
-            })
-          ),
-
-          columnOrder: state.kanbanboard.columnOrder,
-          tasks: [
-            ...state.kanbanboard.tasks,
-            {
-              ...action.updates,
-            },
-          ],
-        },
       };
 
     case "EDIT_NOTE_STORY_ACTIVE_NOTE":
       return {
         ...state,
-        kanbanboard: {
-          columns: state.kanbanboard.columns,
-
-          columnOrder: state.kanbanboard.columnOrder,
-          tasks: [
-            ...state.kanbanboard.tasks.map((userStorie) => {
-              if (userStorie.storieID === action.userStorieID) {
-                return {
-                  ...userStorie,
-                  ...action.updates,
-                };
-              } else {
-                return { ...userStorie };
-              }
-            }),
-          ],
-        },
       };
 
-      case "EDIT_ACtiVENOTE_BUZWORD":
-        return state.map((expense) => {
-          if (expense.id === action.id) {
-            return {
-              ...expense,
-              ...action.updates,
-              bTitel: action.updates.buzwords.map((titel) => {
-                return titel.titel;
-              }),
-            };
-          } else {
-            return expense;
-          }
-        });
+    case "EDIT_ACtiVENOTE_BUZWORD":
+      return state.map((expense) => {
+        if (expense.id === action.id) {
+          return {
+            ...expense,
+            ...action.updates,
+            bTitel: action.updates.buzwords.map((titel) => {
+              return titel.titel;
+            }),
+          };
+        } else {
+          return expense;
+        }
+      });
 
     default:
       return state;

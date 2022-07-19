@@ -56,7 +56,7 @@ export function setActiveNote(expense, props) {
       infoNote: expense.infoNote,
       effort: expense.effort,
       noteStatus: expense.noteStatus,
-      kanbanboard: expense.kanbanboard,
+
       countNoteStories: expense.countNoteStories,
       buzwords: expense.buzwords,
       bTitel: expense.bTitel,

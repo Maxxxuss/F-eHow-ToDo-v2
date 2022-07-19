@@ -1,5 +1,3 @@
-// Show if not Committet cahnges
-
 import {
   TextField,
   Autocomplete,
@@ -31,21 +29,6 @@ import store from "../../store/configureStore";
 import BuzwordTags from "../Buzwords/buzwords";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
-// import {counter} from "../Counter/counter"
-
-// const style = {
-//   position: 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   width: 400,
-//   bgcolor: 'background.paper',
-//   border: '2px solid #000',
-//   boxShadow: 24,
-//   pt: 2,
-//   px: 4,
-//   pb: 3,
-// };
 
 const style = {
   position: "absolute",
@@ -80,9 +63,9 @@ export const ShortDescription = (properties) => {
 
   const [aNoteId, setaNoteId] = useState("");
   const [noteId, setNoteId] = useState("");
-  const [aUserStorieID, setAUserStorieID] = useState("");
-  const [counterNoteStories, setCounterNoteStories] = useState(0);
-  const [storieClearer, setStorieClearer] = useState("");
+
+
+
   const [buttonHandler, setButtonHandler] = useState("AddNote");
 
   const space = "<p><br></p> ";
@@ -101,37 +84,22 @@ export const ShortDescription = (properties) => {
     seteffort("");
     setInputCategorie("");
     setActiveCategorie("");
-    setStorieClearer("");
     setButtonHandler("AddNote");
-  };
-
-  const clearStorieInput = (ndsProps) => {
-    console.log("Clearer: ", ndsProps);
-
-    setDescription("");
-
-    setnoteDecscription("");
-
-    setStorieClearer("rfBoard");
-    setButtonHandler("AddStorie");
   };
 
   const ListItem = styled("li")(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
 
-  // useEffect(() => []);
-
   if (
-    ndsProps.activeUserStorie.length > 0 &&
-    ndsProps.activeUserStorie[0].collapse === false &&
+
     activeNoteID != ndsProps.activeNote.id
   ) {
     setActiveNoteID(ndsProps.activeNote.id);
     setDescription(ndsProps.activeNote.description);
     setrelevance(ndsProps.activeNote.relevance);
     setimportant(ndsProps.activeNote.important);
-    // </p><p><br></p><p><br></p>
+
     setnoteDecscription(
       ndsProps.activeNote.noteDecscription.replaceAll(
         "</p><p><br></p><p><br></p>",
@@ -145,32 +113,12 @@ export const ShortDescription = (properties) => {
     setinfoNote(ndsProps.activeNote.infoNote);
     seteffort(ndsProps.activeNote.effort);
     setnoteStatus(ndsProps.activeNote.noteStatus);
-    setStorieClearer("rfBoard");
-    setCounterNoteStories(ndsProps.activeNote.countNoteStories);
+
+
     setButtonHandler("EditNote");
   }
 
-  if (
-    ndsProps.activeUserStorie.length > 0 &&
-    ndsProps.activeUserStorie[0].collapse === true &&
-    storieClearer === "rfBoard"
-  ) {
-    setDescription("");
-    setnoteDecscription("");
-    setStorieClearer("rfStorie");
-    setButtonHandler("AddStorie");
-  }
 
-  if (
-    storieClearer === "rfStorie" &&
-    ndsProps.activeUserStorie.length > 0 &&
-    aUserStorieID != ndsProps.activeUserStorie[0].storieID
-  ) {
-    setDescription(ndsProps.activeUserStorie[0].titel);
-    setnoteDecscription(ndsProps.activeUserStorie[0].description);
-    setAUserStorieID(ndsProps.activeUserStorie[0].storieID);
-    setButtonHandler("EditStorie");
-  }
 
   const startNewNote = {
     id: activeNoteID,
@@ -187,28 +135,6 @@ export const ShortDescription = (properties) => {
     nextStep: nextStep,
     infoNote: infoNote,
     effort: effort,
-    kanbanboard: {
-      tasks: [],
-      columns: {
-        "column-1": {
-          id: "column-1",
-          title: "Backlock",
-          taskIds: [],
-        },
-
-        "column-3": {
-          id: "column-3",
-          title: "In Progress",
-          taskIds: [],
-        },
-        "column-4": {
-          id: "column-4",
-          title: "Done",
-          taskIds: [],
-        },
-      },
-      columnOrder: ["column-1", "column-3", "column-4"],
-    },
   };
 
   const style = {
@@ -245,19 +171,7 @@ export const ShortDescription = (properties) => {
     setNoteId(ndsProps.activeNote.id);
   }
 
-  const addStorie = {
-    aNoteId: aNoteId,
-    storieID: uuidv4(),
-    noteId: noteId,
-    titel: description,
-    description: space + timeStamp + noteDecscription,
-    column: "column-1",
-  };
 
-  const updateStorie = {
-    titel: description,
-    description: space + timeStamp + noteDecscription,
-  };
 
   function statusChange(ndsProps, updates) {
     if (noteStatus === "open") {
@@ -303,15 +217,6 @@ export const ShortDescription = (properties) => {
     "background",
   ];
 
-  const kanbanUpdates = {
-    aNoteId: aNoteId,
-    storieID: uuidv4(),
-    noteId: noteId,
-    titel: description,
-    description: space + timeStamp + noteDecscription,
-    column: "column-1",
-  };
-
   function decider(ndsProps) {
     if (buttonHandler === "EditNote") {
       return (
@@ -343,64 +248,7 @@ export const ShortDescription = (properties) => {
       );
     }
 
-    if (buttonHandler === "AddStorie")
-      return (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            ndsProps.addNoteStory_ActiveNote(activeNoteID, kanbanUpdates),
-              ndsProps.addNoteStory(activeNoteID, kanbanUpdates),
-              ndsProps.editExpense(ndsProps.activeNote.id, {
-                countNoteStories: counterNoteStories + 1,
-              }),
-              setCounterNoteStories(counterNoteStories + 1),
-              clearStorieInput(ndsProps);
-            autoSaveFunc(ndsProps);
-          }}
-        >
-          Add Story
-        </Button>
-      );
 
-    if (buttonHandler === "EditStorie")
-      return (
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            ndsProps.editNoteStory(
-              activeNoteID,
-              ndsProps.activeUserStorie[0].storieID,
-              updateStorie
-            ),
-              ndsProps.editNoteStory_ActiveNote(
-                activeNoteID,
-                ndsProps.activeUserStorie[0].storieID,
-                updateStorie
-              ),
-              ndsProps.removeActiveUserStory(),
-              clearStorieInput(ndsProps),
-              autoSaveFunc(ndsProps);
-          }}
-        >
-          {ndsProps.activeUserStorie[0].description.replace(/<[^>]+>/g, "")
-            .length -
-            1 !=
-          noteDecscription.replace(/<[^>]+>/g, "").length ? (
-            <PublishedWithChangesOutlinedIcon
-              color="warning"
-              fontSize="medium"
-              sx={{
-                mr: 2,
-              }}
-            />
-          ) : (
-            ""
-          )}
-          Edit Story
-        </Button>
-      );
     else
       return (
         <Button
@@ -410,7 +258,6 @@ export const ShortDescription = (properties) => {
             ndsProps.addExpense(startNewNote),
               clearInputValues(ndsProps),
               autoSaveFunc(ndsProps);
-            // counter(ndsProps)
           }}
         >
           Add NOte
@@ -419,57 +266,7 @@ export const ShortDescription = (properties) => {
   }
 
   function deciderClearInputValue(ndsProps) {
-    if (buttonHandler === "EditStorie")
-      return (
-        <div>
-          <IconButton
-            onClick={() => {
-              ndsProps.removeActiveUserStory(),
-                ndsProps.setActiveStory({
-                  aNoteId: "defauldID",
-                  storieID: "",
-                  noteId: "noteId",
-                  titel: "description",
-                  description: "noteDecscription",
-                  column: "column-1",
-                  collapse: "false",
-                }),
-                clearStorieInput(ndsProps);
-            }}
-            size="large"
-            color="secondary"
-          >
-            <ClearIcon fontSize="large" />
-          </IconButton>
-        </div>
-      );
-    if (buttonHandler === "AddStorie")
-      return (
-        <div>
-          <IconButton
-            onClick={() => {
-              setDescription(ndsProps.activeNote.description),
-                setnoteDecscription(ndsProps.activeNote.noteDecscription),
-                setrelevance(ndsProps.activeNote.relevance),
-                setimportant(ndsProps.activeNote.important),
-                setInputCategorie(ndsProps.activeNote.categorie),
-                setdatesToFinish(ndsProps.activeNote.datesToFinish),
-                setnextStep(ndsProps.activeNote.nextStep),
-                setinfoNote(ndsProps.activeNote.infoNote),
-                seteffort(ndsProps.activeNote.effort),
-                setnoteStatus(ndsProps.activeNote.noteStatus),
-                setStorieClearer(""),
-                setCounterNoteStories(ndsProps.activeNote.countNoteStories),
-                setButtonHandler("EditNote");
-            }}
-            size="large"
-            color="secondary"
-          >
-            <ClearIcon fontSize="large" />
-          </IconButton>
-        </div>
-      );
-    else
+    
       return (
         <div>
           <IconButton
@@ -482,7 +279,7 @@ export const ShortDescription = (properties) => {
         </div>
       );
   }
-  //MODAL STATE
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -515,10 +312,6 @@ export const ShortDescription = (properties) => {
             ""
           )}
         </ButtonGroup>
-
-        {/* <Button onClick={() => console.log("SHOW Props: ", props)}>
-          Props
-        </Button> */}
       </Grid>
 
       <Grid
@@ -544,9 +337,7 @@ export const ShortDescription = (properties) => {
             />
           </Grid>
         </Grid>
-        {storieClearer === "rfStorie" ? (
-          ""
-        ) : (
+      
           <Grid
             container
             spacing={1}
@@ -641,7 +432,6 @@ export const ShortDescription = (properties) => {
               />
             </Grid>
           </Grid>
-        )}
         <Grid item xs={10}>
           <Paper
             sx={{
@@ -805,8 +595,6 @@ function ChildModal(props) {
                           props.editBuzword(activeBuz.id, { titel: titel });
                           setTitel("");
                           setActiveBuz("");
-
-                          // console.log(activeBuz);
                         }}
                       >
                         Take Change
