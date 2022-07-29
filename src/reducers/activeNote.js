@@ -38,6 +38,25 @@ const activeNoteReducer = (state = activeNoteReducerDefaultState, action) => {
         }
       });
 
+      // case "ADD_ACtiVENOTE_URL":
+      //   return state.map((expense) => {
+      //     if (expense.id === action.id) {
+      //       return {
+      //         ...expense,
+      //         ...action.updates,
+      //         linkTitel: action.updates.map((linkTitel) => {
+      //           return linkTitel.linkTitel;
+      //         }),
+      //         linkURL: action.updates.map((linkURL) => {
+      //           return linkURL.linkURL;
+      //         }),
+      //       };
+      //     } else {
+      //       return expense;
+      //     }
+      //   });
+
+
     default:
       return state;
   }

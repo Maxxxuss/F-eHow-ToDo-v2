@@ -1,0 +1,30 @@
+const noteDocReducerDefaultState = [];
+
+const noteDocReducer = (state = noteDocReducerDefaultState, action) => {
+  switch (action.type) {
+    case "ADD_NOTE_DOC":
+      return [...state, action.noteDoc];
+
+    // case "EDIT_BUZWORD":
+    //   return state.map((buzword) => {
+    //     if (buzword.id === action.id) {
+    //       return {
+    //         ...buzword,
+    //         ...action.updates,
+    //       };
+    //     } else {
+    //       return buzword;
+    //     }
+    //   });
+
+    // case "ADD_NOTE_TO_BUZWORD":
+    // return state.map((buzword)=>{
+    //   buzword.id === action.id
+    // })
+
+    default:
+      return state;
+  }
+};
+
+export default noteDocReducer;

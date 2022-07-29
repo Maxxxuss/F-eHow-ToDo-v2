@@ -3,14 +3,14 @@ import moment from "moment";
 
 export const getActiveNotes = (state) => state.activeNote;
 
-
-
-export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
-
-({
+export const getAllActiveNotes = createSelector(
+  getActiveNotes,
+  (activeNotes) => ({
     id: activeNotes.id ? activeNotes.id : "",
     categorie: activeNotes.categorie ? activeNotes.categorie : "",
-    noteUpdateDate: activeNotes.noteUpdateDate ? activeNotes.noteUpdateDate : "",
+    noteUpdateDate: activeNotes.noteUpdateDate
+      ? activeNotes.noteUpdateDate
+      : "",
     noteStatus: activeNotes.noteStatus ? activeNotes.noteStatus : "",
     description: activeNotes.description ? activeNotes.description : "",
     prio: activeNotes.prio ? activeNotes.prio : "",
@@ -22,7 +22,9 @@ export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
       : "",
     datesToFinish: activeNotes.datesToFinish ? activeNotes.datesToFinish : "",
     nextStep: activeNotes.nextStep ? activeNotes.nextStep : "",
-    riskAuswirkung: activeNotes.riskAuswirkung ? activeNotes.riskAuswirkung : "",
+    riskAuswirkung: activeNotes.riskAuswirkung
+      ? activeNotes.riskAuswirkung
+      : "",
     riskWahrscheinlichkeit: activeNotes.riskWahrscheinlichkeit
       ? activeNotes.riskWahrscheinlichkeit
       : "",
@@ -32,14 +34,12 @@ export const getAllActiveNotes = createSelector(getActiveNotes, (activeNotes) =>
     onHold: activeNotes.onHold ? activeNotes.onHold : "",
     effort: activeNotes.effort ? activeNotes.effort : "",
 
+    linkTitel: activeNotes.linkTitel ? activeNotes.linkTitel : "",
+    linkURL: activeNotes.linkURL ? activeNotes.linkURL : "",
+
     buzwords: activeNotes.buzwords ? activeNotes.buzwords : [],
     bTitel: activeNotes.bTitel ? activeNotes.bTitel : [],
 
-
-    countNoteStories: activeNotes.countNoteStories
-      ? activeNotes.countNoteStories
-      : 0,
-      })
-
+   
+  })
 );
-

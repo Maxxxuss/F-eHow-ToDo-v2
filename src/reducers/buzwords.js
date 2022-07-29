@@ -17,12 +17,10 @@ const buzwordsReducer = (state = buzwordReducerDefaultState, action) => {
         }
       });
 
-      // case "ADD_NOTE_TO_BUZWORD":
-      // return state.map((buzword)=>{
-      //   buzword.id === action.id
-      // })
-
-
+    // case "ADD_NOTE_TO_BUZWORD":
+    // return state.map((buzword)=>{
+    //   buzword.id === action.id
+    // })
 
     default:
       return state;

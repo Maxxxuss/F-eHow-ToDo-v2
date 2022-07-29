@@ -43,7 +43,10 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
     snooze: expense.snooze ? expense.snooze : false,
     onHold: expense.onHold ? expense.onHold : false,
     effort: expense.effort ? expense.effort : "5",
-    countNoteStories: expense.countNoteStories ? expense.countNoteStories : 0,
+
+    linkTitel: expense.linkTitel ? expense.linkTitel : "",
+    linkURL: expense.linkURL ? expense.linkURL : "",  
+
     buzwords: expense.buzwords ? expense.buzwords : [],
     bTitel: expense.bTitel ? expense.bTitel : [],
 
@@ -52,24 +55,7 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
   }))
 );
 
-export function group(list, varCol) {
-  const grouped = groupBy(list, (pet) => pet.column);
 
-  function groupBy(list, keyGetter) {
-    const map = new Map();
-    list.forEach((item) => {
-      const key = keyGetter(item);
-      if (!map.has(key)) {
-        map.set(key, [item.storieID]);
-      } else {
-        map.get(key).push(item.storieID);
-      }
-    });
-    return map;
-  }
-
-  return grouped.get(varCol);
-}
 
 export function absDatesToFin(datesToFinish) {
   var b = moment();

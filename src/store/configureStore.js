@@ -7,10 +7,8 @@ import { localStorageKey } from "./constants";
 import globalVariabels from "../reducers/globalVariables";
 import activeNoteReducer from "../reducers/activeNote";
 
-import kColumReducer from "../reducers/kColumn";
-import activeUserStorieReducer from "../reducers/activeStorie";
 import buzwordsReducer from "../reducers/buzwords";
-import { getAllExpenses } from "../selectors/notes";
+import noteDocReducer from "../reducers/noteDocs";
 
 const composerFunction = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -35,10 +33,8 @@ const store = combineReducers({
   categories: categorieReducer,
   globalVariables: globalVariabels,
   activeNote: activeNoteReducer,
-
-  kColumns: kColumReducer,
-  activeUserStorie: activeUserStorieReducer,
   buzwords: buzwordsReducer,
+  noteDocs: noteDocReducer,
 });
 
 const loggingMiddleware = (store) => (next) => (action) => {

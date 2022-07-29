@@ -20,9 +20,9 @@ export const addActiveNote = ({
   snooze,
   onHold,
   effort,
-
+  linkTitel,
+  linkURL,
   buzwords,
-  countNoteStories,
 } = {}) => ({
   type: "ADD_ACTIVE_NOTE",
   activeNote: {
@@ -45,8 +45,8 @@ export const addActiveNote = ({
     snooze,
     onHold,
     effort,
-
-    countNoteStories,
+    linkTitel,
+    linkURL,
     buzwords,
   },
 });
@@ -64,29 +64,6 @@ export const editActiveNote = (updates) => ({
 export const changeStatus = (id, updates) => ({
   type: "CHANGE_STATUS",
   id,
-  updates,
-});
-
-export const addNoteStory_ActiveNote = (noteId, updates) => ({
-  type: "ADD_NOTE_STORY_ACTIVE_NOTE",
-  noteId,
-  updates,
-});
-
-export const editNoteStory_ActiveNote = (noteId, userStorieID, updates) => ({
-  type: "EDIT_NOTE_STORY_ACTIVE_NOTE",
-  noteId,
-  userStorieID,
-  updates,
-});
-export const editNoteStoryColumn_ActiveNote = (
-  noteId,
-  userStorieID,
-  updates
-) => ({
-  type: "EDIT_NOTE_STORY_COLUMN_ACTIVE_NOTE",
-  noteId,
-  userStorieID,
   updates,
 });
 

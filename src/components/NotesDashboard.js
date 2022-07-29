@@ -8,24 +8,21 @@ import { getAllExpenses } from "../selectors/notes";
 import ShortDescription from "./inputs/titel";
 import {
   addActiveNote,
-  addNoteStory_ActiveNote,
-  editNoteStoryColumn_ActiveNote,
-  editNoteStory_ActiveNote,
   removeActiveNote,
   editActiveNote,
 } from "../actions/activeNote";
 import { getAllActiveNotes } from "../selectors/activeNote";
 import {
   addExpense,
-  addNoteStory,
   editExpense,
   editExpenseBuzword,
-  editNoteStory,
-  removeExpense,
+  removeExpense
 } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { addBuzword, editBuzword } from "../actions/buzwords";
+
+import {addNoteDoc} from "../actions/noteDoc"
 
 import { SearchForNotes } from "./inputs/search";
 import { getAllCategories } from "../selectors/categories";
@@ -33,12 +30,11 @@ import AddDeleteProject from "./AddDeleteProject";
 import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 
-import { setActiveStory, removeActiveUserStory } from "../actions/activeStorie";
 
-import { getAllActiveUserStories } from "../selectors/activeStorie";
 import { getAllBuzwords } from "../selectors/buzwords";
+import { getAllNoteDocs } from "../selectors/noteDoc";
 
-import { categorieCounter } from "./Counter/counter";
+
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -57,7 +53,6 @@ export function setActiveNote(expense, props) {
       effort: expense.effort,
       noteStatus: expense.noteStatus,
 
-      countNoteStories: expense.countNoteStories,
       buzwords: expense.buzwords,
       bTitel: expense.bTitel,
     };
@@ -144,6 +139,7 @@ export function NotesDashboardPage(props) {
               activeCategorie={activeCategorie}
             />
           </Grid>
+ 
         </Grid>
       </Box>
 
@@ -181,9 +177,8 @@ const mapStateToProps = (state) => {
     ),
 
     globalVariables: getGlobalVariables(state),
-    //KanbanIndex
-    activeUserStorie: getAllActiveUserStories(state),
     buzwords: getAllBuzwords(state),
+    noteDocs: getAllNoteDocs(state)
   };
 };
 
@@ -202,25 +197,10 @@ const mapDispatchToProps = (dispatch) => ({
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
   startStory: (id) => dispatch(startStory(id)),
 
-  //KanbanIndex
-  addStory: (id, updates) => dispatch(addStory(id, updates)),
-  setActiveStory: (updates) => dispatch(setActiveStory(updates)),
-  removeActiveUserStory: () => dispatch(removeActiveUserStory()),
-  removeStory: (aNid, sId) => dispatch(removeStory(aNid, sId)),
-  addNoteStory: (noteId, updates) => dispatch(addNoteStory(noteId, updates)),
-  addNoteStory_ActiveNote: (noteId, updates) =>
-    dispatch(addNoteStory_ActiveNote(noteId, updates)),
-  editNoteStory: (noteId, userStorieID, updates) =>
-    dispatch(editNoteStory(noteId, userStorieID, updates)),
-  editNoteStory_ActiveNote: (noteId, userStorieID, updates) =>
-    dispatch(editNoteStory_ActiveNote(noteId, userStorieID, updates)),
-
-  editNoteStoryColumn_ActiveNote: (noteId, userStorieID, updates) =>
-    dispatch(editNoteStoryColumn_ActiveNote(noteId, userStorieID, updates)),
-
   // BuzWords
   addBuzword: (buzword) => dispatch(addBuzword(buzword)),
   editBuzword: (id, updates) => dispatch(editBuzword(id, updates)),
+  addNoteDoc: (id, updates) => dispatch(addNoteDoc(id, updates)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

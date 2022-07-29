@@ -18,6 +18,8 @@ export const addExpense = ({
   snooze,
   onHold,
   effort,
+  linkTitel,
+  linkURL,
 
   task_current,
   task_tomorrow,
@@ -44,6 +46,8 @@ export const addExpense = ({
     snooze,
     onHold,
     effort,
+    linkTitel,
+    linkURL,
 
     task_current,
     task_tomorrow,
@@ -68,15 +72,17 @@ export const addNoteStory = (noteId, updates) => ({
   updates,
 });
 
-export const editNoteStory = (noteId, userStorieID, updates) => ({
-  type: "EDIT_NOTE_STORY",
-  noteId,
-  userStorieID,
-  updates,
-});
 
 export const editExpenseBuzword = (id, updates) => ({
   type: "EDIT_EXPENSE_BUZWORD",
+  id,
+  updates,
+});
+
+
+export const addExpenseURL = (id, updates) => ({
+  type: "ADD_ACtiVENOTE_URL",
+  // urlID:uuidv4(),
   id,
   updates,
 });

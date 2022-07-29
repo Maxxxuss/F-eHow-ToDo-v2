@@ -145,21 +145,7 @@ export function ShowNotes(props) {
                         <Grid item xs={1}>
                           {showHintForTimedNotes(expense, props)}
 
-                          {expense.countNoteStories != 0 ? (
-                            <Grid
-                              container
-                              direction="column"
-                              justifyContent="space-between"
-                              alignItems="center"
-                            >
-                              <Grid item>
-                                <StickyNote2OutlinedIcon />
-                              </Grid>
-                              <Grid item>({expense.countNoteStories})</Grid>
-                            </Grid>
-                          ) : (
-                            ""
-                          )}
+                         
                         </Grid>
                         <Grid item xs={10}>
                           <ListItemText

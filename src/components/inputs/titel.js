@@ -29,6 +29,8 @@ import store from "../../store/configureStore";
 import BuzwordTags from "../Buzwords/buzwords";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
+import { NoteDocInput } from "../noteDocs/NoteDocInput";
+import { NoteDocView } from "../noteDocs/NoteDocView";
 
 const style = {
   position: "absolute",
@@ -64,8 +66,6 @@ export const ShortDescription = (properties) => {
   const [aNoteId, setaNoteId] = useState("");
   const [noteId, setNoteId] = useState("");
 
-
-
   const [buttonHandler, setButtonHandler] = useState("AddNote");
 
   const space = "<p><br></p> ";
@@ -91,10 +91,7 @@ export const ShortDescription = (properties) => {
     margin: theme.spacing(0.5),
   }));
 
-  if (
-
-    activeNoteID != ndsProps.activeNote.id
-  ) {
+  if (activeNoteID != ndsProps.activeNote.id) {
     setActiveNoteID(ndsProps.activeNote.id);
     setDescription(ndsProps.activeNote.description);
     setrelevance(ndsProps.activeNote.relevance);
@@ -114,11 +111,8 @@ export const ShortDescription = (properties) => {
     seteffort(ndsProps.activeNote.effort);
     setnoteStatus(ndsProps.activeNote.noteStatus);
 
-
     setButtonHandler("EditNote");
   }
-
-
 
   const startNewNote = {
     id: activeNoteID,
@@ -170,8 +164,6 @@ export const ShortDescription = (properties) => {
     setaNoteId(ndsProps.activeNote.id);
     setNoteId(ndsProps.activeNote.id);
   }
-
-
 
   function statusChange(ndsProps, updates) {
     if (noteStatus === "open") {
@@ -246,10 +238,7 @@ export const ShortDescription = (properties) => {
           Edit Note
         </Button>
       );
-    }
-
-
-    else
+    } else
       return (
         <Button
           variant="contained"
@@ -266,23 +255,26 @@ export const ShortDescription = (properties) => {
   }
 
   function deciderClearInputValue(ndsProps) {
-    
-      return (
-        <div>
-          <IconButton
-            onClick={() => clearInputValues(ndsProps)}
-            size="large"
-            color="primary"
-          >
-            <ClearIcon fontSize="large" />
-          </IconButton>
-        </div>
-      );
+    return (
+      <div>
+        <IconButton
+          onClick={() => clearInputValues(ndsProps)}
+          size="large"
+          color="primary"
+        >
+          <ClearIcon fontSize="large" />
+        </IconButton>
+      </div>
+    );
   }
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openBuz, setOpenBuz] = React.useState(false);
+  const [openDoc, setOpenDoc] = React.useState(false);
+
+  const handleOpenBuz = () => setOpenBuz(true);
+  const handleCloseBuz = () => setOpenBuz(false);
+  const handleOpenDoc = () => setOpenDoc(true);
+  const handleCloseDoc = () => setOpenDoc(false);
 
   return (
     <div>
@@ -337,101 +329,101 @@ export const ShortDescription = (properties) => {
             />
           </Grid>
         </Grid>
-      
-          <Grid
-            container
-            spacing={1}
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item xs>
-              <TextField
-                label="Days"
-                onChange={(e) =>
-                  setdatesToFinish(moment().add(e.target.value, "days"))
-                }
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                label="Finish Till"
-                value={
-                  datesToFinish
-                    ? moment(datesToFinish).format("ddd - DD.MM.YY")
-                    : ""
-                }
-                onChange={(e) =>
-                  setdatesToFinish(moment().add(e.target.value, "days"))
-                }
-                variant="filled"
-                color="secondary"
-                fullWidth
-              />
-            </Grid>
 
-            <Grid item xs>
-              <TextField
-                label="Dringlich"
-                variant="filled"
-                value={relevance}
-                onChange={(e) => setrelevance(e.target.value)}
-                color="secondary"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                label="Wichtig"
-                variant="filled"
-                color="secondary"
-                value={important}
-                onChange={(e) => setimportant(e.target.value)}
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs>
-              <TextField
-                label="Aufwand"
-                variant="filled"
-                value={effort}
-                onChange={(e) => seteffort(e.target.value)}
-                color="secondary"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Autocomplete
-                value={activeCategorie}
-                onChange={(e, newValue) => {
-                  setActiveCategorie(newValue);
-                }}
-                inputValue={
-                  inputCategorie
-                    ? inputCategorie
-                    : ndsProps.activeNote.id != ""
-                    ? ndsProps.activeNote.categorie
-                    : properties.activeCategorie.catName
-                }
-                onInputChange={(e, newInputValue) => {
-                  setInputCategorie(newInputValue);
-                }}
-                options={ndsProps.categories}
-                getOptionLabel={(option) =>
-                  option.catName ? option.catName : ""
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Project"
-                    variant="filled"
-                    color="secondary"
-                  />
-                )}
-              />
-            </Grid>
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item xs>
+            <TextField
+              label="Days"
+              onChange={(e) =>
+                setdatesToFinish(moment().add(e.target.value, "days"))
+              }
+            />
           </Grid>
+          <Grid item xs={3}>
+            <TextField
+              label="Finish Till"
+              value={
+                datesToFinish
+                  ? moment(datesToFinish).format("ddd - DD.MM.YY")
+                  : ""
+              }
+              onChange={(e) =>
+                setdatesToFinish(moment().add(e.target.value, "days"))
+              }
+              variant="filled"
+              color="secondary"
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs>
+            <TextField
+              label="Dringlich"
+              variant="filled"
+              value={relevance}
+              onChange={(e) => setrelevance(e.target.value)}
+              color="secondary"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs>
+            <TextField
+              label="Wichtig"
+              variant="filled"
+              color="secondary"
+              value={important}
+              onChange={(e) => setimportant(e.target.value)}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs>
+            <TextField
+              label="Aufwand"
+              variant="filled"
+              value={effort}
+              onChange={(e) => seteffort(e.target.value)}
+              color="secondary"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Autocomplete
+              value={activeCategorie}
+              onChange={(e, newValue) => {
+                setActiveCategorie(newValue);
+              }}
+              inputValue={
+                inputCategorie
+                  ? inputCategorie
+                  : ndsProps.activeNote.id != ""
+                  ? ndsProps.activeNote.categorie
+                  : properties.activeCategorie.catName
+              }
+              onInputChange={(e, newInputValue) => {
+                setInputCategorie(newInputValue);
+              }}
+              options={ndsProps.categories}
+              getOptionLabel={(option) =>
+                option.catName ? option.catName : ""
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Project"
+                  variant="filled"
+                  color="secondary"
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
         <Grid item xs={10}>
           <Paper
             sx={{
@@ -454,10 +446,13 @@ export const ShortDescription = (properties) => {
             })}
           </Paper>
 
-          <Button onClick={handleOpen}>Add Buzword</Button>
+          <Button
+          size="small"
+          variant="outlined"
+          onClick={handleOpenBuz}>Add Buzword</Button>
           <Modal
-            open={open}
-            onClose={handleClose}
+            open={openBuz}
+            onClose={handleCloseBuz}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -473,7 +468,31 @@ export const ShortDescription = (properties) => {
               />
             </Box>
           </Modal>
+
+          <Button
+          size="small"
+          variant="outlined"
+          onClick={handleOpenDoc}>Add Document</Button>
+
+          <Modal
+            open={openDoc}
+            onClose={handleCloseDoc}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <NoteDocInput
+                activeNoteID={activeNoteID}
+                addNoteDoc={ndsProps.addNoteDoc}
+                categorie={updates.categorie}
+              />
+            </Box>
+          </Modal>
         </Grid>
+
+        {/* Note DOCS */}
+
+        <NoteDocView activeNoteID={activeNoteID} noteDocs={ndsProps.noteDocs} />
       </Grid>
 
       <ReactQuill

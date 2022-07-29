@@ -48,6 +48,25 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
     case "EDIT_NOTE_STORY":
       return { ...expense };
 
+    case "ADD_ACtiVENOTE_URL":
+      // return  console.log("Notes reducer State ", state, action) 
+      return state.map((expense) => {
+        if (expense.id === action.id) {
+          return {
+            ...expense,
+            ...action.updates,
+            ...expense.linkTitel= action.updates.map((linkTitel) => {
+              return linkTitel.linkTitel;
+            }),
+            ...expense.linkURL= action.updates.map((linkURL) => {
+              return linkURL.linkTitel;
+            })
+          };
+        } else {
+          return expense;
+        }
+      });
+
     default:
       return state;
   }
