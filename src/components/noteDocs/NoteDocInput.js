@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 export const NoteDocInput = (props) => {
   const [docTitel, setDocTitel] = React.useState("Doc Name");
   const [docURL, setDocURL] = React.useState("Doc Link");
+  const [docDescription, setDocDescription] = React.useState("Doc Description");
 
   const handeldocTitelChange = (event) => {
     setDocTitel(event.target.value);
@@ -22,6 +23,7 @@ export const NoteDocInput = (props) => {
     docTitel: docTitel,
     docURL: docURL,
     docAdded: moment().format(), 
+    docDescription: docDescription
   };
 
   return (
@@ -44,6 +46,15 @@ export const NoteDocInput = (props) => {
         />
       </Grid>
 
+      <Grid item xs={4}>
+        <TextField
+          id="outlined-uncontrolled"
+          label="Doc Description"
+          value={docDescription}
+          onChange={(e) => setDocDescription(e.target.value)}
+        />
+      </Grid>
+
       <Grid item xs={2}>
         <Button
           onClick={() => {
@@ -53,6 +64,7 @@ export const NoteDocInput = (props) => {
             ),
               setDocURL(""),
               setDocTitel(""),
+              setDocDescription(""), 
               console.log("InputLink Props: ", noteDocUpdates);
           }}
         >

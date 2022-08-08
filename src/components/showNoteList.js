@@ -71,11 +71,6 @@ const showHintForTimedNotes = (expense, props) => {
   }
 };
 
-
-
-
-
-
 export function ShowNotes(props) {
   const expenses = props.expenses;
   const noteListStatus = props.noteListStatus;
@@ -91,32 +86,29 @@ export function ShowNotes(props) {
   return (
     <List>
       {expenses
-        .filter(
-          (expense) => {
-            if (noteListStatus === "allOpen") {
-              return (
-                expense.noteStatus === "open" &&
-                expense.absDatesToFinish < "0.6"
-              );
-            }
-            if (noteListStatus === "openTomorrow") {
-              return (
-                expense.absDatesToFinish < 1.4 &&
-                expense.absDatesToFinish > 0.6 &&
-                expense.noteStatus != "closed"
-              );
-            }
-            if (noteListStatus === "openAfterTomorrow") {
-              return (
-                expense.absDatesToFinish < 2.2 &&
-                expense.absDatesToFinish > 1.4 &&
-                expense.noteStatus != "closed"
-              );
-            } else {
-              return expense.noteStatus === noteListStatus;
-            }
+        .filter((expense) => {
+          if (noteListStatus === "allOpen") {
+            return (
+              expense.noteStatus === "open" && expense.absDatesToFinish < "0.6"
+            );
           }
-        )
+          if (noteListStatus === "openTomorrow") {
+            return (
+              expense.absDatesToFinish < 1.4 &&
+              expense.absDatesToFinish > 0.6 &&
+              expense.noteStatus != "closed"
+            );
+          }
+          if (noteListStatus === "openAfterTomorrow") {
+            return (
+              expense.absDatesToFinish < 2.2 &&
+              expense.absDatesToFinish > 1.4 &&
+              expense.noteStatus != "closed"
+            );
+          } else {
+            return expense.noteStatus === noteListStatus;
+          }
+        })
         .filter((expense) =>
           props.activeCategorie.catName === "ALL"
             ? expense
@@ -144,15 +136,13 @@ export function ShowNotes(props) {
                       >
                         <Grid item xs={1}>
                           {showHintForTimedNotes(expense, props)}
-
-                         
                         </Grid>
                         <Grid item xs={10}>
                           <ListItemText
                             id={expense.id}
                             primary={expense.description}
                             secondary={expense.noteDecscription
-                              .substr( 0 , 270)
+                              .substr(0, 270)
                               .replace(/<[^>]+>/g, "")}
                           />
                           <Typography
@@ -194,7 +184,6 @@ export function ShowNotes(props) {
                     </ListItemButton>
                   </ListItem>
                 </Grid>
-
               </Grid>
             </Paper>
           );

@@ -16,13 +16,13 @@ import {
   addExpense,
   editExpense,
   editExpenseBuzword,
-  removeExpense
+  removeExpense,
 } from "../actions/notes";
 import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { addBuzword, editBuzword } from "../actions/buzwords";
 
-import {addNoteDoc} from "../actions/noteDoc"
+import { addNoteDoc } from "../actions/noteDoc";
 
 import { SearchForNotes } from "./inputs/search";
 import { getAllCategories } from "../selectors/categories";
@@ -30,11 +30,9 @@ import AddDeleteProject from "./AddDeleteProject";
 import { getGlobalVariables } from "../selectors/autoSave";
 import { editGlobalVariables } from "../actions/globalVariables";
 
-
 import { getAllBuzwords } from "../selectors/buzwords";
 import { getAllNoteDocs } from "../selectors/noteDoc";
-
-
+// import { TabCategorie } from "./Categorie";
 
 export function setActiveNote(expense, props) {
   //ALS PROPS MÜSSEN ÜBERGEBEN WERDEN (1) Add ActiveNote und RemoveActiveNote
@@ -57,15 +55,16 @@ export function setActiveNote(expense, props) {
       bTitel: expense.bTitel,
     };
     props.addActiveNote(updates);
-
     console.log("Active Notee: ", expense);
-
   }
 }
 
 export function NotesDashboardPage(props) {
-  const [tabCategorie, setTabCategorie] = useState(0);
+  // const [tabCategorie, setTabCategorie] = useState(0);
+  // const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
+  const [tabCategorie, setTabCategorie] = useState(0);
+
 
   if (props.categories.length < 1) {
     props.setCategorie({
@@ -75,13 +74,18 @@ export function NotesDashboardPage(props) {
   }
 
   const ProjectTab = (categories) =>
-    categories.map((categorie, index) => (
-      <Tab
-        key={categorie.sorting ? categorie.sorting : index}
-        label= {categorie.catName}
-        onClick={() => setActiveCategorie(categorie)}
-      ></Tab>
-    ));
+  categories.map((categorie, index) => (
+    <Tab
+      key={categorie.sorting ? categorie.sorting : index}
+      label={categorie.catName}
+      onClick={() =>{
+         setActiveCategorie(categorie) 
+        // console.log("categorie Change: ", categorie)
+      }
+        }
+    />
+  ));
+
 
   return (
     <Box
@@ -101,11 +105,22 @@ export function NotesDashboardPage(props) {
         Project Dashboard
       </Link>
 
+      <Link
+        href="/documentDash"
+        style={{
+          backgroundColor: "yellow",
+          padding: "20",
+        }}
+      >
+        Document Dashboard
+      </Link>
 
       <Box mt={2} mb={2} mr={2} ml={2}>
         <AppBar position="static" color="default">
           <Grid container alignItems="row">
             <Grid item xs={10}>
+      
+
               <Tabs
                 value={tabCategorie}
                 onChange={(e, newValue) => setTabCategorie(newValue)}
@@ -113,8 +128,12 @@ export function NotesDashboardPage(props) {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-                {ProjectTab(props.categories)} 
+                {ProjectTab(props.categories)}
               </Tabs>
+              {/* <TabCategorie
+              categories = {props.categories}
+              
+              /> */}
             </Grid>
             <Grid item xs>
               <AddDeleteProject
@@ -139,7 +158,6 @@ export function NotesDashboardPage(props) {
               activeCategorie={activeCategorie}
             />
           </Grid>
- 
         </Grid>
       </Box>
 
@@ -178,7 +196,7 @@ const mapStateToProps = (state) => {
 
     globalVariables: getGlobalVariables(state),
     buzwords: getAllBuzwords(state),
-    noteDocs: getAllNoteDocs(state)
+    noteDocs: getAllNoteDocs(state),
   };
 };
 

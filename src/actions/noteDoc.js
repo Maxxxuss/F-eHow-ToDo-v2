@@ -6,6 +6,7 @@ export const addNoteDoc = ({
   docTitel,
   docURL,
   docAdded,
+  docDescription,
 } = {}) => ({
   type: "ADD_NOTE_DOC",
   noteDoc: {
@@ -15,5 +16,17 @@ export const addNoteDoc = ({
     docTitel,
     docURL,
     docAdded,
+    docDescription,
   },
+});
+
+export const editNoteDoc = (id, updates) => ({
+  type: "EDIT_NOTE_DOC",
+  id,
+  updates,
+});
+
+export const removeNoteDoc = ({ id } = {}) => ({
+  type: "REMOVE_NOTE_DOC",
+  id,
 });

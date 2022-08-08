@@ -5,6 +5,21 @@ const noteDocReducer = (state = noteDocReducerDefaultState, action) => {
     case "ADD_NOTE_DOC":
       return [...state, action.noteDoc];
 
+      case "EDIT_NOTE_DOC":
+        return state.map((noteDoc) => {
+          if (noteDoc.id === action.id) {
+            return {
+              ...noteDoc,
+              ...action.updates,
+            };
+          } else {
+            return noteDoc;
+          }
+        });
+
+        case "REMOVE_NOTE_DOC":
+          return state.filter(({ id }) => id !== action.id);
+
     // case "EDIT_BUZWORD":
     //   return state.map((buzword) => {
     //     if (buzword.id === action.id) {

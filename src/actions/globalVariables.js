@@ -6,19 +6,20 @@ export const addGlobalVariables = ({} = {}) => ({
   globalVariables: {
     autoSave,
     onOffSwitch,
-    dayCounter_current,
-    dayCounter_one,
-    dayCounter_tow,
-     weekCounter,
-    oneMonthCoutner,
-    twoMonthCoutner,
-    threeMonthCoutner,
-    dateTime_current,
-    dateTime_one,
-    dateTime_tow,
-    task_current, 
-    task_tomorrow,
-    task_afert_Tomorrow
+    // activeCategorie
+    // dayCounter_current,
+    // dayCounter_one,
+    // dayCounter_tow,
+    //  weekCounter,
+    // oneMonthCoutner,
+    // twoMonthCoutner,
+    // threeMonthCoutner,
+    // dateTime_current,
+    // dateTime_one,
+    // dateTime_tow,
+    // task_current, 
+    // task_tomorrow,
+    // task_afert_Tomorrow
   },
 });
 

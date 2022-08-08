@@ -35,3 +35,4 @@ export const getHistorieCategorie = createSelector(
       m4_2: historyCategorie.m4_1 ? historyCategorie.m4_2 : "",
     }))
 );
+
