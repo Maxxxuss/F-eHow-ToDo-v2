@@ -8,6 +8,7 @@ import {
   Grid,
   ListItem,
   IconButton,
+  Button,
 } from "@mui/material";
 import React, { useState } from "react";
 import { DocDashDetails } from "./DocumentDash/DocumentDashDetails";
@@ -100,20 +101,13 @@ export function ShowDocumentDash(props) {
                                   </Grid>
 
                                   <Grid item>
-                                    <IconButton
-                                      onClick={
-                                        () => openDocurl(noteDoc.docURL)
-                                        // console.log(noteDoc.docURL)
-                                        // <a
-                                        //   href={noteDoc.docURL}
-                                        //   // target="_blank"
-                                        // ></a>
-                                      }
-                                      size="large"
+                                    <Button
+                                      href={noteDoc.docURL}
                                       color="primary"
+                                      target="_blank"
                                     >
-                                      <ClearIcon fontSize="large" />
-                                    </IconButton>
+                                      Link
+                                    </Button>
                                   </Grid>
                                 </Grid>
                               </Grid>

@@ -22,7 +22,7 @@ import { setCategorie, removeCategorie } from "../actions/categorie";
 
 import { addBuzword, editBuzword } from "../actions/buzwords";
 
-import { addNoteDoc } from "../actions/noteDoc";
+import { addNoteDoc, editNoteDoc } from "../actions/noteDoc";
 
 import { SearchForNotes } from "./inputs/search";
 import { getAllCategories } from "../selectors/categories";
@@ -213,12 +213,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(editExpenseBuzword(id, updates)),
 
   editGlobalVariables: (autoSave) => dispatch(editGlobalVariables(autoSave)),
+
+  // DEL
   startStory: (id) => dispatch(startStory(id)),
 
   // BuzWords
   addBuzword: (buzword) => dispatch(addBuzword(buzword)),
   editBuzword: (id, updates) => dispatch(editBuzword(id, updates)),
   addNoteDoc: (id, updates) => dispatch(addNoteDoc(id, updates)),
+
+  //NoteDoc
+  editNoteDoc: (id, updates) => dispatch(editNoteDoc(id, updates))
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

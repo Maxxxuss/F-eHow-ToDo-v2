@@ -17,6 +17,8 @@ import moment from "moment";
 import React, { useState } from "react";
 
 import ClearIcon from "@mui/icons-material/Clear";
+import DoubleCheckRemoveButton from "../../Button/DoubleCheckRemoveButton";
+import { DoubleCheckDelete } from "../doubleChecDeleteNoteDoc";
 
 export function DocDashDetails(props) {
   const DocDetail = props;
@@ -67,6 +69,7 @@ export function DocDashDetails(props) {
     docURL: docURL,
     docAdded: moment().format(),
     docDescription: docDescription,
+    noteID: props.activeNoteDoc.noteID,
   };
 
   if (docID != props.activeNoteDoc.id) {
@@ -81,10 +84,25 @@ export function DocDashDetails(props) {
   }
 
   return (
-    <Grid container>
+    <Box>
       <Box mb={2} mt={1}>
-        <Grid item>
-          <ButtonGroup fullWidth={true} variant="contained" size="small">
+        <Grid item >
+          <ButtonGroup fullWidth={true}
+          //  variant="contained" size="small"
+           >
+            <Button
+              color="primary"
+              onClick={() => {
+                setDocTitel("");
+                setActiveCategorie("");
+                setDocURL("");
+                setDocDescription("");
+                setDocAdded("");
+                setActiveCategorie("");
+              }}
+            >
+              clear
+            </Button>
             {docAdded === "" ? (
               <Button
                 color="primary"
@@ -109,29 +127,6 @@ export function DocDashDetails(props) {
             )}
 
             <Button
-              color="secondary"
-              onClick={() =>
-                props.showDocuDashPROPS.props.removeNoteDoc({
-                  id: props.activeNoteDoc.id,
-                })
-              }
-            >
-              Delete
-            </Button>
-            <Button
-              color="primary"
-              onClick={() => {
-                setDocTitel("");
-                setActiveCategorie("");
-                setDocURL("");
-                setDocDescription("");
-                setDocAdded("");
-                setActiveCategorie("");
-              }}
-            >
-              clear
-            </Button>
-            <Button
               color="primary"
               onClick={() =>
                 console.log(
@@ -140,7 +135,7 @@ export function DocDashDetails(props) {
                   "a",
                   activeCategorie,
                   "active cat Prop",
-                  props.showDocuDashPROPS.activeCategorie.catName,
+                  props,
                   "geProps",
                   props
                 )
@@ -148,6 +143,8 @@ export function DocDashDetails(props) {
             >
               SHOW- PROPS
             </Button>
+
+            <DoubleCheckDelete props={props} />
           </ButtonGroup>
         </Grid>
       </Box>
@@ -189,25 +186,38 @@ export function DocDashDetails(props) {
             )}
           />
         </Grid>
-        <Grid item xs={12} mt={2}>
-          <TextField
-            fullWidth={true}
-            label="Doc URL"
-            value={docURL}
-            onChange={(e) => setDocURL(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} mt={2}>
-          <TextField
-            fullWidth={true}
-            multiline={true}
-            label="Doc Description"
-            value={docDescription}
-            onChange={(e) => setDocDescription(e.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <div>
+
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Grid item>
+            <Button href={docURL} color="primary" target="_blank">
+              Open-Link
+            </Button>
+          </Grid>
+          <Grid item xs={9} mt={2}>
+            <TextField
+              fullWidth={true}
+              label="Doc URL"
+              value={docURL}
+              onChange={(e) => setDocURL(e.target.value)}
+            />
+          </Grid>
+
+          <Grid item xs={12} mt={2}>
+            <TextField
+              fullWidth={true}
+              multiline={true}
+              label="Doc Description"
+              value={docDescription}
+              onChange={(e) => setDocDescription(e.target.value)}
+            />
+          </Grid>
+
+          {/* <div>
             <IconButton
               onClick={() => <a href={docURL} target="_blank"></a>}
               size="large"
@@ -215,9 +225,9 @@ export function DocDashDetails(props) {
             >
               <ClearIcon fontSize="large" />
             </IconButton>
-          </div>
+          </div> */}
         </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }

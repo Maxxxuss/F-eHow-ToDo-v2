@@ -492,7 +492,9 @@ export const ShortDescription = (properties) => {
 
         {/* Note DOCS */}
 
-        <NoteDocView activeNoteID={activeNoteID} noteDocs={ndsProps.noteDocs} />
+        <NoteDocView activeNoteID={activeNoteID} noteDocs={ndsProps.noteDocs}
+        editNoteDoc={ndsProps.editNoteDoc}
+        />
       </Grid>
 
       <ReactQuill
