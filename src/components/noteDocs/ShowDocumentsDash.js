@@ -13,16 +13,6 @@ import {
 import React, { useState } from "react";
 import { DocDashDetails } from "./DocumentDash/DocumentDashDetails";
 
-import ClearIcon from "@mui/icons-material/Clear";
-
-function openDocurl(props) {
-  return (
-    <div>
-      <a href={props}></a>
-    </div>
-  );
-}
-
 export function ShowDocumentDash(props) {
   const noteDocs = props.props.noteDocs;
 
@@ -67,7 +57,17 @@ export function ShowDocumentDash(props) {
                               justifyContent="space-between"
                               alignItems="center"
                             >
-                              <Grid item xs={10}>
+                              <Grid item xs={1}>
+                                <Typography
+                                  variant="body2"
+                                  style={{
+                                    color: "SlateGray",
+                                  }}
+                                >
+                                  {noteDoc.docAdded.substr(0, 10)}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={9}>
                                 <ListItemText
                                   id={noteDoc.id}
                                   primary={noteDoc.docTitel}

@@ -65,7 +65,6 @@ export function NotesDashboardPage(props) {
   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
   const [tabCategorie, setTabCategorie] = useState(0);
 
-
   if (props.categories.length < 1) {
     props.setCategorie({
       catName: "ALL",
@@ -74,53 +73,58 @@ export function NotesDashboardPage(props) {
   }
 
   const ProjectTab = (categories) =>
-  categories.map((categorie, index) => (
-    <Tab
-      key={categorie.sorting ? categorie.sorting : index}
-      label={categorie.catName}
-      onClick={() =>{
-         setActiveCategorie(categorie) 
-        // console.log("categorie Change: ", categorie)
-      }
-        }
-    />
-  ));
-
+    categories.map((categorie, index) => (
+      <Tab
+        key={categorie.sorting ? categorie.sorting : index}
+        label={categorie.catName}
+        onClick={() => {
+          setActiveCategorie(categorie);
+          // console.log("categorie Change: ", categorie)
+        }}
+      />
+    ));
 
   return (
     <Box
       sx={{
         backgroundColor: "background.default",
         minHeight: "100%",
-        py: 8,
+        // py: 2,
       }}
     >
-      <Link
-        href="/proDash"
-        style={{
-          backgroundColor: "yellow",
-          padding: "20",
-        }}
-      >
-        Project Dashboard
-      </Link>
+      <Box mt={2} mb={2} mr={2} ml={2}>
+        <Grid container alignItems="row" 
+        >
+        <Grid item xs={2}>
+            <Link
+              href="/proDash"
+              style={{
+                // backgroundColor: "yellow",
+                padding: "20",
+              }}
+            >
+              Project Dashboard
+            </Link>
+          </Grid>
 
-      <Link
-        href="/documentDash"
-        style={{
-          backgroundColor: "yellow",
-          padding: "20",
-        }}
-      >
-        Document Dashboard
-      </Link>
+          <Grid item xs={2}>
+            <Link
+              href="/documentDash"
+              style={{
+                // backgroundColor: "yellow",
+                padding: "20",
+              }}
+            >
+              Document Dashboard
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
 
       <Box mt={2} mb={2} mr={2} ml={2}>
         <AppBar position="static" color="default">
           <Grid container alignItems="row">
             <Grid item xs={10}>
-      
-
               <Tabs
                 value={tabCategorie}
                 onChange={(e, newValue) => setTabCategorie(newValue)}
@@ -223,8 +227,7 @@ const mapDispatchToProps = (dispatch) => ({
   addNoteDoc: (id, updates) => dispatch(addNoteDoc(id, updates)),
 
   //NoteDoc
-  editNoteDoc: (id, updates) => dispatch(editNoteDoc(id, updates))
-
+  editNoteDoc: (id, updates) => dispatch(editNoteDoc(id, updates)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesDashboardPage);

@@ -1,4 +1,4 @@
-import { AppBar, Box, Grid, Tab, Tabs } from "@mui/material";
+import { AppBar, Box, Grid, Link, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { addNoteDoc, editNoteDoc, removeNoteDoc } from "../../../actions/noteDoc";
@@ -25,6 +25,15 @@ export function DocumentDash(props) {
   return (
     <Box>
       <Box mt={2} mb={2} mr={2} ml={2}>
+      <Link
+        href="/"
+        style={{
+          // backgroundColor: "yellow",
+          padding: "20",
+        }}
+      >
+        Task Dashboard
+      </Link>
         <AppBar position="static" color="default">
           <Grid container alignItems="row">
             <Grid item xs={10}>
