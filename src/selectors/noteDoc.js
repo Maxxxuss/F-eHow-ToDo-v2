@@ -11,6 +11,9 @@ export const getAllNoteDocs = createSelector(getNoteDocs, (noteDocs) =>
     docURL: noteDoc.docURL ? noteDoc.docURL : "",
     docCategorie: noteDoc.docCategorie ? noteDoc.docCategorie : "",
     docDescription: noteDoc.docDescription ? noteDoc.docDescription : "",
+    docBuzword: noteDoc.docBuzword ? noteDoc.docBuzword : "",
+
+
 
 
   }))
