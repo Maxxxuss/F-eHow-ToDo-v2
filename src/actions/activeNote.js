@@ -23,6 +23,7 @@ export const addActiveNote = ({
   linkTitel,
   linkURL,
   buzwords,
+  // docCounter
 } = {}) => ({
   type: "ADD_ACTIVE_NOTE",
   activeNote: {
@@ -48,6 +49,7 @@ export const addActiveNote = ({
     linkTitel,
     linkURL,
     buzwords,
+    // docCounter
   },
 });
 

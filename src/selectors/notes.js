@@ -52,6 +52,8 @@ export const getAllExpenses = createSelector(getExpenses, (expenses) =>
 
     task_tomorrow: 0,
     task_afert_Tomorrow: 0,
+
+    docCounter: expense.docCounter ? expense.docCounter : 0,  
   }))
 );
 

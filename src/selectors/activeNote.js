@@ -39,6 +39,8 @@ export const getAllActiveNotes = createSelector(
 
     buzwords: activeNotes.buzwords ? activeNotes.buzwords : [],
     bTitel: activeNotes.bTitel ? activeNotes.bTitel : [],
+    docCounter: activeNotes.docCounter ? activeNotes.docCounter : 0, 
+
 
    
   })

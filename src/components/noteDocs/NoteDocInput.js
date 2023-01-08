@@ -26,6 +26,8 @@ export const NoteDocInput = (props) => {
     docDescription: docDescription
   };
 
+
+
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <Grid item xs={4}>
@@ -58,17 +60,20 @@ export const NoteDocInput = (props) => {
       <Grid item xs={2}>
         <Button
           onClick={() => {
+            props.editExpense(props.activeNoteID, 
+              {docCounter:props.docCounter+1}
+              )
+            // props.editActiveNote({docCounter:props.docCounter+1})
             props.addNoteDoc(
               // props.activeNoteID,
               noteDocUpdates
             ),
               setDocURL(""),
               setDocTitel(""),
-              setDocDescription(""), 
-              console.log("InputLink Props: ", noteDocUpdates);
+              setDocDescription("")
           }}
         >
-          Add Link
+          Add Document
         </Button>
       </Grid>
     </Grid>

@@ -14,6 +14,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import CachedIcon from "@mui/icons-material/Cached";
 import { handelTakeChanges } from "./Button/AddNote";
 import moment from "moment";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 
@@ -64,6 +65,21 @@ const showHintForTimedNotes = (expense, props) => {
         >
           {daySubStrin}D
         </Typography>
+      </Grid>
+    );
+  } else {
+    return <span></span>;
+  }
+};
+
+const showDocCounter = (expense, props) => {
+  const docCounter = expense.docCounter;
+
+  if (docCounter > 0) {
+    return (
+      <Grid>
+        <PictureAsPdfIcon />
+        {/* {docCounter} */}
       </Grid>
     );
   } else {
@@ -136,8 +152,10 @@ export function ShowNotes(props) {
                       >
                         <Grid item xs={1}>
                           {showHintForTimedNotes(expense, props)}
+                          {showDocCounter(expense, props)}
                         </Grid>
-                        <Grid item xs={10}>
+
+                        <Grid item xs={9}>
                           <ListItemText
                             id={expense.id}
                             primary={expense.description}
@@ -169,7 +187,7 @@ export function ShowNotes(props) {
                                 {expense.categorie.substr(0, 8)}
                               </Typography>
                             </Grid>
-                            <Grid item xs={1}>
+                            <Grid item xs={2}>
                               <SkipButton
                                 props={props}
                                 updates={{

@@ -446,10 +446,9 @@ export const ShortDescription = (properties) => {
             })}
           </Paper>
 
-          <Button
-          size="small"
-          variant="outlined"
-          onClick={handleOpenBuz}>Add Buzword</Button>
+          <Button size="small" variant="outlined" onClick={handleOpenBuz}>
+            Add Buzword
+          </Button>
           <Modal
             open={openBuz}
             onClose={handleCloseBuz}
@@ -469,10 +468,10 @@ export const ShortDescription = (properties) => {
             </Box>
           </Modal>
 
-          <Button
-          size="small"
-          variant="outlined"
-          onClick={handleOpenDoc}>Add Document</Button>
+          <Button size="small" variant="outlined" onClick={handleOpenDoc}>
+            Add Doccument
+          </Button>
+
 
           <Modal
             open={openDoc}
@@ -485,6 +484,10 @@ export const ShortDescription = (properties) => {
                 activeNoteID={activeNoteID}
                 addNoteDoc={ndsProps.addNoteDoc}
                 categorie={updates.categorie}
+                editExpense={ndsProps.editExpense}
+                docCounter={ndsProps.activeNote.docCounter}
+                // activeNote={ndsProps.activeNote}
+                // editActiveNote={ndsProps.editActiveNote}
               />
             </Box>
           </Modal>
@@ -492,8 +495,10 @@ export const ShortDescription = (properties) => {
 
         {/* Note DOCS */}
 
-        <NoteDocView activeNoteID={activeNoteID} noteDocs={ndsProps.noteDocs}
-        editNoteDoc={ndsProps.editNoteDoc}
+        <NoteDocView
+          activeNoteID={activeNoteID}
+          noteDocs={ndsProps.noteDocs}
+          editNoteDoc={ndsProps.editNoteDoc}
         />
       </Grid>
 

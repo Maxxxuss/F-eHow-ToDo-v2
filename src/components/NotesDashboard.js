@@ -53,6 +53,7 @@ export function setActiveNote(expense, props) {
 
       buzwords: expense.buzwords,
       bTitel: expense.bTitel,
+      // docCounter: expense.docCounter
     };
     props.addActiveNote(updates);
     console.log("Active Notee: ", expense);
