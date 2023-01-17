@@ -5,6 +5,7 @@ import { addNoteDoc, editNoteDoc, removeNoteDoc } from "../../../actions/noteDoc
 import { getAllCategories } from "../../../selectors/categories";
 import { getAllNoteDocs } from "../../../selectors/noteDoc";
 import { ShowDocumentDash } from "../ShowDocumentsDash";
+import { getAllExpenses } from "../../../selectors/notes";
 
 export function DocumentDash(props) {
   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
@@ -21,6 +22,8 @@ export function DocumentDash(props) {
         }
       />
     ));
+
+   
 
   return (
     <Box>
@@ -93,7 +96,7 @@ export function DocumentDash(props) {
 const mapStateToProps = (state) => {
   return {
     // activeNote: getAllActiveNotes(state),
-    // expenses: getAllExpenses(state).sort((a, b) => (a.prio > b.prio ? -1 : 1)),
+    expenses: getAllExpenses(state), 
     // openExpenses: getAllExpenses(state)
     //   .sort((a, b) => (a.prio > b.prio ? -1 : 1))
     //   .filter((expense) => expense.noteStatus === "open"),

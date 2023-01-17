@@ -12,13 +12,16 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { DocDashDetails } from "./DocumentDash/DocumentDashDetails";
+import LayersClearIcon from "@mui/icons-material/LayersClear";
+import InfoIcon from "@mui/icons-material/Info";
 
 export function ShowDocumentDash(props) {
   const noteDocs = props.props.noteDocs;
+  const expenses = props.props.expenses;
 
   const [selectedIndex, setSelectedIndex] = useState("");
   const [activeNoteDoc, setActiveNoteDoc] = useState("");
-  //   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
+
 
   const handleListItemClick = (noteDoc, props, event, index) => {
     setSelectedIndex(index);
@@ -26,6 +29,31 @@ export function ShowDocumentDash(props) {
   };
 
   console.log("ShowDocumentDash PROPS-PROPS ", props);
+
+
+  const showDeletedNoteIcon = (noteDocID, noteDoc) => {
+    const find = props.props.expenses.find(
+      (expense) => expense.id === noteDocID
+    );
+
+    if (find === undefined) {
+      return (
+        <LayersClearIcon fontSize="small" />
+
+        // <Button
+        // onClick={() => props.props.removeNoteDoc({id:noteDoc.id})}
+        // // onClick={()=> console.log(noteDoc.id) }
+
+        // >
+        //   remove
+        // </Button>
+
+        // <LayersClearIcon
+        // fontSize="small"
+        // />
+      );
+    }
+  };
 
   return (
     <Grid container alignItems="row">
@@ -40,7 +68,7 @@ export function ShowDocumentDash(props) {
               )
               .map((noteDoc, index) => {
                 return (
-                  <Paper key={noteDoc.id} elevation={6}>
+                  <Paper key={noteDoc.id} elevation={5}>
                     <Grid container direction="column">
                       <Grid>
                         <ListItem key={noteDoc.id}>
@@ -57,13 +85,19 @@ export function ShowDocumentDash(props) {
                               justifyContent="space-between"
                               alignItems="center"
                             >
-                              <Grid item xs={1}>
+                              <Grid item xs={2}>
                                 <Typography
                                   variant="body2"
                                   style={{
                                     color: "SlateGray",
                                   }}
                                 >
+                                  {noteDoc.noteID ? (
+                                    showDeletedNoteIcon(noteDoc.noteID, noteDoc)
+                                  ) : (
+                                    <InfoIcon fontSize="small" />
+                                  )}
+
                                   {noteDoc.docAdded.substr(0, 10)}
                                 </Typography>
                               </Grid>

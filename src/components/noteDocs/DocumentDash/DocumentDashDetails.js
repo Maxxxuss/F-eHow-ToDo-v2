@@ -126,24 +126,6 @@ export function DocDashDetails(props) {
               </Button>
             )}
 
-            <Button
-              color="primary"
-              onClick={() =>
-                console.log(
-                  "DocDashDetails Props: ",
-                  inputCategorie,
-                  "a",
-                  activeCategorie,
-                  "active cat Prop",
-                  props,
-                  "geProps",
-                  props
-                )
-              }
-            >
-              SHOW- PROPS
-            </Button>
-
             <DoubleCheckDelete props={props} />
           </ButtonGroup>
         </Grid>
