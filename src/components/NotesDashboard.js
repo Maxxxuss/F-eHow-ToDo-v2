@@ -94,9 +94,8 @@ export function NotesDashboardPage(props) {
       }}
     >
       <Box mt={2} mb={2} mr={2} ml={2}>
-        <Grid container alignItems="row" 
-        >
-        <Grid item xs={2}>
+        <Grid container alignItems="row">
+          <Grid item xs={2}>
             <Link
               href="/proDash"
               style={{
@@ -158,10 +157,22 @@ export function NotesDashboardPage(props) {
           </Grid>
           {/* RIGHT-SIDE - Note Details  */}
           <Grid item xs>
+            {/* <Box
+            mr={2}
+            sx={{
+              // position:"fixed",
+              position: "-webkit-sticky", 
+              position:" sticky",
+              top: 0,
+              // bottom:2
+          }} */}
+
+            {/* > */}
             <ShortDescription
               NotesDashboradProps={props}
               activeCategorie={activeCategorie}
             />
+            {/* </Box> */}
           </Grid>
         </Grid>
       </Box>

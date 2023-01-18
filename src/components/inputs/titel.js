@@ -277,7 +277,7 @@ export const ShortDescription = (properties) => {
   const handleCloseDoc = () => setOpenDoc(false);
 
   return (
-    <div>
+    <div    >
       <Grid mt={1} mb={1}>
         <ButtonGroup fullWidth={true}>
           {decider(ndsProps)}

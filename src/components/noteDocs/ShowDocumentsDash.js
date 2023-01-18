@@ -22,14 +22,12 @@ export function ShowDocumentDash(props) {
   const [selectedIndex, setSelectedIndex] = useState("");
   const [activeNoteDoc, setActiveNoteDoc] = useState("");
 
-
   const handleListItemClick = (noteDoc, props, event, index) => {
     setSelectedIndex(index);
     setActiveNoteDoc(noteDoc);
   };
 
   console.log("ShowDocumentDash PROPS-PROPS ", props);
-
 
   const showDeletedNoteIcon = (noteDocID, noteDoc) => {
     const find = props.props.expenses.find(
@@ -158,7 +156,14 @@ export function ShowDocumentDash(props) {
       </Grid>
 
       <Grid item xs>
-        <Box ml={2}>
+        <Box
+          ml={2}
+          sx={{
+            position: "-webkit-sticky",
+            position: " sticky",
+            top: 300,
+          }}
+        >
           <DocDashDetails
             showDocuDashPROPS={props}
             activeNoteDoc={activeNoteDoc}

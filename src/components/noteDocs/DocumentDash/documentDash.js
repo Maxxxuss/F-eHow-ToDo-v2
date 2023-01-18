@@ -106,7 +106,8 @@ const mapStateToProps = (state) => {
 
     // globalVariables: getGlobalVariables(state),
     // buzwords: getAllBuzwords(state),
-    noteDocs: getAllNoteDocs(state),
+    noteDocs: getAllNoteDocs(state)
+    .sort((a, b) => (a.docAdded > b.docAdded ? -1 : 1)),
   };
 };
 
