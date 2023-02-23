@@ -15,9 +15,12 @@ import { DocDashDetails } from "./DocumentDash/DocumentDashDetails";
 import LayersClearIcon from "@mui/icons-material/LayersClear";
 import InfoIcon from "@mui/icons-material/Info";
 
+import Filter2Icon from "@mui/icons-material/Filter2";
+
 export function ShowDocumentDash(props) {
   const noteDocs = props.props.noteDocs;
   const expenses = props.props.expenses;
+  const dupChecker= props.dupChecker
 
   const [selectedIndex, setSelectedIndex] = useState("");
   const [activeNoteDoc, setActiveNoteDoc] = useState("");
@@ -51,6 +54,30 @@ export function ShowDocumentDash(props) {
         // />
       );
     }
+  };
+
+
+// Anzeigen Doppelter DocURLS -  N E X T Hinzufügen Button für FilterSuche 
+  const showDoupleDoc = (noteDocURL) => {
+    const find = props.props.noteDocs.find(
+      (noteDoc) => noteDoc.docURL === noteDocURL
+    );
+
+    // ! ! ! ! ! ! !
+
+    var uniqueValues = new Set(noteDocs.map((noteDoc) => noteDoc.docURL));
+
+    const found = uniqueValues.has(noteDocURL);
+
+    var counter = noteDocs.map((noteDoc) => noteDoc.docURL === noteDocURL);
+
+    const multipleDocs = counter.filter(Boolean).length;
+
+    if (multipleDocs != 1) {
+      return <Filter2Icon />;
+    }
+
+    // console.log(multipleDocs);
   };
 
   return (
@@ -95,6 +122,14 @@ export function ShowDocumentDash(props) {
                                   ) : (
                                     <InfoIcon fontSize="small" />
                                   )}
+
+                                  {
+                                    dupChecker ?
+                                    showDoupleDoc(noteDoc.docURL)
+                                    : ""
+                                  }
+                                  
+
 
                                   {noteDoc.docAdded.substr(0, 10)}
                                 </Typography>

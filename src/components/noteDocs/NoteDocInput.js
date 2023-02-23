@@ -22,11 +22,19 @@ export const NoteDocInput = (props) => {
     docCategorie: props.categorie,
     docTitel: docTitel,
     docURL: docURL,
-    docAdded: moment().format(), 
-    docDescription: docDescription
+    docAdded: moment().format(),
+    docDescription: docDescription,
   };
 
+  // const showDoupleDoc = (noteDocURL) => {
+  //   const noteDocs = props.noteDocs
 
+  //   var uniqueValues = new Set(noteDocs.map((noteDoc) => noteDoc.docURL));
+
+  //   const found = uniqueValues.has(noteDocURL);
+
+  //   console.log(found);
+  // };
 
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
@@ -60,9 +68,9 @@ export const NoteDocInput = (props) => {
       <Grid item xs={2}>
         <Button
           onClick={() => {
-            props.editExpense(props.activeNoteID, 
-              {docCounter:props.docCounter+1}
-              )
+            props.editExpense(props.activeNoteID, {
+              docCounter: props.docCounter + 1,
+            });
             // props.editActiveNote({docCounter:props.docCounter+1})
             props.addNoteDoc(
               // props.activeNoteID,
@@ -70,7 +78,7 @@ export const NoteDocInput = (props) => {
             ),
               setDocURL(""),
               setDocTitel(""),
-              setDocDescription("")
+              setDocDescription("");
           }}
         >
           Add Document

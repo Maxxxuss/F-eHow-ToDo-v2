@@ -1,4 +1,4 @@
-import { AppBar, Box, Grid, Link, Tab, Tabs } from "@mui/material";
+import { AppBar, Box, Button, FormControlLabel, Grid, Link, Switch, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { addNoteDoc, editNoteDoc, removeNoteDoc } from "../../../actions/noteDoc";
@@ -10,6 +10,8 @@ import { getAllExpenses } from "../../../selectors/notes";
 export function DocumentDash(props) {
   const [activeCategorie, setActiveCategorie] = useState({ catName: "ALL" });
   const [tabCategorie, setTabCategorie] = useState(0);
+  const [dupChecker, setDubChecked] = React.useState(false);
+
 
   const ProjectTab = (categories) =>
     categories.map((categorie, index) => (
@@ -22,6 +24,10 @@ export function DocumentDash(props) {
         }
       />
     ));
+
+    const handleChange = () => {
+      setDubChecked((prev) => !prev);
+    };
 
    
 
@@ -58,11 +64,18 @@ export function DocumentDash(props) {
       <Box 
       mt={2} mb={2} mr={2} ml={2}
       >
+
+<FormControlLabel
+          control={<Switch checked={dupChecker} onChange={handleChange} />}
+          label="DupChecker"
+        />
+
       <ShowDocumentDash
           props ={props}
           activeCategorie ={activeCategorie}
           removeNoteDoc={removeNoteDoc}
           editNoteDoc={editNoteDoc}
+          dupChecker={dupChecker}
           
           /> 
         {/* <Grid container spacing={2} direction="row">

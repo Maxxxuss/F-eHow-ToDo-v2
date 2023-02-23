@@ -486,6 +486,8 @@ export const ShortDescription = (properties) => {
                 categorie={updates.categorie}
                 editExpense={ndsProps.editExpense}
                 docCounter={ndsProps.activeNote.docCounter}
+                // noteDocs={ndsProps.noteDocs}
+
                 // activeNote={ndsProps.activeNote}
                 // editActiveNote={ndsProps.editActiveNote}
               />
