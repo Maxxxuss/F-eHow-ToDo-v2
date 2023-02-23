@@ -12,8 +12,11 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { DocDashDetails } from "./DocumentDash/DocumentDashDetails";
+//LayersClearIcon, wenn Note gelöscht wurde 
 import LayersClearIcon from "@mui/icons-material/LayersClear";
+//Info Icon wenn nur das Doc/ der Link erstellt wurden ohne Note 
 import InfoIcon from "@mui/icons-material/Info";
+//FilterIcon wenn Doppelte Notes vorhanden sind
 
 import Filter2Icon from "@mui/icons-material/Filter2";
 
