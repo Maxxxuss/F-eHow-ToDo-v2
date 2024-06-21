@@ -6,8 +6,7 @@ import {
   ButtonGroup,
   IconButton,
   Modal,
-  Typography,
-  Chip,
+   Chip,
   Paper,
   ListItem,
   List,
@@ -15,11 +14,10 @@ import {
   ListItemButton,
 } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoubleCheckRemoveButton from "../Button/DoubleCheckRemoveButton";
 import ReactQuill from "react-quill";
-import { v4 as uuidv4 } from "uuid";
 import { autoSaveFunc } from "./autoSave";
 import { getAllActiveNotes } from "../../selectors/activeNote";
 import { connect } from "react-redux";
@@ -276,6 +274,15 @@ export const ShortDescription = (properties) => {
   const handleOpenDoc = () => setOpenDoc(true);
   const handleCloseDoc = () => setOpenDoc(false);
 
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      // Hier kannst du auf editorRef.current zugreifen, um das Quill-Editor-Element zu erhalten
+      console.log(editorRef.current);
+    }
+  }, []);
+
   return (
     <div    >
       <Grid mt={1} mb={1}>
@@ -504,13 +511,14 @@ export const ShortDescription = (properties) => {
         />
       </Grid>
 
-      <ReactQuill
+      {/* <ReactQuill
+         ref={editorRef}
         theme="snow"
         value={noteDecscription}
         onChange={setnoteDecscription}
         modules={modules}
         formats={formats}
-      />
+      /> */}
     </div>
   );
 };

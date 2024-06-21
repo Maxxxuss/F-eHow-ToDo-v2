@@ -153,7 +153,7 @@ export function NotesDashboardPage(props) {
         <Grid container spacing={2} direction="row">
           <Grid item xs={7}>
             {/* Left Side - ShoW Notes & Filter */}
-            <SearchForNotes props={props} activeCategorie={activeCategorie} />
+          <SearchForNotes props={props} activeCategorie={activeCategorie} />
           </Grid>
           {/* RIGHT-SIDE - Note Details  */}
           <Grid item xs>

@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import expensesReducer from "../reducers/notes";
 import filtersReducer from "../reducers/filters";
 import categorieReducer from "../reducers/categorie";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { localStorageKey } from "./constants";
 import globalVariabels from "../reducers/globalVariables";
 import activeNoteReducer from "../reducers/activeNote";

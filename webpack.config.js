@@ -1,93 +1,72 @@
 const path = require('path');
-const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
-const { web } = require('webpack');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-// const ExtractTextPlugin = require('extract-text-webpack-plugin')
-// const CSSExtract = new ExtractTextPlugin('styles.css')
+module.exports = (env) => {
+  const isProduction = env === 'production';
 
-module.exports = (env) =>{ 
-  const isProduction = env ==='production'
-  return{
-
-    entry: ['babel-polyfill', './src/index.js'],
+  return {
+    mode: isProduction ? 'production' : 'development',
+    entry: isProduction ? ['./src/index.js'] : ['babel-polyfill', './src/index.js'], // Remove 'babel-polyfill' for modern browsers
     output: {
       path: path.join(__dirname, 'public', 'dist'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
     },
- 
-  module: {
-    rules: [{
-      loader: 'babel-loader',
-      test: /\.js$/,
-      exclude: /node_modules/
-    }
-    , 
-    {
-     test: /\.s?css$/i,
-     use: [
-       'style-loader', 
-          'css-loader',
-
-            ]
-   }
-    //   , 
-  //   {
-  //    test: /\.s?css$/i,
-  //    use: [
-  //      'style-loader',
-  //      'css-loader',
-  //      'sass-loader'
-  //    ]
-  //  }
-  
-  ]
-//  },
-//   // plugins: [   ggf anschauen min~ 1:50
-//   //   CSSExtract
-//   // ],
-
-//   devtool: isProduction ? 'source-map' :'cheap-module-eval-source-map', 
-//   devtool: 'cheap-module-eval-source-map', // zeigt fehler-code im QuellCode an 
-//   devServer: {
-//     contentBase: path.join(__dirname, './dist'),
-//     historyApiFallback: true,
-//     writeToDisk: true, 
-}, 
-target: "web", 
-
-
-
-devServer: {
-  static: {
-    directory: path.join(__dirname, "public/"),
-  },
-  historyApiFallback: true,
-  // compress: true, 
-  port: 3000,
-  devMiddleware: {
-    publicPath: "https://localhost:3000/dist/",
-  },
-  hot: "only",
-
-
-},
-
-
-// devServer: {
-//   historyApiFallback: true,
-//   contentBase: path.resolve(__dirname, "public"),
-//   hot: true,
-//   port: 3000,
-// },
-
-
-
-
-plugins: [
-  new HtmlWebPackPlugin({
-     template: path.resolve( __dirname, 'public/index.html' ),
-     filename: 'index.html'
-  })
-]  
-}
-}
+    resolve: {
+      extensions: ['.js', '.jsx', '.json'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-react', '@babel/preset-env'],
+            },
+          },
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            'style-loader',
+            'css-loader',
+            // Add Sass loader if using Sass
+            {
+              options: {
+                implementation: require('sass'), // or 'sass-loader'
+                sourceMap: true, // Enable source maps for Sass
+              },
+            },
+          ],
+        },
+      ],
+    },
+    devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
+    devServer: {
+      static: {
+        directory: path.join(__dirname, 'public'),
+      },
+      historyApiFallback: true,
+      port: 3000,
+      devMiddleware: {
+        publicPath: '/dist/',
+      },
+      hot: 'only',
+    },
+    plugins: [
+      new HtmlWebPackPlugin({
+        template: path.resolve(__dirname, 'public/index.html'),
+        filename: 'index.html',
+      }),
+    ],
+    optimization: {
+      minimize: isProduction,
+      minimizer: [
+        new TerserPlugin(),
+      ],
+    },
+    target: 'web',
+  };
+};
