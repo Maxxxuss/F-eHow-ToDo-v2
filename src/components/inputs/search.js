@@ -14,90 +14,94 @@ import {
   Switch,
   Button,
 } from "@mui/material";
-import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { setActiveNote } from "../NotesDashboard";
 import { ShowNotes } from "../showNoteList";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { taskCounter } from "../Counter/counter";
 
 export function SearchForNotes(properties) {
-  const { props } = properties;
+  const { props, activeCategorie } = properties;
 
-  const [filteredNote, setFilteredNote] = useState(null);
-  const [filteredNotesOnBuz, setFilteredNotesOnBuz] = useState(props.expenses);
+  const [filteredNotes, setFilteredNotes] = useState(null); // Use null for initial state
   const [noteListStatus, setNoteListStatus] = useState("open");
+  const [filteredNotesOnBuz, setFilteredNotesOnBuz] = useState(props.expenses);
   const [checked, setChecked] = useState(false);
 
-  const icon = <CheckBoxOutlineBlank fontSize="small" />;
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-  const handleChange = () => {
-    setChecked((prevChecked) => !prevChecked);
-  };
-
-  useEffect(() => {
-    setActiveNote(filteredNote, props);
-  }, [filteredNote, props]);
+  useEffect(() => setActiveNote(filteredNotes, props), [filteredNotes]);
 
   useEffect(() => {
     setFilteredNotesOnBuz(props.expenses);
   }, [props.expenses]);
 
+  const searchBuzSetting = (value) => {
+    const latestValue = value[value.length - 1];
+    const newFilteredNotes = props.expenses.filter(note =>
+      note.bTitel.includes(latestValue) || 
+      note.description.includes(latestValue) || 
+      note.noteDecscription.includes(latestValue)
+    );
+    setFilteredNotesOnBuz(newFilteredNotes);
+  };
+
   const handleMultiRemoveNote = () => {
-    const delNotes = props.expenses.filter(
-      (note) =>
-        note.absDatesToFinish < -45 && note.noteStatus === "closed"
+    const delNotes = props.expenses.filter(note =>
+      note.absDatesToFinish < -45 && note.noteStatus === "closed"
     );
 
-    console.log("delNotes +=45d are: ", delNotes.length, delNotes);
-
-    delNotes.forEach((note) => {
+    delNotes.forEach(note => {
       props.removeExpense({ id: note.id });
     });
+  };
+
+  useEffect(() => {
+    if (filteredNotesOnBuz.length === 0 && props.expenses.length > 0) {
+      setFilteredNotesOnBuz(props.expenses);
+    }
+  }, [filteredNotesOnBuz.length, props.expenses]);
+
+  const handleFilterChange = () => {
+    setChecked(prev => !prev);
   };
 
   return (
     <Box mr={2} ml={1}>
       <Grid container direction="row">
         <FormControlLabel
-          control={<Switch checked={checked} onChange={handleChange} />}
+          control={<Switch checked={checked} onChange={handleFilterChange} />}
           label="Filter"
         />
         <Box
           sx={{
             bgcolor: "background.paper",
-            color: "text.secondary",
+            color: 'text.secondary',
             boxShadow: 1,
             p: 2,
             maxWidth: 140,
           }}
         >
-          {/* Note Counter */}
-          {taskCounter(props.expenses, 0.6, -100.4, "closed")}/{" "}
-          {taskCounter(props.expenses, 1.4, 0.6, "closed")}/{" "}
-          {taskCounter(props.expenses, 2.2, 1.4, "closed")}/{" "}
-          {taskCounter(props.expenses, 3, 2.2, "closed")}/{" "}
-          {taskCounter(props.expenses, 3.8, 3, "closed")}{" "}
+          {taskCounter(props.expenses, 0.6, -100.4, "closed")}/
+          {taskCounter(props.expenses, 1.4, 0.6, "closed")}/
+          {taskCounter(props.expenses, 2.2, 1.4, "closed")}/
+          {taskCounter(props.expenses, 3, 2, 2, "closed")}/
+          {taskCounter(props.expenses, 3.8, 3, "closed")}
           ({taskCounter(props.expenses, 100, -100, "closed")})
         </Box>
 
         <Grid item xs={12}>
           <Collapse in={checked}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+            <Grid container direction="row" justifyContent="space-between" alignItems="center">
               <Grid item xs={12}>
                 <Autocomplete
                   options={props.expenses}
-                  onChange={(event, expense) => {
-                    setFilteredNote(expense);
-                  }}
+                  value={filteredNotes}
+                  onChange={(event, expense) => setFilteredNotes(expense)}
                   getOptionLabel={(note) =>
                     note.description
-                      ? `${note.description} - ${note.noteDescription.substr(0, 600).replace(/<[^>]+>/g, "")}`
+                      ? `${note.description} - ${note.noteDecscription.replace(/<[^>]+>/g, "")}`
                       : ""
                   }
                   style={{
@@ -106,50 +110,43 @@ export function SearchForNotes(properties) {
                   }}
                   fullWidth
                   renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Search Note"
-                      variant="outlined"
-                    />
+                    <TextField {...params} label="Search Note" variant="outlined" />
                   )}
                 />
               </Grid>
               <Grid item>
                 <FormControl>
-                  <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+                  <InputLabel id="status-select-label">Filter</InputLabel>
                   <Select
+                    labelId="status-select-label"
                     value={noteListStatus}
-                    onChange={(e) => setNoteListStatus(e.target.value)}
                     label="Status"
+                    onChange={(e) => setNoteListStatus(e.target.value)}
                   >
                     <MenuItem value={"open"}>Open</MenuItem>
-                    <MenuItem value={"allOpen"}>Just Do's</MenuItem>
-                    <MenuItem value={"openTomorrow"}>Do's +1 Day</MenuItem>
-                    <MenuItem value={"openAfterTomorrow"}>Do's +2 Days</MenuItem>
+                    <MenuItem value={"allOpen"}>Just Do´s</MenuItem>
+                    <MenuItem value={"openTomorrow"}>Do´s +1 Day</MenuItem>
+                    <MenuItem value={"openAfterTomorrow"}>Do´s +2 Day</MenuItem>
                     <MenuItem value={"closed"}>Closed</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
-
-              <Grid item>
-                {noteListStatus === "closed" && (
+              {noteListStatus === "closed" && (
+                <Grid item>
                   <Button
                     onClick={handleMultiRemoveNote}
                     variant="contained"
                     color="error"
-                    ml={2}
-                    mr={3}
                   >
                     Del Closed +45 D
                   </Button>
-                )}
-              </Grid>
-
+                </Grid>
+              )}
               <Grid item>
                 <Autocomplete
                   multiple
                   onChange={(event, value) => {
-                    searchBuzSetting(value.map((buzword) => buzword.titel));
+                    searchBuzSetting(value.map(buz => buz.titel));
                   }}
                   id="tags-filter-Buz"
                   options={props.buzwords}
@@ -167,11 +164,7 @@ export function SearchForNotes(properties) {
                   )}
                   style={{ width: 500 }}
                   renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Search Buzwords"
-                      placeholder="Favorites"
-                    />
+                    <TextField {...params} label="Search Buzwords" placeholder="Favorites" />
                   )}
                 />
               </Grid>
@@ -183,7 +176,7 @@ export function SearchForNotes(properties) {
           <ShowNotes
             props={props}
             expenses={filteredNotesOnBuz}
-            activeCategorie={properties.activeCategorie}
+            activeCategorie={activeCategorie}
             noteListStatus={noteListStatus}
           />
         </Grid>
