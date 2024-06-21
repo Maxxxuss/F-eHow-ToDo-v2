@@ -28,15 +28,19 @@ module.exports = (env) => {
           },
         },
         {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
           test: /\.s[ac]ss$/i,
           use: [
             'style-loader',
             'css-loader',
-            // Add Sass loader if using Sass
             {
+              loader: 'sass-loader',
               options: {
-                implementation: require('sass'), // or 'sass-loader'
-                sourceMap: true, // Enable source maps for Sass
+                implementation: require('sass'),
+                sourceMap: true,
               },
             },
           ],

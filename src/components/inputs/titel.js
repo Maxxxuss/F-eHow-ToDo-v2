@@ -29,6 +29,8 @@ import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import { NoteDocInput } from "../noteDocs/NoteDocInput";
 import { NoteDocView } from "../noteDocs/NoteDocView";
+import 'react-quill/dist/quill.snow.css';
+
 
 const style = {
   position: "absolute",
@@ -511,14 +513,14 @@ export const ShortDescription = (properties) => {
         />
       </Grid>
 
-      {/* <ReactQuill
+      <ReactQuill
          ref={editorRef}
         theme="snow"
         value={noteDecscription}
         onChange={setnoteDecscription}
         modules={modules}
         formats={formats}
-      /> */}
+      />
     </div>
   );
 };
