@@ -102,7 +102,7 @@ export function SearchForNotes(properties) {
                   getOptionLabel={(note) =>
                     note.description
                       ? `${note.description} - ${note.noteDecscription.replace(/<[^>]+>/g, "")}`
-                      : ""
+                      : "No Description" // Display a default message for empty descriptions
                   }
                   style={{
                     marginBottom: "10px",

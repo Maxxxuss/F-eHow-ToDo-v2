@@ -13,7 +13,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default function BuzwordTags(props) {
   const tNdsProps = props.titelNdsProps.NotesDashboradProps;
 
-  const buzOptions = tNdsProps.buzwords;
+  const buzOptions = tNdsProps.buzwords
 
   const [indexOptions, setIndexOptions] = useState("");
   const defaultOptions = tNdsProps.activeNote.buzwords

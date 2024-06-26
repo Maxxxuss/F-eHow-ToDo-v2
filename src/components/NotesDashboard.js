@@ -190,7 +190,7 @@ export function NotesDashboardPage(props) {
 
           <Grid item>
             <Typography variant="overline">
-              Ideas or Support: ehow.todo.mn@gmail.com
+              Ideas or Support: ehow.todo.mn@gmail.com - v1.0.0
             </Typography>
           </Grid>
         </Grid>
