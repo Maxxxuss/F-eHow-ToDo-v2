@@ -11,6 +11,7 @@
     "@emotion/weak-memoize": "^0.3.1",
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.1.0",
+    "core-js": "^3.40.0",
     "downshift": "^9.0.6",
     "history": "^5.0.1",
     "moment": "^2.29.1",
@@ -26,6 +27,7 @@
     "react-window": "^1.8.6",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "regenerator-runtime": "^0.14.1",
     "reselect": "^5.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
@@ -35,7 +37,7 @@
     "web-vitals": "^4.2.0"
   },
   "scripts": {
-    "dev": "webpack server --mode=development",
+    "dev": "webpack serve --mode development",
     "build": "webpack",
     "test": "jest --watch",
     "eject": "react-scripts eject",
@@ -77,6 +79,6 @@
     "webpack": "^5.45.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-middleware": "^7.2.1",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.2.0"
   }
 }

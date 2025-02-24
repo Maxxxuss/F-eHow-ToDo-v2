@@ -1,16 +1,19 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = (env) => {
-  const isProduction = env === 'production';
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production';
 
   return {
     mode: isProduction ? 'production' : 'development',
-    entry: isProduction ? ['./src/index.js'] : ['babel-polyfill', './src/index.js'], // Remove 'babel-polyfill' for modern browsers
+    entry: isProduction
+      ? './src/index.js'
+      : ['core-js/stable', 'regenerator-runtime/runtime', './src/index.js'],
     output: {
       path: path.join(__dirname, 'public', 'dist'),
       filename: 'bundle.js',
+      publicPath: '/dist/',
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
@@ -48,29 +51,27 @@ module.exports = (env) => {
       ],
     },
     devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
-    devServer: {
-      static: {
-        directory: path.join(__dirname, 'public'),
-      },
-      historyApiFallback: true,
-      port: 3000,
-      devMiddleware: {
-        publicPath: '/dist/',
-      },
-      hot: 'only',
-    },
     plugins: [
-      new HtmlWebPackPlugin({
-        template: path.resolve(__dirname, 'public/index.html'),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'public', 'index.html'),
         filename: 'index.html',
       }),
     ],
     optimization: {
       minimize: isProduction,
-      minimizer: [
-        new TerserPlugin(),
-      ],
+      minimizer: isProduction ? [new TerserPlugin()] : [],
     },
+    // Nur im Entwicklungsmodus aktivieren
+    devServer: isProduction
+      ? undefined
+      : {
+        static: {
+          directory: path.join(__dirname, 'public'),
+        },
+        historyApiFallback: true,
+        port: 3000,
+        hot: true,
+      },
     target: 'web',
   };
 };
